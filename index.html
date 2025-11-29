@@ -82,7 +82,7 @@
     <p class="text-gray-600 mb-8">Gestion des réservations</p>
     <input id="password" type="password" class="w-full p-4 border-2 rounded-lg text-xl mb-4 focus:outline-none focus:border-blue-500" placeholder="Mot de passe">
     <button onclick="login()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold text-xl transition">Se connecter</button>
-    <p class="mt-6 text-sm text-gray-500">💡 Mot de passe par défaut : <code class="bg-gray-100 px-2 py-1 rounded">admin1234</code></p>
+    <p class="mt-6 text-sm text-gray-500">💡 Contactez votre fournisseur pour le mot de passe</p>
   </div>
 </div>
 
@@ -108,17 +108,18 @@
   </div>
 
   <!-- CONFIG MAIL -->
-  <div class="bg-gray-100 border-b-4 border-blue-600">
+  <div class="bg-yellow-50 border-l-4 border-yellow-500">
     <div class="px-4 py-6 max-w-7xl mx-auto">
-      <h3 class="text-2xl font-bold mb-4 text-blue-900">📧 Configuration Email Contrat</h3>
+      <h3 class="text-2xl font-bold mb-4 text-yellow-900">📧 Configuration Email Contrat</h3>
+      <p class="text-sm text-yellow-700 mb-4">⚙️ Ces paramètres sont personnalisables pour chaque propriétaire</p>
       <div class="grid md:grid-cols-2 gap-6">
         <div>
           <label class="block text-sm font-bold mb-2 text-gray-700">Objet du mail :</label>
           <input id="sujet" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" value="Votre contrat Photobooth - À signer">
         </div>
         <div>
-          <label class="block text-sm font-bold mb-2 text-gray-700">Votre email (pour recevoir une copie) :</label>
-          <input id="emailCopie" type="email" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" placeholder="votre@email.com" value="amaxbooth@gmail.com">
+          <label class="block text-sm font-bold mb-2 text-gray-700">📧 Votre email (pour recevoir les copies) :</label>
+          <input id="emailCopie" type="email" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" placeholder="votre@email.com" value="">
         </div>
         <div class="md:col-span-2">
           <label class="block text-sm font-bold mb-2 text-gray-700">Corps du mail (utilisez {PRENOM} pour personnaliser) :</label>
@@ -130,7 +131,7 @@ Cordialement,
 L'équipe Photobooth</textarea>
         </div>
       </div>
-      <p class="mt-4 text-sm text-gray-600">💡 Une copie automatique sera envoyée à l'adresse ci-dessus</p>
+      <p class="mt-4 text-sm text-gray-600">💡 Chaque email de contrat sera copié automatiquement sur votre adresse</p>
     </div>
   </div>
 
@@ -226,8 +227,9 @@ L'équipe Photobooth</textarea>
 </div>
 
 <script>
-  const URL = "https://script.google.com/macros/s/AKfycbyODO1Iq9LBkldQ95kksW9zzK-V9ltfSNr5kG_Vc6-vHivgDJd29bEZnf3LTZCwLfxnzg/exec";
-  const PASSWORD = "admin1234"; // ⚠️ À changer pour chaque client
+  // 🔧 CONFIGURATION À PERSONNALISER POUR CHAQUE CLIENT
+  const URL = "https://script.google.com/macros/s/VOTRE_URL_ICI/exec";
+  const PASSWORD = "motdepasse123"; // ⚠️ À changer pour chaque client
 
   function login() {
     const pass = document.getElementById('password').value;
@@ -259,12 +261,16 @@ L'équipe Photobooth</textarea>
   function envoi(email, nom, prenom) {
     const sujet = document.getElementById('sujet').value || 'Votre contrat Photobooth';
     const corps = (document.getElementById('corps').value || 'Bonjour,\n\nVoici votre contrat.').replace('{PRENOM}', prenom);
-    const emailCopie = document.getElementById('emailCopie').value || 'amaxbooth@gmail.com';
+    const emailCopie = document.getElementById('emailCopie').value || '';
     
     const s = encodeURIComponent(sujet);
     const b = encodeURIComponent(corps);
     
-    window.open(`https://mail.google.com/mail/?view=cm&to=${email}&su=${s}&body=${b}&bcc=${emailCopie}`);
+    const mailtoUrl = emailCopie 
+      ? `https://mail.google.com/mail/?view=cm&to=${email}&su=${s}&body=${b}&bcc=${emailCopie}`
+      : `https://mail.google.com/mail/?view=cm&to=${email}&su=${s}&body=${b}`;
+    
+    window.open(mailtoUrl);
   }
 
   async function load() {
