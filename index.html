@@ -174,28 +174,28 @@ L'équipe Photobooth</textarea>
       <input type="hidden" id="id">
       
       <div>
-        <label class="block text-sm font-bold mb-2 text-gray-700">Date d'enlèvement *</label>
-        <input type="date" id="enlevement" required class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <label class="block text-sm font-bold mb-2 text-gray-700">Date d'enlèvement</label>
+        <input type="date" id="enlevement" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
       </div>
       
       <div>
-        <label class="block text-sm font-bold mb-2 text-gray-700">Date de restitution *</label>
-        <input type="date" id="restitution" required class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <label class="block text-sm font-bold mb-2 text-gray-700">Date de restitution</label>
+        <input type="date" id="restitution" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
       </div>
       
       <div>
-        <label class="block text-sm font-bold mb-2 text-gray-700">Nom *</label>
-        <input type="text" id="nom" required placeholder="Nom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <label class="block text-sm font-bold mb-2 text-gray-700">Nom</label>
+        <input type="text" id="nom" placeholder="Nom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
       </div>
       
       <div>
-        <label class="block text-sm font-bold mb-2 text-gray-700">Prénom *</label>
-        <input type="text" id="prenom" required placeholder="Prénom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <label class="block text-sm font-bold mb-2 text-gray-700">Prénom</label>
+        <input type="text" id="prenom" placeholder="Prénom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
       </div>
       
       <div>
-        <label class="block text-sm font-bold mb-2 text-gray-700">Email *</label>
-        <input type="email" id="email" required placeholder="email@example.com" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <label class="block text-sm font-bold mb-2 text-gray-700">Email</label>
+        <input type="email" id="email" placeholder="email@example.com" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
       </div>
       
       <div>
@@ -215,7 +215,10 @@ L'équipe Photobooth</textarea>
       
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-700">Template</label>
-        <input type="text" id="template" placeholder="Template" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <select id="template" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500 cursor-pointer">
+          <option value="">Non</option>
+          <option value="Oui">Oui</option>
+        </select>
       </div>
       
       <div class="md:col-span-2 flex gap-4">
@@ -250,12 +253,23 @@ L'équipe Photobooth</textarea>
         login();
       }
     });
+    
+    // Auto-remplir la date de restitution quand on change la date d'enlèvement
+    document.getElementById('enlevement').addEventListener('change', function() {
+      const dateEnlevement = this.value;
+      if (dateEnlevement && !document.getElementById('restitution').value) {
+        document.getElementById('restitution').value = dateEnlevement;
+      }
+    });
   });
 
   function tel(t) {
     if (!t) return '';
-    const str = String(t);
-    return str.replace(/\D/g, '').replace(/(\d{2})/g, '$1 ').trim();
+    const str = String(t).replace(/\D/g, '');
+    if (str.length === 10) {
+      return str.replace(/(\d{2})(?=\d)/g, '$1 ');
+    }
+    return str;
   }
 
   function envoi(email, nom, prenom) {
@@ -354,6 +368,9 @@ L'équipe Photobooth</textarea>
           reservation: { id, [champ]: val ? 'Oui' : 'Non' }
         })
       });
+      
+      // Attendre un peu avant de recharger pour que la mise à jour soit effective
+      await new Promise(resolve => setTimeout(resolve, 500));
       load();
     } catch (err) {
       console.error('Erreur mise à jour:', err);
