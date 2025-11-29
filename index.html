@@ -79,9 +79,10 @@
 <div id="login" class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-900 to-purple-900">
   <div class="bg-white p-10 rounded-2xl shadow-2xl text-center max-w-md w-full mx-4">
     <h1 class="text-4xl font-bold text-blue-900 mb-8">🎉 Photobooth</h1>
-    <input id="code" type="text" class="w-full p-4 border-2 rounded-lg text-xl mb-4 focus:outline-none focus:border-blue-500" placeholder="Code client">
-    <button onclick="login()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold text-xl transition">Entrer</button>
-    <p class="mt-4"><a href="#" onclick="adminLogin(); return false;" class="text-blue-600 font-bold hover:underline">Accès Admin</a></p>
+    <p class="text-gray-600 mb-8">Gestion des réservations</p>
+    <input id="password" type="password" class="w-full p-4 border-2 rounded-lg text-xl mb-4 focus:outline-none focus:border-blue-500" placeholder="Mot de passe">
+    <button onclick="login()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold text-xl transition">Se connecter</button>
+    <p class="mt-6 text-sm text-gray-500">💡 Mot de passe par défaut : <code class="bg-gray-100 px-2 py-1 rounded">admin1234</code></p>
   </div>
 </div>
 
@@ -93,7 +94,7 @@
       <div class="flex flex-wrap justify-between items-center gap-4">
         <div>
           <h1 class="text-3xl font-bold text-white">📋 Réservations Photobooth</h1>
-          <p class="text-blue-200 mt-1">Connecté : <span id="user" class="font-bold text-white"></span></p>
+          <p class="text-blue-200 mt-1">Gestion complète de vos locations</p>
         </div>
         <div class="flex gap-3 flex-wrap">
           <select id="filtre" onchange="load()" class="px-4 py-2 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500 cursor-pointer">
@@ -106,8 +107,8 @@
     </div>
   </div>
 
-  <!-- CONFIG MAIL ADMIN -->
-  <div id="configmail" class="hidden bg-gray-100 border-b-4 border-blue-600">
+  <!-- CONFIG MAIL -->
+  <div class="bg-gray-100 border-b-4 border-blue-600">
     <div class="px-4 py-6 max-w-7xl mx-auto">
       <h3 class="text-2xl font-bold mb-4 text-blue-900">📧 Configuration Email Contrat</h3>
       <div class="grid md:grid-cols-2 gap-6">
@@ -116,16 +117,20 @@
           <input id="sujet" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" value="Votre contrat Photobooth - À signer">
         </div>
         <div>
+          <label class="block text-sm font-bold mb-2 text-gray-700">Votre email (pour recevoir une copie) :</label>
+          <input id="emailCopie" type="email" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" placeholder="votre@email.com" value="amaxbooth@gmail.com">
+        </div>
+        <div class="md:col-span-2">
           <label class="block text-sm font-bold mb-2 text-gray-700">Corps du mail (utilisez {PRENOM} pour personnaliser) :</label>
           <textarea id="corps" rows="6" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500">Bonjour {PRENOM},
 
 Veuillez trouver ci-joint votre contrat de location Photobooth à signer.
 
 Cordialement,
-L'équipe Amaxbooth</textarea>
+L'équipe Photobooth</textarea>
         </div>
       </div>
-      <p class="mt-4 text-sm text-gray-600">💡 Les emails seront envoyés avec une copie automatique à : <strong>amaxbooth@gmail.com</strong></p>
+      <p class="mt-4 text-sm text-gray-600">💡 Une copie automatique sera envoyée à l'adresse ci-dessus</p>
     </div>
   </div>
 
@@ -222,45 +227,28 @@ L'équipe Amaxbooth</textarea>
 
 <script>
   const URL = "https://script.google.com/macros/s/AKfycbyODO1Iq9LBkldQ95kksW9zzK-V9ltfSNr5kG_Vc6-vHivgDJd29bEZnf3LTZCwLfxnzg/exec";
-  let admin = false;
-  let client = null;
+  const PASSWORD = "admin1234"; // ⚠️ À changer pour chaque client
 
-  function adminLogin() {
-    Swal.fire({
-      title: 'Accès Admin',
-      input: 'password',
-      inputPlaceholder: 'Mot de passe admin',
-      showCancelButton: true,
-      confirmButtonText: 'Connexion',
-      cancelButtonText: 'Annuler'
-    }).then(r => {
-      if (r.value === "admin1234") {
-        admin = true;
-        login("ADMIN");
-      } else if (r.value) {
-        Swal.fire('Erreur', 'Mot de passe incorrect', 'error');
+  function login() {
+    const pass = document.getElementById('password').value;
+    
+    if (pass === PASSWORD) {
+      document.getElementById('login').classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+      load();
+    } else {
+      Swal.fire('Erreur', 'Mot de passe incorrect', 'error');
+    }
+  }
+
+  // Connexion avec touche Entrée
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('password').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        login();
       }
     });
-  }
-
-  function login(codeClient) {
-    const c = codeClient || document.getElementById('code').value.trim().toUpperCase();
-    if (!c && !admin) {
-      Swal.fire('Erreur', 'Veuillez entrer un code client', 'warning');
-      return;
-    }
-    
-    client = admin ? null : c;
-    document.getElementById('login').classList.add('hidden');
-    document.getElementById('app').classList.remove('hidden');
-    document.getElementById('user').textContent = admin ? "ADMIN" : c;
-    
-    if (admin) {
-      document.getElementById('configmail').classList.remove('hidden');
-    }
-    
-    load();
-  }
+  });
 
   function tel(t) {
     if (!t) return '';
@@ -271,17 +259,17 @@ L'équipe Amaxbooth</textarea>
   function envoi(email, nom, prenom) {
     const sujet = document.getElementById('sujet').value || 'Votre contrat Photobooth';
     const corps = (document.getElementById('corps').value || 'Bonjour,\n\nVoici votre contrat.').replace('{PRENOM}', prenom);
+    const emailCopie = document.getElementById('emailCopie').value || 'amaxbooth@gmail.com';
     
     const s = encodeURIComponent(sujet);
     const b = encodeURIComponent(corps);
     
-    window.open(`https://mail.google.com/mail/?view=cm&to=${email}&su=${s}&body=${b}&bcc=amaxbooth@gmail.com`);
+    window.open(`https://mail.google.com/mail/?view=cm&to=${email}&su=${s}&body=${b}&bcc=${emailCopie}`);
   }
 
   async function load() {
     try {
-      const u = admin ? URL : URL + "?clientId=" + client;
-      const r = await fetch(u);
+      const r = await fetch(URL);
       const j = await r.json();
       const data = j.data || [];
       
@@ -357,7 +345,6 @@ L'équipe Amaxbooth</textarea>
         method: 'POST',
         body: JSON.stringify({
           action: 'update',
-          clientId: client || '',
           reservation: { id, [champ]: val ? 'Oui' : 'Non' }
         })
       });
@@ -407,7 +394,6 @@ L'équipe Amaxbooth</textarea>
           method: 'POST',
           body: JSON.stringify({
             action: 'delete',
-            clientId: client || '',
             reservationId: id
           })
         });
@@ -455,7 +441,6 @@ L'équipe Amaxbooth</textarea>
     try {
       const payload = {
         action: edit ? 'update' : 'add',
-        clientId: client || '',
         reservation: resa
       };
       
