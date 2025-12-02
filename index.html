@@ -255,21 +255,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Sauvegarder l'email client quand il change
-  document.getElementById('emailClient').addEventListener('change', function() {
-    if (currentClientId) {
-      localStorage.setItem('emailClient_' + currentClientId, this.value);
+  // Sauvegarder l'email client quand il change (avec blur ET input)
+  document.getElementById('emailClient').addEventListener('blur', function() {
+    if (currentClientId && this.value.trim()) {
+      localStorage.setItem('emailClient_' + currentClientId, this.value.trim());
+      console.log('Email sauvegardé:', this.value.trim());
+    }
+  });
+  
+  document.getElementById('emailClient').addEventListener('input', function() {
+    if (currentClientId && this.value.trim()) {
+      localStorage.setItem('emailClient_' + currentClientId, this.value.trim());
     }
   });
   
   // Sauvegarder le sujet et le corps du mail
-  document.getElementById('sujet').addEventListener('change', function() {
+  document.getElementById('sujet').addEventListener('blur', function() {
     if (currentClientId) {
       localStorage.setItem('sujet_' + currentClientId, this.value);
     }
   });
   
-  document.getElementById('corps').addEventListener('change', function() {
+  document.getElementById('corps').addEventListener('blur', function() {
     if (currentClientId) {
       localStorage.setItem('corps_' + currentClientId, this.value);
     }
