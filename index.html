@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Photobooth - Réservations</title>
-  <!-- Tailwind CDN (version stable qui marche toujours) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
@@ -18,7 +17,7 @@
     .paid { background: #d1fae5; }
     .paid:hover { background: #a7f3d0 !important; }
     .notpaid { background: #fee2e2; }
-    .notpaid:hover { background: #fecaca !important;background: #fecaca !important; }
+    .notpaid:hover { background: #fecaca !important; }
   </style>
 </head>
 <body>
@@ -26,7 +25,7 @@
   <!-- PAGE DE CONNEXION -->
   <div id="login" class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-900 to-purple-900">
     <div class="bg-white p-10 rounded-2xl shadow-2xl text-center max-w-md w-full mx-4">
-      <h1 class="text-4xl font-bold text-blue-900 mb-4">🎉 Photobooth</h1>
+      <h1 class="text-4xl font-bold text-blue-900 mb-4">Photobooth</h1>
       <p class="text-gray-600 mb-8">Gestion de vos réservations</p>
       <input id="clientCode" type="text" class="w-full p-4 border-2 rounded-lg text-lg mb-4 focus:outline-none focus:border-blue-500 uppercase" placeholder="Identifiant (ex: TUTU)">
       <input id="password" type="password" class="w-full p-4 border-2 rounded-lg text-lg mb-2 focus:outline-none focus:border-blue-500" placeholder="Mot de passe">
@@ -39,7 +38,7 @@
         <label for="rememberMe" class="text-sm text-gray-700 cursor-pointer select-none">Se souvenir de moi</label>
       </div>
       <button onclick="login()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold text-xl transition">Se connecter</button>
-      <p class="mt-6 text-sm text-gray-500">💡 Contactez votre fournisseur pour vos identifiants</p>
+      <p class="mt-6 text-sm text-gray-500">Contactez votre fournisseur pour vos identifiants</p>
     </div>
   </div>
 
@@ -50,7 +49,7 @@
       <div class="px-4 py-6 max-w-7xl mx-auto">
         <div class="flex flex-wrap justify-between items-center gap-4">
           <div>
-            <h1 class="text-3xl font-bold text-white">📋 Mes Réservations Photobooth</h1>
+            <h1 class="text-3xl font-bold text-white">Mes Réservations Photobooth</h1>
             <p class="text-blue-200 mt-1">Connecté : <span id="userName" class="font-bold"></span></p>
           </div>
           <div class="flex gap-3 flex-wrap">
@@ -58,7 +57,7 @@
               <option value="">Tous les mois</option>
             </select>
             <button onclick="nouveau()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition">+ Nouvelle réservation</button>
-            <button onclick="location.reload()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition">🚪 Déconnexion</button>
+            <button onclick="location.reload()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition">Déconnexion</button>
           </div>
         </div>
       </div>
@@ -67,10 +66,10 @@
     <!-- CONFIG CLIENT -->
     <div class="bg-yellow-50 border-l-4 border-yellow-500">
       <div class="px-4 py-6 max-w-7xl mx-auto">
-        <h3 class="text-2xl font-bold mb-4 text-yellow-900">⚙️ Configuration Client</h3>
+        <h3 class="text-2xl font-bold mb-4 text-yellow-900">Configuration Client</h3>
         <div class="grid md:grid-cols-2 gap-6">
           <div>
-            <label class="block text-sm font-bold mb-2 text-gray-700">📧 Votre email Gmail :</label>
+            <label class="block text-sm font-bold mb-2 text-gray-700">Votre email Gmail :</label>
             <input id="emailClient" type="email" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" placeholder="votreemail@gmail.com">
           </div>
           <div>
@@ -97,20 +96,20 @@ L'équipe Photobooth</textarea>
         <table>
           <thead>
             <tr>
-              <th>📅 Enlèvement</th>
-              <th>📅 Restitution</th>
-              <th>👤 Nom Prénom</th>
-              <th>📧 Email</th>
-              <th>📞 Téléphone</th>
-              <th>📍 Adresse</th>
-              <th>🎭 Pseudo</th>
-              <th>✉️ Contrat</th>
-              <th>📤 Envoyé</th>
-              <th>✅ Signé</th>
-              <th>💰 Acompte</th>
-              <th>🔒 Caution</th>
-              <th>🎨 Template</th>
-              <th>⚙️ Actions</th>
+              <th>Enlèvement</th>
+              <th>Restitution</th>
+              <th>Nom Prénom</th>
+              <th>Email</th>
+              <th>Téléphone</th>
+              <th>Adresse</th>
+              <th>Pseudo</th>
+              <th>Contrat</th>
+              <th>Envoyé</th>
+              <th>Signé</th>
+              <th>Acompte</th>
+              <th>Caution</th>
+              <th>Template</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody id="tbody">
@@ -142,8 +141,8 @@ L'équipe Photobooth</textarea>
           </select>
         </div>
         <div class="md:col-span-2 flex gap-4">
-          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg flex-1 transition">💾 Enregistrer</button>
-          <button type="button" onclick="closeModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-lg font-bold text-lg transition">❌ Annuler</button>
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg flex-1 transition">Enregistrer</button>
+          <button type="button" onclick="closeModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-lg font-bold text-lg transition">Annuler</button>
         </div>
       </form>
     </div>
@@ -162,7 +161,7 @@ L'équipe Photobooth</textarea>
     let currentClientId = null;
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Récupération des identifiants sauvegardés
+      // Récupération identifiants sauvegardés
       const rememberedId = localStorage.getItem('rememberedClientId');
       const rememberedPass = localStorage.getItem('rememberedPassword');
       if (rememberedId && rememberedPass) {
@@ -171,7 +170,7 @@ L'équipe Photobooth</textarea>
         document.getElementById('rememberMe').checked = true;
       }
 
-      // Afficher/masquer mot de passe
+      // Show/hide password
       document.getElementById('showPassword').addEventListener('change', () => {
         const p = document.getElementById('password');
         p.type = p.type === 'password' ? 'text' : 'password';
@@ -202,12 +201,12 @@ L'équipe Photobooth</textarea>
         load();
       };
 
-      // === CHARGEMENT DU TABLEAU ===
+      // === CHARGEMENT TABLEAU ===
       window.load = async function () {
         try {
           const res = await fetch(URL + '?clientId=' + currentClientId);
           const j = await res.json();
-          if (!j.success) throw new Error(j.message || 'Erreur serveur');
+          if (!j.success) throw new Error(j.message || 'Erreur');
           const data = j.data || [];
 
           const tbody = document.getElementById('tbody');
@@ -227,15 +226,15 @@ L'équipe Photobooth</textarea>
                   <td>${tel}</td>
                   <td style="white-space:normal;max-width:250px;">${r.adresse || ''}</td>
                   <td>${r.pseudo || ''}</td>
-                  <td><button onclick="generateAndSendContract('${r.id}')" class="bg-orange-600 hover:bg-orange-700 text-white px-3 py-1.5 rounded text-sm font-bold">📧 Contrat</button></td>
-                  <td><input type="checkbox" class="w-5 h-5" ${r.contratEnvoye === 'Oui' ? 'checked' : ''} onchange="maj('${r.id}','contratEnvoye',this.checked)"></td>
-                  <td><input type="checkbox" class="w-5 h-5" ${r.contratSigne === 'Oui' ? 'checked' : ''} onchange="maj('${r.id}','contratSigne',this.checked)"></td>
-                  <td><input type="checkbox" class="w-5 h-5" ${r.acompte === 'Oui' ? 'checked' : ''} onchange="maj('${r.id}','acompte',this.checked)"></td>
-                  <td><input type="checkbox" class="w-5 h-5" ${r.caution === 'Oui' ? 'checked' : ''} onchange="maj('${r.id}','caution',this.checked)"></td>
+                  <td><button onclick="generateAndSendContract(${r.id})" class="bg-orange-600 hover:bg-orange-700 text-white px-3 py-1.5 rounded text-sm font-bold">Contrat</button></td>
+                  <td><input type="checkbox" class="w-5 h-5" ${r.contratEnvoye === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'contratEnvoye',this.checked)"></td>
+                  <td><input type="checkbox" class="w-5 h-5" ${r.contratSigne === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'contratSigne',this.checked)"></td>
+                  <td><input type="checkbox" class="w-5 h-5" ${r.acompte === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'acompte',this.checked)"></td>
+                  <td><input type="checkbox" class="w-5 h-5" ${r.caution === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'caution',this.checked)"></td>
                   <td>${r.template || ''}</td>
                   <td>
                     <button onclick='editer(${JSON.stringify(r)})' class="text-2xl">✏️</button>
-                    <button onclick="supprimer('${r.id}')" class="text-2xl">🗑️</button>
+                    <button onclick="supprimer(${r.id})" class="text-2xl">🗑️</button>
                   </td>
                 </tr>`;
               }).join('');
@@ -244,26 +243,12 @@ L'équipe Photobooth</textarea>
         }
       };
 
-      // === MISE À JOUR CHECKBOX ===
-      window.maj = async (id, champ, val) => {
-        await fetch(URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            clientId: currentClientId,
-            action: 'update',
-            reservation: { id, [champ]: val ? 'Oui' : 'Non' }
-          })
-        });
-        load();
-      };
-
-      // === PDF CLIENT-SIDE PARFAIT (impression + Gmail) ===
+      // === PDF CLIENT-SIDE (PLUS JAMAIS D'ERREUR) ===
       window.generateAndSendContract = function (id) {
         fetch(URL + '?clientId=' + currentClientId)
           .then(r => r.json())
           .then(j => {
-            const r = j.data.find(x => x.id === id);
+            const r = j.data.find(x => x.id == id); // == et non === pour comparer string/number
             if (!r) return Swal.fire('Erreur', 'Réservation introuvable', 'error');
 
             const win = window.open('', '_blank');
@@ -312,10 +297,24 @@ L'équipe Photobooth</textarea>
               .replace('{NOM}', r.nom || '');
             const gmail = `https://mail.google.com/mail/?view=cm&to=${r.email}&su=${sujet}&body=${encodeURIComponent(corps)}`;
             setTimeout(() => window.open(gmail, '_blank'), 1000);
-          });
+          })
+          .catch(() => Swal.fire('Erreur', 'Impossible de récupérer les données', 'error'));
       };
 
-      // === TOUT LE RESTE (nouveau, editer, supprimer, form) ===
+      // === TOUT LE RESTE (maj, nouveau, editer, supprimer, form) ===
+      window.maj = async (id, champ, val) => {
+        await fetch(URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            clientId: currentClientId,
+            action: 'update',
+            reservation: { id, [champ]: val ? 'Oui' : 'Non' }
+          })
+        });
+        load();
+      };
+
       window.nouveau = function () {
         document.getElementById('titre').textContent = 'Nouvelle réservation';
         document.getElementById('form').reset();
@@ -354,7 +353,7 @@ L'équipe Photobooth</textarea>
         document.getElementById('modal').classList.add('hidden');
       };
 
-      // === FORMULAIRE D'AJOUT/MODIF ===
+      // === FORMULAIRE ===
       document.getElementById('form').onsubmit = async e => {
         e.preventDefault();
         const edit = document.getElementById('id').value;
