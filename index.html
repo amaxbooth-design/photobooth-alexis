@@ -18,6 +18,11 @@
     .paid:hover { background: #a7f3d0 !important; }
     .notpaid { background: #fee2e2; }
     .notpaid:hover { background: #fecaca !important; }
+    #contractPreview { font-family: Arial; font-size: 12pt; line-height: 1.6; padding: 40px; background: white; }
+    #contractPreview .box { border: 2px solid black; padding: 20px; margin: 30px 0; }
+    #contractPreview .logo { float: right; width: 120px; margin: 0 0 20px 20px; }
+    #contractPreview .checkbox { margin: 10px 0; }
+    #contractPreview .dotted { border-bottom: 1px dotted #000; display: inline-block; width: 200px; }
   </style>
 </head>
 <body>
@@ -38,13 +43,11 @@
         <label for="rememberMe" class="text-sm text-gray-700 cursor-pointer select-none">Se souvenir de moi</label>
       </div>
       <button onclick="login()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold text-xl transition">Se connecter</button>
-      <p class="mt-6 text-sm text-gray-500">Contactez votre fournisseur pour vos identifiants</p>
     </div>
   </div>
 
   <!-- APPLICATION -->
   <div id="app" class="hidden">
-    <!-- HEADER -->
     <div class="bg-blue-900 shadow-lg">
       <div class="px-4 py-6 max-w-7xl mx-auto">
         <div class="flex flex-wrap justify-between items-center gap-4">
@@ -59,33 +62,6 @@
             <button onclick="nouveau()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition">+ Nouvelle réservation</button>
             <button onclick="openContractEditor()" class="bg-purple-600 hover:bg-purple-800 text-white px-6 py-3 rounded-lg font-bold transition shadow-lg">Modifier mon contrat</button>
             <button onclick="location.reload()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition">Déconnexion</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CONFIG CLIENT -->
-    <div class="bg-yellow-50 border-l-4 border-yellow-500">
-      <div class="px-4 py-6 max-w-7xl mx-auto">
-        <h3 class="text-2xl font-bold mb-4 text-yellow-900">Configuration Client</h3>
-        <div class="grid md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-sm font-bold mb-2 text-gray-700">Votre email Gmail :</label>
-            <input id="emailClient" type="email" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" placeholder="votreemail@gmail.com">
-          </div>
-          <div>
-            <label class="block text-sm font-bold mb-2 text-gray-700">Objet du mail :</label>
-            <input id="sujet" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" value="Votre contrat Photobooth - À signer">
-          </div>
-          <div class="md:col-span-2">
-            <label class="block text-sm font-bold mb-2 text-gray-700">Corps du mail ({PRENOM} {NOM}) :</label>
-            <textarea id="corps" rows="6" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500">Bonjour {PRENOM} {NOM},
-Veuillez trouver ci-joint votre contrat de location Photobooth à signer.
-Merci de nous retourner le contrat signé accompagné de :
-- L’acompte de 35€
-- Une copie de votre pièce d’identité
-Cordialement,
-L'équipe Photobooth</textarea>
           </div>
         </div>
       </div>
@@ -121,7 +97,7 @@ L'équipe Photobooth</textarea>
     </div>
   </div>
 
-  <!-- MODAL RÉSERVATION -->
+  <!-- MODALE RÉSERVATION -->
   <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
     <div class="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-screen overflow-y-auto">
       <h2 class="text-3xl font-bold mb-6 text-blue-900" id="titre">Nouvelle réservation</h2>
@@ -155,7 +131,7 @@ L'équipe Photobooth</textarea>
       <div class="bg-blue-900 text-white p-6 rounded-t-2xl text-center">
         <h2 class="text-3xl font-bold">Modifier mon contrat Photobooth</h2>
       </div>
-      <div class="flex-1 overflow-auto p-10" id="contractPreview" contenteditable="true" style="font-family: Arial; font-size: 12pt; line-height: 1.6;">
+      <div class="flex-1 overflow-auto p-10" id="contractPreview" contenteditable="true">
         <!-- Contrat complet chargé ici -->
       </div>
       <div class="p-6 bg-gray-100 flex justify-center gap-6">
@@ -189,7 +165,7 @@ L'équipe Photobooth</textarea>
         const code = document.getElementById('clientCode').value.trim().toUpperCase();
         const pass = document.getElementById('password').value;
 
-        if (!code || !pass) return Swal.fire('Erreur', 'Identifiant et mot de passe requis', 'error');
+        if (!code || !pass) return Swal.fire('Erreur', 'Tous les champs sont obligatoires', 'error');
         const client = CLIENTS[code];
         if (!client || client.password !== pass) return Swal.fire('Erreur', 'Identifiants incorrects', 'error');
 
@@ -242,7 +218,7 @@ L'équipe Photobooth</textarea>
         }
       };
 
-      // === ÉDITEUR VISUEL DE CONTRAT ===
+      // === ÉDITEUR DE CONTRAT VISUEL ===
       window.openContractEditor = function () {
         const preview = document.getElementById('contractPreview');
         let html = localStorage.getItem(`contrat_${currentClientId}`);
@@ -254,42 +230,41 @@ L'équipe Photobooth</textarea>
   <meta charset="UTF-8">
   <style>
     body { font-family: Arial; margin: 40px; font-size: 12pt; line-height: 1.6; }
-    h1 { text-align: center; font-weight: bold; margin-bottom: 30px; }
-    .logo { float: right; width: 150px; margin: 0 0 20px 20px; }
-    .box { border: 2px solid black; padding: 20px; margin: 30px 0; page-break-inside: avoid; }
+    h1 { text-align: center; font-weight: bold; }
+    .logo { float: right; width: 120px; margin: 0 0 20px 20px; }
+    .box { border: 2px solid black; padding: 20px; margin: 30px 0; }
     .checkbox { margin: 10px 0; }
-    .signature { margin-top: 100px; text-align: center; }
-    .page-break { page-break-before: always; }
-    @media print { body { margin: 20mm; } }
+    .dotted { border-bottom: 1px dotted #000; display: inline-block; width: 200px; }
+    @media print { body { margin: 15mm; } }
   </style>
 </head>
 <body>
   <h1>CONTRAT DE LOCATION ET CONDITIONS GÉNÉRALES POUR LE Photobooth LITE</h1>
   <img src="https://i.imgur.com/2rE3n8k.png" alt="Photobooth" class="logo">
 
-  <p style="text-align:center;"><strong>Contrat n° 001 / Date :</strong> .................... / .................... / 202....</p>
+  <p style="text-align:center;"><strong>Contrat n° 001 / Date :</strong> <span class="dotted">....................</span> / <span class="dotted">....................</span> / 202....</p>
 
   <div class="box">
-    <strong>Le loueur :</strong><br>
+    <p><strong>Le loueur :</strong><br>
     Mr CHIMOT Alexis,<br>
     3 Allée Michelet, 34410 Sauvian<br>
-    06.68.17.24.63
+    06.68.17.24.63</p>
   </div>
 
   <div class="box">
-    <strong>Le locataire :</strong><br>
-    Nom : ........................................<br>
-    Prénom : ........................................<br>
-    Adresse : ........................................<br>
-    Ville : ........................................ Code postal : ................<br>
-    Mail : ........................................<br>
-    Numéro de téléphone : ........................................<br>
-    Numéro pièce d’identité : ................................................
+    <p><strong>Le locataire :</strong><br>
+    Nom : <span class="dotted">........................................</span><br>
+    Prénom : <span class="dotted">........................................</span><br>
+    Adresse : <span class="dotted">........................................</span><br>
+    Ville : <span class="dotted">........................................</span> Code postal : <span class="dotted">................</span><br>
+    Mail : <span class="dotted">........................................</span><br>
+    Numéro de téléphone : <span class="dotted">........................................</span><br>
+    Numéro pièce d’identité : <span class="dotted">............................................</span></p>
   </div>
 
   <div class="box">
-    <strong>La location :</strong><br>
-    Date : du .................... / .................... / 202.... à 17h00 au .................... / .................... / 202.... à 11h00<br>
+    <p><strong>La location :</strong><br>
+    Date : du <span class="dotted">....................</span> / <span class="dotted">....................</span> / 202.... à 17h00 au <span class="dotted">....................</span> / <span class="dotted">....................</span> / 202.... à 11h00<br>
     (enlèvement de dépôt à l’adresse du loueur)<br><br>
     <div class="checkbox">☐ Offre Week End 75 € ( du vendredi au lundi )</div>
     <div class="checkbox">☐ Offre Semaine 75 € ( deux jours )</div>
@@ -297,31 +272,11 @@ L'équipe Photobooth</textarea>
     <div class="checkbox">☐ Offre jour(s) supplémentaire(s) 22 €/jour → Nombre de jours : ........</div>
     <br>
     Total : ........ €<br>
-    Adresse de votre événement : ................................................
+    Adresse de votre événement : <span class="dotted">............................................</span></p>
   </div>
 
   <p style="text-align:center; margin-top:80px;">Page 1</p>
   <p style="text-align:right;">Paraphes : ________________</p>
-
-  <div class="page-break"></div>
-
-  <h2>ARTICLE 1 – NATURE ET DATE D’EFFET DU CONTRAT</h2>
-  <p>Le loueur met à disposition du locataire, un matériel complet de photographie présenté sous forme de photobooth.</p>
-  <p>Tout retard de restitution par le locataire du photobooth dans son intégralité sera facturé d’un montant TTC de 75€ par jour.</p>
-  <p>Mr CHIMOT ALEXIS (le loueur) ne peut être tenu responsable des éventuels retards de mise à disposition ou de livraison dus à toute raison indépendante de sa volonté. La location prend effet au moment où le matériel est mis à disposition du locataire à l’adresse indiquée par le loueur.</p>
-  <p>Lors de la remise du matériel, la charge des risques est transférée au locataire qui en assume la garde matérielle et juridique sous son entière responsabilité.</p>
-  <p>La location prend fin le jour où le matériel est restitué par le locataire à l’adresse indiquée par le loueur.</p>
-
-  <!-- Tu peux ajouter les 15 autres articles ici -->
-
-  <div class="signature">
-    <p>Fait à ...................., le ....................</p>
-    <br><br><br>
-    <p>Signature du loueur ____________________</p>
-    <br><br>
-    <p>Signature du locataire ____________________<br>
-    (précédée de la mention « bon pour accord »)</p>
-  </div>
 </body>
 </html>`;
         }
@@ -337,7 +292,7 @@ L'équipe Photobooth</textarea>
       };
 
       window.resetToDefaultContract = function () {
-        if (confirm('Réinitialiser le contrat à la version d\'origine ?')) {
+        if (confirm('Réinitialiser le contrat ?')) {
           localStorage.removeItem(`contrat_${currentClientId}`);
           openContractEditor();
         }
@@ -353,7 +308,7 @@ L'équipe Photobooth</textarea>
 
           let html = localStorage.getItem(`contrat_${currentClientId}`);
           if (!html) {
-            html = document.getElementById('contractPreview').innerHTML || "Contrat par défaut";
+            html = document.getElementById('contractPreview').innerHTML;
           }
 
           const today = new Date().toLocaleDateString('fr-FR');
@@ -371,13 +326,6 @@ L'équipe Photobooth</textarea>
           win.document.write(html);
           win.document.close();
           setTimeout(() => win.print(), 800);
-
-          const sujet = encodeURIComponent(document.getElementById('sujet').value || 'Votre contrat Photobooth');
-          let corps = document.getElementById('corps').value
-            .replace('{PRENOM}', r.prenom || '')
-            .replace('{NOM}', r.nom || '');
-          const gmail = `https://mail.google.com/mail/?view=cm&to=${r.email}&su=${sujet}&body=${encodeURIComponent(corps)}`;
-          setTimeout(() => window.open(gmail, '_blank'), 1500);
         } catch (err) {
           Swal.fire('Erreur', 'Impossible de générer le contrat', 'error');
         }
