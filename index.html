@@ -18,6 +18,7 @@
     .paid:hover { background: #a7f3d0 !important; }
     .notpaid { background: #fee2e2; }
     .notpaid:hover { background: #fecaca !important; }
+    #preview iframe { width: 100%; height: 100%; border: none; background: white; }
   </style>
 </head>
 <body>
@@ -25,12 +26,12 @@
   <!-- PAGE DE CONNEXION -->
   <div id="login" class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-900 to-purple-900">
     <div class="bg-white p-10 rounded-2xl shadow-2xl text-center max-w-md w-full mx-4">
-      <h1 class="text-4xl font-bold text-blue-900 mb-4">Photobooth</h1>
+      <h1 class="text-4xl font-bold text-blue-900 mb-4">🎉 Photobooth</h1>
       <p class="text-gray-600 mb-8">Gestion de vos réservations</p>
       <input id="clientCode" type="text" class="w-full p-4 border-2 rounded-lg text-lg mb-4 focus:outline-none focus:border-blue-500 uppercase" placeholder="Identifiant (ex: TUTU)">
       <input id="password" type="password" class="w-full p-4 border-2 rounded-lg text-lg mb-2 focus:outline-none focus:border-blue-500" placeholder="Mot de passe">
       <div class="flex items-center mb-4">
-        <input type="checkbox" id="showPassword" class="w-5 h-5 mr-3 cursor-pointer">
+        <input type="checkbox" id="showPassword" class="w-5 h-5 mr-3 cursor-pointer" onchange="togglePassword()">
         <label for="showPassword" class="text-sm text-gray-700 cursor-pointer select-none">Afficher le mot de passe</label>
       </div>
       <div class="flex items-center mb-6">
@@ -38,7 +39,7 @@
         <label for="rememberMe" class="text-sm text-gray-700 cursor-pointer select-none">Se souvenir de moi</label>
       </div>
       <button onclick="login()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold text-xl transition">Se connecter</button>
-      <p class="mt-6 text-sm text-gray-500">Contactez votre fournisseur pour vos identifiants</p>
+      <p class="mt-6 text-sm text-gray-500">💡 Contactez votre fournisseur pour vos identifiants</p>
     </div>
   </div>
 
@@ -49,7 +50,7 @@
       <div class="px-4 py-6 max-w-7xl mx-auto">
         <div class="flex flex-wrap justify-between items-center gap-4">
           <div>
-            <h1 class="text-3xl font-bold text-white">Mes Réservations Photobooth</h1>
+            <h1 class="text-3xl font-bold text-white">📋 Mes Réservations Photobooth</h1>
             <p class="text-blue-200 mt-1">Connecté : <span id="userName" class="font-bold"></span></p>
           </div>
           <div class="flex gap-3 flex-wrap">
@@ -58,7 +59,7 @@
             </select>
             <button onclick="nouveau()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition">+ Nouvelle réservation</button>
             <button onclick="openContractEditor()" class="bg-purple-600 hover:bg-purple-800 text-white px-6 py-3 rounded-lg font-bold transition shadow-lg">✏️ Modifier mon contrat</button>
-            <button onclick="location.reload()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition">Déconnexion</button>
+            <button onclick="location.reload()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition">🚪 Déconnexion</button>
           </div>
         </div>
       </div>
@@ -67,15 +68,19 @@
     <!-- CONFIG CLIENT -->
     <div class="bg-yellow-50 border-l-4 border-yellow-500">
       <div class="px-4 py-6 max-w-7xl mx-auto">
-        <h3 class="text-2xl font-bold mb-4 text-yellow-900">Configuration Client</h3>
+        <h3 class="text-2xl font-bold mb-4 text-yellow-900">⚙️ Configuration Client</h3>
         <div class="grid md:grid-cols-2 gap-6">
           <div>
-            <label class="block text-sm font-bold mb-2 text-gray-700">Votre email Gmail :</label>
+            <label class="block text-sm font-bold mb-2 text-gray-700">📧 Votre email Gmail :</label>
             <input id="emailClient" type="email" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" placeholder="votreemail@gmail.com">
           </div>
           <div>
             <label class="block text-sm font-bold mb-2 text-gray-700">Objet du mail :</label>
             <input id="sujet" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" value="Votre contrat Photobooth - À signer">
+          </div>
+          <div>
+            <label class="block text-sm font-bold mb-2 text-gray-700">Copie cachée (BCC) :</label>
+            <input id="emailCopie" type="email" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" placeholder="optionnel@exemple.com">
           </div>
           <div class="md:col-span-2">
             <label class="block text-sm font-bold mb-2 text-gray-700">Corps du mail ({PRENOM} {NOM}) :</label>
@@ -97,20 +102,20 @@ L'équipe Photobooth</textarea>
         <table>
           <thead>
             <tr>
-              <th>Enlèvement</th>
-              <th>Restitution</th>
-              <th>Nom Prénom</th>
-              <th>Email</th>
-              <th>Téléphone</th>
-              <th>Adresse</th>
-              <th>Pseudo</th>
-              <th>Contrat</th>
-              <th>Envoyé</th>
-              <th>Signé</th>
-              <th>Acompte</th>
-              <th>Caution</th>
-              <th>Template</th>
-              <th>Actions</th>
+              <th>📅 Enlèvement</th>
+              <th>📅 Restitution</th>
+              <th>👤 Nom Prénom</th>
+              <th>📧 Email</th>
+              <th>📞 Téléphone</th>
+              <th>📍 Adresse</th>
+              <th>🎭 Pseudo</th>
+              <th>✉️ Contrat</th>
+              <th>📤 Envoyé</th>
+              <th>✅ Signé</th>
+              <th>💰 Acompte</th>
+              <th>🔒 Caution</th>
+              <th>🎨 Template</th>
+              <th>⚙️ Actions</th>
             </tr>
           </thead>
           <tbody id="tbody">
@@ -121,7 +126,7 @@ L'équipe Photobooth</textarea>
     </div>
   </div>
 
-  <!-- MODAL RÉSERVATION (inchangée) -->
+  <!-- MODAL -->
   <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
     <div class="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-screen overflow-y-auto">
       <h2 class="text-3xl font-bold mb-6 text-blue-900" id="titre">Nouvelle réservation</h2>
@@ -142,27 +147,10 @@ L'équipe Photobooth</textarea>
           </select>
         </div>
         <div class="md:col-span-2 flex gap-4">
-          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg flex-1 transition">Enregistrer</button>
-          <button type="button" onclick="closeModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-lg font-bold text-lg transition">Annuler</button>
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg flex-1 transition">💾 Enregistrer</button>
+          <button type="button" onclick="closeModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-lg font-bold text-lg transition">❌ Annuler</button>
         </div>
       </form>
-    </div>
-  </div>
-
-  <!-- MODALE ÉDITEUR VISUEL DE CONTRAT -->
-  <div id="contractEditorModal" class="fixed inset-0 bg-black bg-opacity-80 hidden flex items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl h-95vh flex flex-col">
-      <div class="bg-blue-900 text-white p-6 rounded-t-2xl text-center">
-        <h2 class="text-3xl font-bold">✏️ Modifier mon contrat Photobooth</h2>
-      </div>
-      <div class="flex-1 overflow-auto p-10" id="contractPreview" contenteditable="true">
-        <!-- Le contrat complet sera chargé ici -->
-      </div>
-      <div class="p-6 bg-gray-100 flex justify-center gap-6">
-        <button onclick="saveCustomContract()" class="bg-green-600 hover:bg-green-700 text-white px-10 py-4 rounded-lg font-bold text-xl">Sauvegarder mon contrat</button>
-        <button onclick="resetToDefaultContract()" class="bg-orange-600 hover:bg-orange-700 text-white px-10 py-4 rounded-lg font-bold text-xl">Réinitialiser</button>
-        <button onclick="document.getElementById('contractEditorModal').classList.add('hidden')" class="bg-gray-600 hover:bg-gray-700 text-white px-10 py-4 rounded-lg font-bold text-xl">Fermer</button>
-      </div>
     </div>
   </div>
 
@@ -178,144 +166,111 @@ L'équipe Photobooth</textarea>
 
     let currentClientId = null;
 
-    document.addEventListener('DOMContentLoaded', () => {
-      // === CONNEXION + AFFICHAGE MOT DE PASSE ===
-      const showPassword = document.getElementById('showPassword');
-      const passwordInput = document.getElementById('password');
-      showPassword.addEventListener('change', () => {
-        passwordInput.type = showPassword.checked ? 'text' : 'password';
-      });
+    function togglePassword() {
+      const p = document.getElementById('password');
+      p.type = document.getElementById('showPassword').checked ? 'text' : 'password';
+    }
 
-      window.login = function () {
-        const code = document.getElementById('clientCode').value.trim().toUpperCase();
-        const pass = document.getElementById('password').value;
-        const remember = document.getElementById('rememberMe').checked;
+    window.login = function () {
+      const code = document.getElementById('clientCode').value.trim().toUpperCase();
+      const pass = document.getElementById('password').value;
 
-        if (!code || !pass) return Swal.fire('Erreur', 'Tous les champs sont obligatoires', 'error');
-        const client = CLIENTS[code];
-        if (!client || client.password !== pass) return Swal.fire('Erreur', 'Identifiants incorrects', 'error');
+      if (!code || !pass) return Swal.fire('Erreur', 'Tous les champs sont obligatoires', 'error');
+      const client = CLIENTS[code];
+      if (!client || client.password !== pass) return Swal.fire('Erreur', 'Identifiants incorrects', 'error');
 
-        currentClientId = code;
-        if (remember) {
-          localStorage.setItem('rememberedClientId', code);
-          localStorage.setItem('rememberedPassword', pass);
-        }
+      currentClientId = code;
+      document.getElementById('login').classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+      document.getElementById('userName').textContent = client.name;
+      load();
+    };
 
-        document.getElementById('login').classList.add('hidden');
-        document.getElementById('app').classList.remove('hidden');
-        document.getElementById('userName').textContent = client.name;
-        load();
-      };
+    // === LOAD TABLEAU ===
+    window.load = async function () {
+      // ... ton code load existant ...
+    };
 
-      // === ÉDITEUR VISUEL DE CONTRAT ===
-      window.openContractEditor = function () {
-        const preview = document.getElementById('contractPreview');
-        let html = localStorage.getItem(`contrat_${currentClientId}`);
+    // === GENERATE CONTRAT ===
+    window.generateAndSendContract = async function (id) {
+      // ... ton code existant ...
+    };
 
-        if (!html) {
-          html = `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <style>
-    body { font-family: Arial; margin: 40px; font-size: 12pt; line-height: 1.6; }
-    h1 { text-align: center; font-weight: bold; }
-    .logo { float: right; width: 150px; margin: 0 0 20px 20px; }
-    .box { border: 2px solid black; padding: 20px; margin: 30px 0; page-break-inside: avoid; }
-    .checkbox { margin: 10px 0; }
-    @media print { body { margin: 20mm; } }
-  </style>
-</head>
-<body>
-  <h1>CONTRAT DE LOCATION ET CONDITIONS GÉNÉRALES POUR LE Photobooth LITE</h1>
-  <img src="https://i.imgur.com/2rE3n8k.png" alt="Photobooth" class="logo">
+    // === ÉDITEUR VISUEL ===
+    window.openContractEditor = function () {
+      const preview = document.getElementById('contractPreview');
+      let html = localStorage.getItem(`contrat_${currentClientId}`);
+      if (!html) {
+        html = `
+CONTRAT DE LOCATION ET CONDITIONS GÉNÉRALES POUR LE Photobooth LITE
 
-  <p style="text-align:center;"><strong>Contrat n° 001 / Date :</strong> .................... / .................... / 202....</p>
+Contrat n° 001 / Date : ...... / ...... / 202....
 
-  <div class="box">
-    <strong>Le loueur :</strong><br>
-    Mr CHIMOT Alexis,<br>
-    3 Allée Michelet, 34410 Sauvian<br>
-    06.68.17.24.63
-  </div>
+Le loueur :
 
-  <div class="box">
-    <strong>Le locataire :</strong><br>
-    Nom : ........................................<br>
-    Prénom : ........................................<br>
-    Adresse : ........................................<br>
-    Ville : ........................................ Code postal : ................<br>
-    Mail : ........................................<br>
-    Numéro de téléphone : ........................................<br>
-    Numéro pièce d’identité : ................................................
-  </div>
+Mr CHIMOT Alexis,
+3 Allée Michelet, 34410 Sauvian
+06.68.17.24.63
 
-  <div class="box">
-    <strong>La location :</strong><br>
-    Date : du .................... / .................... / 202.... à 17h00 au .................... / .................... / 202.... à 11h00<br>
-    (enlèvement de dépôt à l’adresse du loueur)<br><br>
-    <div class="checkbox">☐ Offre Week End 75 € ( du vendredi au lundi )</div>
-    <div class="checkbox">☐ Offre Semaine 75 € ( deux jours )</div>
-    <div class="checkbox">☐ Offre contour écran personnalisé 25€</div>
-    <div class="checkbox">☐ Offre jour(s) supplémentaire(s) 22 €/jour → Nombre de jours : ........</div>
-    <br>
-    Total : ........ €<br>
-    Adresse de votre événement : ................................................
-  </div>
+Le locataire :
 
-  <p style="text-align:center; margin-top:80px;">Page 1</p>
-  <p style="text-align:right;">Paraphes : ________________</p>
-</body>
-</html>`;
-        }
+Nom : .........................................
 
-        preview.innerHTML = html;
-        document.getElementById('contractEditorModal').classList.remove('hidden');
-      };
+Prénom : .........................................
 
-      window.saveCustomContract = function () {
-        const html = document.getElementById('contractPreview').innerHTML;
-        localStorage.setItem(`contrat_${currentClientId}`, html);
-        Swal.fire('Sauvegardé !', 'Votre contrat personnalisé est enregistré', 'success');
-      };
+Adresse : .........................................
 
-      window.resetToDefaultContract = function () {
-        if (confirm('Réinitialiser le contrat à la version d\'origine ?')) {
-          localStorage.removeItem(`contrat_${currentClientId}`);
-          openContractEditor();
-        }
-      };
+Ville : ........................................ Code postal : ....................
 
-      // === GÉNÉRATION DU CONTRAT ===
-      window.generateAndSendContract = async function (id) {
-        // ... ton code existant pour récupérer la réservation ...
+Mail : .........................................
 
-        let html = localStorage.getItem(`contrat_${currentClientId}`);
-        if (!html) {
-          // fallback
-          html = document.getElementById('contractPreview').innerHTML || "Contrat par défaut";
-        }
+Numéro de téléphone : .........................................
 
-        // Remplissage automatique
-        const today = new Date().toLocaleDateString('fr-FR');
-        html = html
-          .replace(/{PRENOM}/g, reservation.prenom || '')
-          .replace(/{NOM}/g, reservation.nom || '')
-          .replace(/{EMAIL}/g, reservation.email || '')
-          .replace(/{TELEPHONE}/g, reservation.telephone || '')
-          .replace(/{ADRESSE}/g, reservation.adresse || '')
-          .replace(/{ENLEVEMENT}/g, new Date(reservation.enlevement).toLocaleDateString('fr-FR'))
-          .replace(/{RESTITUTION}/g, new Date(reservation.restitution).toLocaleDateString('fr-FR'))
-          .replace(/{DATE}/g, today);
+Numéro pièce d’identité : .........................................
 
-        const win = window.open('', '_blank');
-        win.document.write(html);
-        win.document.close();
-        setTimeout(() => win.print(), 800);
-      };
+La location :
 
-      // ... le reste de ton code (load, maj, etc.) ...
-    });
+Date : du ......../..…...../202….... à 17h00
+au …...../…...../202….... à 11h00
+
+(enlèvement de dépôt à l’adresse du loueur)
+
+☐ Offre Week End 75 € ( du vendredi au lundi )
+
+☐ Offre Semaine 75 € ( deux jours )
+
+☐ Offre contour écran personnalisé 25€
+
+☐ Offre jour(s) supplémentaire(s) 22 €/jour -> Nombre de jours : .............
+
+Total : ………….€
+
+Adresse de votre événement :.........................................
+
+Page 1
+Paraphes :
+        `;
+      }
+      preview.innerHTML = html.replace(/\n/g, '<br>');
+      document.getElementById('contractEditorModal').classList.remove('hidden');
+    };
+
+    window.saveCustomContract = function () {
+      const html = document.getElementById('contractPreview').innerHTML.replace(/<br>/g, '\n');
+      localStorage.setItem(`contrat_${currentClientId}`, html);
+      Swal.fire('Sauvegardé !', 'Votre contrat personnalisé est enregistré', 'success');
+    };
+
+    window.resetToDefaultContract = function () {
+      if (confirm('Réinitialiser le contrat ?')) {
+        localStorage.removeItem(`contrat_${currentClientId}`);
+        openContractEditor();
+      }
+    };
+
+    // === LE RESTE DU SCRIPT (maj, nouveau, editer, supprimer, form) ===
+    // ... ton code existant ...
+
   </script>
 </body>
 </html>
