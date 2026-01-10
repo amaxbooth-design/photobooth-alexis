@@ -182,23 +182,31 @@ L'équipe Photobooth</textarea>
 
     // 🔥 FONCTION POUR CHARGER LES DONNÉES DEPUIS GOOGLE SHEETS
     async function loadDataFromSheets() {
-      try {
-        const response = await fetch(`${API_ENDPOINT}?clientId=${currentClientId}`);
-        const result = await response.json();
-        
-        if (result.success) {
-          dataStore[currentClientId] = result.data;
-          return result.data;
-        } else {
-          console.error('Erreur chargement:', result.message);
-          return [];
-        }
-      } catch (error) {
-        console.error('Erreur réseau:', error);
-        Swal.fire('Erreur', 'Impossible de charger les données', 'error');
-        return [];
-      }
+  try {
+    const response = await fetch(API_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'get',
+        clientId: currentClientId
+      })
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      dataStore[currentClientId] = result.data;
+      return result.data;
+    } else {
+      console.error('Erreur chargement:', result.message);
+      return [];
     }
+  } catch (error) {
+    console.error('Erreur réseau:', error);
+    Swal.fire('Erreur', 'Impossible de charger les données', 'error');
+    return [];
+  }
+}
 
     // 🔥 FONCTION POUR SAUVEGARDER UNE RÉSERVATION
     async function saveReservation(reservation, isUpdate = false) {
