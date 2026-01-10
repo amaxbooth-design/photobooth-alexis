@@ -181,30 +181,29 @@ L'équipe Photobooth</textarea>
     };
 
     // 🔥 FONCTION POUR CHARGER LES DONNÉES DEPUIS GOOGLE SHEETS
-    async function loadDataFromSheets() {
+    async function saveReservation(reservation, isUpdate = false) {
   try {
     const response = await fetch(API_ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      mode: 'no-cors',
       body: JSON.stringify({
-        action: 'get',
-        clientId: currentClientId
+        clientId: currentClientId,
+        action: isUpdate ? 'update' : 'add',
+        reservation: reservation
       })
     });
     
-    const result = await response.json();
+    // Attendre 2 secondes que Google Sheets se mette à jour
+    await new Promise(resolve => setTimeout(resolve, 2000));
     
-    if (result.success) {
-      dataStore[currentClientId] = result.data;
-      return result.data;
-    } else {
-      console.error('Erreur chargement:', result.message);
-      return [];
-    }
+    // Recharger les données
+    await loadDataFromSheets();
+    
+    return true;
   } catch (error) {
-    console.error('Erreur réseau:', error);
-    Swal.fire('Erreur', 'Impossible de charger les données', 'error');
-    return [];
+    console.error('Erreur sauvegarde:', error);
+    Swal.fire('Erreur', 'Impossible de sauvegarder', 'error');
+    return false;
   }
 }
 
@@ -237,24 +236,24 @@ L'équipe Photobooth</textarea>
 
     // 🔥 FONCTION POUR SUPPRIMER UNE RÉSERVATION
     async function deleteReservation(id) {
-      try {
-        const response = await fetch(API_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify({
-            clientId: currentClientId,
-            action: 'delete',
-            id: id
-          })
-        });
-        
-        const result = await response.json();
-        return result.success;
-      } catch (error) {
-        console.error('Erreur suppression:', error);
-        return false;
-      }
-    }
+  try {
+    await fetch(API_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: JSON.stringify({
+        clientId: currentClientId,
+        action: 'delete',
+        id: id
+      })
+    });
+    
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    return true;
+  } catch (error) {
+    console.error('Erreur suppression:', error);
+    return false;
+  }
+}
 
     // === FONCTION POUR OBTENIR LE CONTRAT COMPLET PAR DÉFAUT ===
     function getDefaultContract() {
