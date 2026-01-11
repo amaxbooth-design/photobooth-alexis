@@ -87,13 +87,13 @@
     <h2 class="text-3xl font-bold mb-6 text-blue-900" id="titre">Nouvelle réservation</h2>
     <form id="form" class="grid md:grid-cols-2 gap-6">
       <input type="hidden" id="id">
-      <div><label class="block text-sm font-bold mb-2 text-gray-700">Date d'enlèvement</label><input type="date" id="enlevement" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
-      <div><label class="block text-sm font-bold mb-2 text-gray-700">Date de restitution</label><input type="date" id="restitution" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
-      <div><label class="block text-sm font-bold mb-2 text-gray-700">Nom</label><input type="text" id="nom" placeholder="Nom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
-      <div><label class="block text-sm font-bold mb-2 text-gray-700">Prénom</label><input type="text" id="prenom" placeholder="Prénom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
-      <div><label class="block text-sm font-bold mb-2 text-gray-700">Email</label><input type="email" id="email" placeholder="email@example.com" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
-      <div><label class="block text-sm font-bold mb-2 text-gray-700">Téléphone</label><input type="tel" id="telephone" placeholder="0612345678" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
-      <div class="md:col-span-2"><label class="block text-sm font-bold mb-2 text-gray-700">Adresse</label><textarea id="adresse" rows="2" placeholder="Adresse complète" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></textarea></div>
+      <div><label class="block text-sm font-bold mb-2 text-gray-700">Date d'enlèvement</label><input type="date" id="enlevement" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></div>
+      <div><label class="block text-sm font-bold mb-2 text-gray-700">Date de restitution</label><input type="date" id="restitution" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></div>
+      <div><label class="block text-sm font-bold mb-2 text-gray-700">Nom</label><input type="text" id="nom" placeholder="Nom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></div>
+      <div><label class="block text-sm font-bold mb-2 text-gray-700">Prénom</label><input type="text" id="prenom" placeholder="Prénom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></div>
+      <div><label class="block text-sm font-bold mb-2 text-gray-700">Email</label><input type="email" id="email" placeholder="email@example.com" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></div>
+      <div><label class="block text-sm font-bold mb-2 text-gray-700">Téléphone</label><input type="tel" id="telephone" placeholder="0612345678" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></div>
+      <div class="md:col-span-2"><label class="block text-sm font-bold mb-2 text-gray-700">Adresse</label><textarea id="adresse" rows="2" placeholder="Adresse complète" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></textarea></div>
       <div><label class="block text-sm font-bold mb-2 text-gray-700">Pseudo</label><input type="text" id="pseudo" placeholder="Pseudo" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
       <div><label class="block text-sm font-bold mb-2 text-gray-700">Template</label><select id="template" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500 cursor-pointer"><option value="">Non</option><option value="Oui">Oui</option></select></div>
       <div class="md:col-span-2 flex gap-4">
@@ -164,9 +164,9 @@
         return `<tr class="${ok ? 'paid' : 'notpaid'}">
           <td>${dateEnlevement}</td><td>${dateRestitution}</td><td><strong>${nomComplet}</strong></td><td>${r.email || ''}</td>
           <td class="font-mono">${telephone}</td><td style="white-space:normal; max-width:250px;">${r.adresse || ''}</td><td>${r.pseudo || ''}</td>
-          <td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer checkbox-signe" ${r.contratSigne === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'contratSigne',this.checked)" data-row-id="${r.id}"></td>
-          <td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer checkbox-acompte" ${r.acompte === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'acompte',this.checked)" data-row-id="${r.id}"></td>
-          <td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer checkbox-caution" ${r.caution === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'caution',this.checked)" data-row-id="${r.id}"></td>
+          <td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer" ${r.contratSigne === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'contratSigne',this.checked)"></td>
+          <td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer" ${r.acompte === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'acompte',this.checked)"></td>
+          <td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer" ${r.caution === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'caution',this.checked)"></td>
           <td>${r.template || ''}</td>
           <td class="text-center whitespace-nowrap">
             <button onclick='editer(${JSON.stringify(r).replace(/'/g, "\\'")})' class="text-2xl hover:scale-110 transition mr-2" title="Modifier">✏️</button>
@@ -175,28 +175,16 @@
       }).join('');
     } catch (err) {
       console.error('Erreur chargement:', err);
-      document.getElementById('tbody').innerHTML = '<tr><td colspan="12" class="text-center py-8 text-red-500">❌ Erreur de chargement des données</td></tr>';
+      document.getElementById('tbody').innerHTML = '<tr><td colspan="12" class="text-center py-8 text-red-500">❌ Erreur de chargement</td></tr>';
     }
   }
 
   async function maj(id, champ, val) {
-    const checkbox = event.target;
-    const row = checkbox.closest('tr');
-    checkbox.disabled = true;
     try {
       await fetch(URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ clientId: CLIENT_ID, action: 'update', reservation: { id, [champ]: val ? 'Oui' : 'Non' } }), mode: 'no-cors' });
-      const checkboxSigne = row.querySelector('.checkbox-signe');
-      const checkboxAcompte = row.querySelector('.checkbox-acompte');
-      if (checkboxSigne && checkboxAcompte && checkboxSigne.checked && checkboxAcompte.checked) {
-        row.classList.remove('notpaid'); row.classList.add('paid');
-      } else {
-        row.classList.remove('paid'); row.classList.add('notpaid');
-      }
-      checkbox.disabled = false;
-      setTimeout(() => load(), 3000);
+      setTimeout(() => load(), 2000);
     } catch (err) {
-      console.error('Erreur mise à jour:', err);
-      checkbox.checked = !val; checkbox.disabled = false;
+      console.error('Erreur:', err);
       Swal.fire('Erreur', 'Impossible de mettre à jour', 'error');
     }
   }
@@ -224,14 +212,12 @@
   }
 
   async function supprimer(id) {
-    const conf = await Swal.fire({ title: 'Supprimer cette réservation ?', text: 'Cette action est irréversible', icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc2626', confirmButtonText: 'Oui, supprimer', cancelButtonText: 'Annuler' });
+    const conf = await Swal.fire({ title: 'Supprimer ?', text: 'Action irréversible', icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc2626', confirmButtonText: 'Oui', cancelButtonText: 'Non' });
     if (conf.isConfirmed) {
       try {
         await fetch(URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ clientId: CLIENT_ID, action: 'delete', id: id }), mode: 'no-cors' });
-        setTimeout(() => load(), 1000);
-        Swal.fire('Supprimé !', 'La réservation a été supprimée', 'success');
+        setTimeout(() => { load(); Swal.fire('Supprimé !', '', 'success'); }, 1000);
       } catch (err) {
-        console.error('Erreur suppression:', err);
         Swal.fire('Erreur', 'Impossible de supprimer', 'error');
       }
     }
@@ -242,18 +228,30 @@
   document.getElementById('form').onsubmit = async function(e) {
     e.preventDefault();
     const edit = document.getElementById('id').value;
-    const resa = { id: edit || Date.now().toString(), enlevement: document.getElementById('enlevement').value, restitution: document.getElementById('restitution').value, nom: document.getElementById('nom').value, prenom: document.getElementById('prenom').value, email: document.getElementById('email').value, telephone: document.getElementById('telephone').value, adresse: document.getElementById('adresse').value, pseudo: document.getElementById('pseudo').value, template: document.getElementById('template').value, contratSigne: 'Non', acompte: 'Non', caution: 'Non' };
+    const resa = { 
+      id: edit || Date.now().toString(), 
+      enlevement: document.getElementById('enlevement').value, 
+      restitution: document.getElementById('restitution').value, 
+      nom: document.getElementById('nom').value, 
+      prenom: document.getElementById('prenom').value, 
+      email: document.getElementById('email').value, 
+      telephone: document.getElementById('telephone').value, 
+      adresse: document.getElementById('adresse').value, 
+      pseudo: document.getElementById('pseudo').value, 
+      template: document.getElementById('template').value, 
+      contratSigne: 'Non', 
+      acompte: 'Non', 
+      caution: 'Non' 
+    };
     Swal.fire({ title: 'Enregistrement...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
     try {
-      const payload = { clientId: CLIENT_ID, action: edit ? 'update' : 'add', reservation: resa };
-      await fetch(URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), mode: 'no-cors' });
+      await fetch(URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ clientId: CLIENT_ID, action: edit ? 'update' : 'add', reservation: resa }), mode: 'no-cors' });
       await new Promise(resolve => setTimeout(resolve, 3000));
       closeModal();
       await load();
-      Swal.fire('Succès !', edit ? 'Réservation modifiée' : 'Réservation ajoutée', 'success');
+      Swal.fire('Succès !', 'Réservation enregistrée et ajoutée à Google Agenda !', 'success');
     } catch (err) {
-      console.error('Erreur enregistrement:', err);
-      Swal.fire('Erreur', 'Problème de connexion: ' + err.message, 'error');
+      Swal.fire('Erreur', 'Problème de connexion', 'error');
     }
   };
 </script>
