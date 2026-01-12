@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestionnaire Locations</title>
+  <title>Photobooth - Alexis</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
@@ -24,9 +24,9 @@
 
 <div id="login" class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-900 to-purple-900">
   <div class="bg-white p-10 rounded-2xl shadow-2xl text-center max-w-md w-full mx-4">
-    <h1 class="text-4xl font-bold text-blue-900 mb-8">🏠 Locations</h1>
-    <p class="text-gray-600 mb-2">Bienvenue</p>
-    <p class="text-sm text-gray-500 mb-8">Gestion de vos locations</p>
+    <h1 class="text-4xl font-bold text-blue-900 mb-8">🎉 Photobooth</h1>
+    <p class="text-gray-600 mb-2">Bienvenue Alexis</p>
+    <p class="text-sm text-gray-500 mb-8">Gestion de vos réservations</p>
     <input id="password" type="password" class="w-full p-4 border-2 rounded-lg text-xl mb-2 focus:outline-none focus:border-blue-500" placeholder="Mot de passe">
     <div class="flex items-center mb-4">
       <input type="checkbox" id="showPassword" class="w-5 h-5 mr-3 cursor-pointer" onchange="togglePassword()">
@@ -41,14 +41,14 @@
     <div class="px-4 py-6 max-w-7xl mx-auto">
       <div class="flex flex-wrap justify-between items-center gap-4">
         <div>
-          <h1 class="text-3xl font-bold text-white">📋 Mes Réservations Locations</h1>
+          <h1 class="text-3xl font-bold text-white">📋 Mes Réservations Photobooth</h1>
           <p class="text-blue-200 mt-1">Gestion complète de mes locations</p>
         </div>
         <div class="flex gap-3 flex-wrap">
           <select id="filtre" onchange="load()" class="px-4 py-2 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500 cursor-pointer">
             <option value="">Tous les mois</option>
           </select>
-          <button onclick="nouveau()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition">+ Nouvelle location</button>
+          <button onclick="nouveau()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition">+ Nouvelle réservation</button>
           <button onclick="location.reload()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition">🚪 Déconnexion</button>
         </div>
       </div>
@@ -67,7 +67,6 @@
             <th>📞 Téléphone</th>
             <th>📍 Adresse</th>
             <th>🎭 Pseudo</th>
-            <th>📄 Envoyé</th>
             <th>✅ Signé</th>
             <th>💰 Acompte</th>
             <th>🔒 Caution</th>
@@ -76,7 +75,7 @@
           </tr>
         </thead>
         <tbody id="tbody">
-          <tr><td colspan="13" class="text-center py-8 text-gray-500">Chargement...</td></tr>
+          <tr><td colspan="12" class="text-center py-8 text-gray-500">Chargement...</td></tr>
         </tbody>
       </table>
     </div>
@@ -85,28 +84,28 @@
 
 <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-screen overflow-y-auto">
-    <h2 class="text-3xl font-bold mb-6 text-blue-900" id="titre">Nouvelle location</h2>
-    <div id="form" class="grid md:grid-cols-2 gap-6">
+    <h2 class="text-3xl font-bold mb-6 text-blue-900" id="titre">Nouvelle réservation</h2>
+    <form id="form" class="grid md:grid-cols-2 gap-6">
       <input type="hidden" id="id">
-      <div><label class="block text-sm font-bold mb-2 text-gray-700">Date d'enlèvement</label><input type="date" id="enlevement" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></div>
-      <div><label class="block text-sm font-bold mb-2 text-gray-700">Date de restitution</label><input type="date" id="restitution" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></div>
-      <div><label class="block text-sm font-bold mb-2 text-gray-700">Nom</label><input type="text" id="nom" placeholder="Nom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></div>
-      <div><label class="block text-sm font-bold mb-2 text-gray-700">Prénom</label><input type="text" id="prenom" placeholder="Prénom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></div>
-      <div><label class="block text-sm font-bold mb-2 text-gray-700">Email</label><input type="email" id="email" placeholder="email@example.com" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></div>
-      <div><label class="block text-sm font-bold mb-2 text-gray-700">Téléphone</label><input type="tel" id="telephone" placeholder="0612345678" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></div>
-      <div class="md:col-span-2"><label class="block text-sm font-bold mb-2 text-gray-700">Adresse</label><textarea id="adresse" rows="2" placeholder="Adresse complète" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" required></textarea></div>
+      <div><label class="block text-sm font-bold mb-2 text-gray-700">Date d'enlèvement</label><input type="date" id="enlevement" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
+      <div><label class="block text-sm font-bold mb-2 text-gray-700">Date de restitution</label><input type="date" id="restitution" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
+      <div><label class="block text-sm font-bold mb-2 text-gray-700">Nom</label><input type="text" id="nom" placeholder="Nom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
+      <div><label class="block text-sm font-bold mb-2 text-gray-700">Prénom</label><input type="text" id="prenom" placeholder="Prénom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
+      <div><label class="block text-sm font-bold mb-2 text-gray-700">Email</label><input type="email" id="email" placeholder="email@example.com" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
+      <div><label class="block text-sm font-bold mb-2 text-gray-700">Téléphone</label><input type="tel" id="telephone" placeholder="0612345678" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
+      <div class="md:col-span-2"><label class="block text-sm font-bold mb-2 text-gray-700">Adresse</label><textarea id="adresse" rows="2" placeholder="Adresse complète" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></textarea></div>
       <div><label class="block text-sm font-bold mb-2 text-gray-700">Pseudo</label><input type="text" id="pseudo" placeholder="Pseudo" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500"></div>
       <div><label class="block text-sm font-bold mb-2 text-gray-700">Template</label><select id="template" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500 cursor-pointer"><option value="">Non</option><option value="Oui">Oui</option></select></div>
       <div class="md:col-span-2 flex gap-4">
-        <button onclick="save()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg flex-1 transition">💾 Enregistrer</button>
-        <button onclick="closeModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-lg font-bold text-lg transition">❌ Annuler</button>
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg flex-1 transition">💾 Enregistrer</button>
+        <button type="button" onclick="closeModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-lg font-bold text-lg transition">❌ Annuler</button>
       </div>
-    </div>
+    </form>
   </div>
 </div>
 
 <script>
-  // 🔧 CONFIGURATION - MODIFIEZ ICI
+  // 🔧 CONFIGURATION ALEXIS
   const URL = "https://script.google.com/macros/s/AKfycbxCjTZax00MtTv3PJ6Vwc2W1s8E6wno9AdCtIk2Eung6H5ycyTHXL9agoFIWsJ-PQvU/exec";
   const PASSWORD = "amax";
   const CLIENT_ID = "Alexis";
@@ -151,16 +150,13 @@
     try {
       const r = await fetch(URL + '?clientId=' + CLIENT_ID);
       const j = await r.json();
-      console.log('Données reçues:', j);
+      console.log('📥 Données reçues:', j);
       const data = j.data || [];
       const filtre = document.getElementById('filtre').value;
       const mois = [...new Set(data.map(x => x.enlevement?.slice(0, 7)))].filter(Boolean).sort().reverse();
       document.getElementById('filtre').innerHTML = '<option value="">Tous les mois</option>' + mois.map(m => `<option value="${m}" ${filtre === m ? 'selected' : ''}>${new Date(m + '-01').toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}</option>`).join('');
       const tbody = document.getElementById('tbody');
-      if (data.length === 0) { 
-        tbody.innerHTML = '<tr><td colspan="13" class="text-center py-8 text-gray-500">Aucune location trouvée</td></tr>'; 
-        return; 
-      }
+      if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="12" class="text-center py-8 text-gray-500">Aucune réservation trouvée</td></tr>'; return; }
       tbody.innerHTML = data.filter(x => !filtre || x.enlevement?.startsWith(filtre)).map(r => {
         const ok = r.contratSigne === 'Oui' && r.acompte === 'Oui';
         const dateEnlevement = r.enlevement ? new Date(r.enlevement).toLocaleDateString('fr-FR') : '-';
@@ -168,14 +164,8 @@
         const telephone = tel(r.telephone || '');
         const nomComplet = `${r.nom || ''} ${r.prenom || ''}`.trim();
         return `<tr class="${ok ? 'paid' : 'notpaid'}">
-          <td>${dateEnlevement}</td>
-          <td>${dateRestitution}</td>
-          <td><strong>${nomComplet}</strong></td>
-          <td>${r.email || ''}</td>
-          <td class="font-mono">${telephone}</td>
-          <td style="white-space:normal; max-width:250px;">${r.adresse || ''}</td>
-          <td>${r.pseudo || ''}</td>
-          <td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer" ${r.contratEnvoye === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'contratEnvoye',this.checked)"></td>
+          <td>${dateEnlevement}</td><td>${dateRestitution}</td><td><strong>${nomComplet}</strong></td><td>${r.email || ''}</td>
+          <td class="font-mono">${telephone}</td><td style="white-space:normal; max-width:250px;">${r.adresse || ''}</td><td>${r.pseudo || ''}</td>
           <td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer" ${r.contratSigne === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'contratSigne',this.checked)"></td>
           <td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer" ${r.acompte === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'acompte',this.checked)"></td>
           <td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer" ${r.caution === 'Oui' ? 'checked' : ''} onchange="maj(${r.id},'caution',this.checked)"></td>
@@ -183,52 +173,34 @@
           <td class="text-center whitespace-nowrap">
             <button onclick='editer(${JSON.stringify(r).replace(/'/g, "\\'"')})' class="text-2xl hover:scale-110 transition mr-2" title="Modifier">✏️</button>
             <button onclick="supprimer(${r.id})" class="text-2xl hover:scale-110 transition" title="Supprimer">🗑️</button>
-          </td>
-        </tr>`;
+          </td></tr>`;
       }).join('');
     } catch (err) {
-      console.error('Erreur chargement:', err);
-      document.getElementById('tbody').innerHTML = '<tr><td colspan="13" class="text-center py-8 text-red-500">❌ Erreur de chargement</td></tr>';
+      console.error('❌ Erreur chargement:', err);
+      document.getElementById('tbody').innerHTML = '<tr><td colspan="12" class="text-center py-8 text-red-500">❌ Erreur de chargement des données</td></tr>';
     }
   }
 
   async function maj(id, champ, val) {
     try {
-      console.log('Mise à jour:', {id, champ, val});
-      await fetch(URL, { 
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' }, 
-        body: JSON.stringify({ 
-          clientId: CLIENT_ID, 
-          action: 'update', 
-          reservation: { id, [champ]: val ? 'Oui' : 'Non' } 
-        }), 
-        mode: 'no-cors' 
-      });
+      console.log('🔄 Mise à jour:', {id, champ, val});
+      await fetch(URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ clientId: CLIENT_ID, action: 'update', reservation: { id, [champ]: val ? 'Oui' : 'Non' } }), mode: 'no-cors' });
       setTimeout(() => load(), 2000);
     } catch (err) {
-      console.error('Erreur:', err);
+      console.error('❌ Erreur:', err);
       Swal.fire('Erreur', 'Impossible de mettre à jour', 'error');
     }
   }
 
   function nouveau() {
-    document.getElementById('titre').textContent = 'Nouvelle location';
+    document.getElementById('titre').textContent = 'Nouvelle réservation';
+    document.getElementById('form').reset();
     document.getElementById('id').value = '';
-    document.getElementById('enlevement').value = '';
-    document.getElementById('restitution').value = '';
-    document.getElementById('nom').value = '';
-    document.getElementById('prenom').value = '';
-    document.getElementById('email').value = '';
-    document.getElementById('telephone').value = '';
-    document.getElementById('adresse').value = '';
-    document.getElementById('pseudo').value = '';
-    document.getElementById('template').value = '';
     document.getElementById('modal').classList.remove('hidden');
   }
 
   function editer(resa) {
-    document.getElementById('titre').textContent = 'Modifier la location';
+    document.getElementById('titre').textContent = 'Modifier la réservation';
     document.getElementById('id').value = resa.id;
     document.getElementById('enlevement').value = resa.enlevement;
     document.getElementById('restitution').value = resa.restitution;
@@ -242,7 +214,24 @@
     document.getElementById('modal').classList.remove('hidden');
   }
 
-  async function save() {
+  async function supprimer(id) {
+    const conf = await Swal.fire({ title: 'Supprimer cette réservation ?', text: 'Cette action est irréversible', icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc2626', confirmButtonText: 'Oui, supprimer', cancelButtonText: 'Annuler' });
+    if (conf.isConfirmed) {
+      try {
+        await fetch(URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ clientId: CLIENT_ID, action: 'delete', id: id }), mode: 'no-cors' });
+        load();
+        Swal.fire('Supprimé !', 'La réservation a été supprimée', 'success');
+      } catch (err) {
+        console.error('❌ Erreur suppression:', err);
+        Swal.fire('Erreur', 'Impossible de supprimer', 'error');
+      }
+    }
+  }
+
+  function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+
+  document.getElementById('form').onsubmit = async function(e) {
+    e.preventDefault();
     const edit = document.getElementById('id').value;
     const resa = {
       id: edit || Date.now().toString(),
@@ -255,72 +244,28 @@
       adresse: document.getElementById('adresse').value,
       pseudo: document.getElementById('pseudo').value,
       template: document.getElementById('template').value,
-      contratEnvoye: 'Non',
-      contratSigne: 'Non',
-      acompte: 'Non',
-      caution: 'Oui'
+      contratSigne: 'Non', acompte: 'Non', caution: 'Non'
     };
-
-    console.log('🚀 Envoi données:', resa);
-    console.log('📅 Dates envoyées - Enlèvement:', resa.enlevement, 'Restitution:', resa.restitution);
-
-    Swal.fire({ title: 'Enregistrement...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
     
+    console.log('🚀 Envoi réservation:', resa);
+    console.log('📅 Dates - Enlèvement:', resa.enlevement, '| Restitution:', resa.restitution);
+    console.log('👤 Client:', resa.prenom, resa.nom);
+    
+    Swal.fire({ title: 'Enregistrement...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
     try {
-      const payload = {
-        clientId: CLIENT_ID,
-        action: edit ? 'update' : 'add',
-        reservation: resa
-      };
+      const payload = { clientId: CLIENT_ID, action: edit ? 'update' : 'add', reservation: resa };
+      console.log('📦 Payload:', JSON.stringify(payload));
       
-      console.log('📦 Payload complet:', JSON.stringify(payload, null, 2));
-      
-      await fetch(URL, { 
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' }, 
-        body: JSON.stringify(payload), 
-        mode: 'no-cors' 
-      });
-      
+      await fetch(URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), mode: 'no-cors' });
       await new Promise(resolve => setTimeout(resolve, 3000));
       closeModal();
       await load();
-      Swal.fire('Succès !', 'Location enregistrée et ajoutée à Google Agenda !', 'success');
+      Swal.fire('Succès !', edit ? 'Réservation modifiée' : 'Réservation ajoutée et événement créé dans Google Agenda !', 'success');
     } catch (err) {
-      console.error('❌ Erreur:', err);
-      Swal.fire('Erreur', 'Problème de connexion', 'error');
+      console.error('❌ Erreur enregistrement:', err);
+      Swal.fire('Erreur', 'Problème de connexion: ' + err.message, 'error');
     }
-  }
-
-  async function supprimer(id) {
-    const conf = await Swal.fire({ 
-      title: 'Supprimer ?', 
-      text: 'Action irréversible', 
-      icon: 'warning', 
-      showCancelButton: true, 
-      confirmButtonColor: '#dc2626', 
-      confirmButtonText: 'Oui', 
-      cancelButtonText: 'Non' 
-    });
-    
-    if (conf.isConfirmed) {
-      try {
-        await fetch(URL, { 
-          method: 'POST', 
-          headers: { 'Content-Type': 'application/json' }, 
-          body: JSON.stringify({ clientId: CLIENT_ID, action: 'delete', id: id }), 
-          mode: 'no-cors' 
-        });
-        setTimeout(() => { load(); Swal.fire('Supprimé !', '', 'success'); }, 1000);
-      } catch (err) {
-        Swal.fire('Erreur', 'Impossible de supprimer', 'error');
-      }
-    }
-  }
-
-  function closeModal() { 
-    document.getElementById('modal').classList.add('hidden'); 
-  }
+  };
 </script>
 </body>
 </html>
