@@ -187,7 +187,6 @@ Alexis - Photobooth
   </div>
 
 </div>
-
 <!-- MODALE ÉDITEUR DE CONTRAT -->
 <div id="contractEditorModal"
      class="fixed inset-0 bg-black bg-opacity-80 hidden flex items-center justify-center z-50 p-4">
@@ -223,14 +222,12 @@ Alexis - Photobooth
 
   </div>
 </div>
-
 <script>
 /* ----------------------------------------------------------
    CONFIG
 ---------------------------------------------------------- */
 
 const URL = "https://script.google.com/macros/s/AKfycbxCjTZax00MtTv3PJ6Vwc2W1s8E6wno9AdCtIk2Eung6H5ycyTHXL9agoFIWsJ-PQvU/exec";
-
 const PASSWORD = "amax";
 const CLIENT_ID = "Alexis";
 
@@ -415,7 +412,6 @@ function generateAndSendContract(id, resa) {
 
   /* -----------------------------
      1) OUVERTURE GMAIL EN PREMIER
-     (pour éviter tout blocage)
   ----------------------------- */
   const sujet = encodeURIComponent(
     document.getElementById("sujet").value || "Votre contrat Photobooth"
@@ -474,7 +470,7 @@ function generateAndSendContract(id, resa) {
 }
 
 /* ----------------------------------------------------------
-   CONTRAT PAR DÉFAUT (VERSION COMPLÈTE AVEC ACCENTS)
+   CONTRAT PAR DÉFAUT (VERSION COMPLÈTE)
 ---------------------------------------------------------- */
 function getDefaultContract() {
   return `
@@ -818,3 +814,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
