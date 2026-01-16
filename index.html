@@ -21,7 +21,9 @@
     /* Colonnes avec largeur fixe pour optimiser l'espace */
     th:nth-child(1), td:nth-child(1) { width: 100px; }  /* Enlèvement */
     th:nth-child(2), td:nth-child(2) { width: 100px; }  /* Restitution */
-    th:nth-child(12), td:nth-child(12) { width: 80px; } /* Template */
+    th:nth-child(7), td:nth-child(7) { width: 80px; }   /* Code Postal */
+    th:nth-child(8), td:nth-child(8) { width: 120px; }  /* Ville */
+    th:nth-child(14), td:nth-child(14) { width: 80px; } /* Template */
   </style>
 </head>
 <body>
@@ -100,6 +102,8 @@ Alexis - Photobooth</textarea>
             <th>📧 Email</th>
             <th>📞 Téléphone</th>
             <th>📍 Adresse</th>
+            <th>📮 CP</th>
+            <th>🏙️ Ville</th>
             <th>🎭 Pseudo</th>
             <th>✉️ Envoyer Contrat</th>
             <th>✅ Signé</th>
@@ -110,7 +114,7 @@ Alexis - Photobooth</textarea>
           </tr>
         </thead>
         <tbody id="tbody">
-          <tr><td colspan="13" class="text-center py-8 text-gray-500">Chargement...</td></tr>
+          <tr><td colspan="15" class="text-center py-8 text-gray-500">Chargement...</td></tr>
         </tbody>
       </table>
     </div>
@@ -244,7 +248,7 @@ function generateAndSendContract(id, resa) {
     .replace(/{PRENOM}/g, resa.prenom || '')
     .replace(/{NOM}/g, resa.nom || '')
     .replace(/{EMAIL}/g, resa.email || '')
-    .replace(/{TELEPHONE}/g, resa.telephone || '')
+    .replace(/{TELEPHONE}/g, tel(resa.telephone || ''))
     .replace(/{ADRESSE}/g, resa.adresse || '')
     .replace(/{CODE_POSTAL}/g, resa.codePostal || '')
     .replace(/{VILLE}/g, resa.ville || '')
@@ -295,7 +299,7 @@ async function load() {
     const tbody = document.getElementById('tbody');
 
     if (data.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="13" class="text-center py-8 text-gray-500">Aucune réservation</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="15" class="text-center py-8 text-gray-500">Aucune réservation</td></tr>';
       return;
     }
 
@@ -318,6 +322,8 @@ async function load() {
           '<td>' + (r.email || '') + '</td>' +
           '<td class="font-mono">' + telephone + '</td>' +
           '<td style="white-space:normal; max-width:250px;">' + (r.adresse || '') + '</td>' +
+          '<td>' + (r.codePostal || '') + '</td>' +
+          '<td>' + (r.ville || '') + '</td>' +
           '<td>' + (r.pseudo || '') + '</td>' +
           '<td class="text-center">' +
             '<button class="btn-send-contract bg-orange-600 hover:bg-orange-700 text-white px-3 py-1.5 rounded-lg font-bold text-sm whitespace-nowrap transition" ' +
@@ -380,7 +386,7 @@ async function load() {
   } catch (err) {
     console.error('❌ Erreur:', err);
     document.getElementById('tbody').innerHTML =
-      '<tr><td colspan="13" class="text-center py-8 text-red-500">❌ Erreur</td></tr>';
+      '<tr><td colspan="15" class="text-center py-8 text-red-500">❌ Erreur</td></tr>';
   }
 }
 
