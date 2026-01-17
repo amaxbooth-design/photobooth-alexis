@@ -11,24 +11,22 @@
     html, body { width: 100%; min-height: 100vh; margin: 0; padding: 0; background: #ffffff; overflow-x: hidden; }
     .table-wrapper { width: 100%; overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; }
-    th { background: #1e40af; color: white; padding: 1rem 0.75rem; position: sticky; top: 0; z-index: 10; white-space: nowrap; text-align: center; font-size: 0.875rem; font-weight: 600; }
+    th { background: #1e40af; color: white; padding: 1rem 0.75rem; position: sticky; top: 0; z-index: 10; whitespace: nowrap; text-align: center; font-size: 0.875rem; font-weight: 600; }
     td { padding: 0.875rem 0.75rem; border-bottom: 1px solid #e5e7eb; text-align: center; font-size: 0.875rem; }
     tbody tr:hover { background: #f9fafb; }
     .paid { background: #d1fae5; }
     .paid:hover { background: #a7f3d0 !important; }
     .notpaid { background: #fee2e2; }
     .notpaid:hover { background: #fecaca !important; }
-    /* Colonnes avec largeur fixe pour optimiser l'espace */
-    th:nth-child(1), td:nth-child(1) { width: 100px; }  /* Enlèvement */
-    th:nth-child(2), td:nth-child(2) { width: 100px; }  /* Restitution */
-    th:nth-child(7), td:nth-child(7) { width: 80px; }   /* Code Postal */
-    th:nth-child(8), td:nth-child(8) { width: 120px; }  /* Ville */
-    th:nth-child(14), td:nth-child(14) { width: 80px; } /* Template */
+    th:nth-child(1), td:nth-child(1) { width: 100px; }
+    th:nth-child(2), td:nth-child(2) { width: 100px; }
+    th:nth-child(7), td:nth-child(7) { width: 80px; }
+    th:nth-child(8), td:nth-child(8) { width: 120px; }
+    th:nth-child(14), td:nth-child(14) { width: 80px; }
   </style>
 </head>
 <body>
 
-<!-- Écran de login -->
 <div id="login" class="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-900 to-purple-900">
   <div class="bg-white p-10 rounded-2xl shadow-2xl text-center max-w-md w-full mx-4">
     <h1 class="text-4xl font-bold text-blue-900 mb-8">🎉 Photobooth</h1>
@@ -43,7 +41,6 @@
   </div>
 </div>
 
-<!-- Contenu principal (caché au démarrage) -->
 <div id="app" class="hidden">
   <div class="bg-blue-900 shadow-lg">
     <div class="px-4 py-6 max-w-full">
@@ -63,7 +60,6 @@
     </div>
   </div>
 
-  <!-- Configuration email + bouton contrat -->
   <div class="bg-yellow-50 border-l-4 border-yellow-500">
     <div class="px-4 py-6 max-w-full">
       <h3 class="text-2xl font-bold mb-4 text-yellow-900">📧 Configuration Email Contrat</h3>
@@ -90,7 +86,6 @@ Alexis - Photobooth</textarea>
     </div>
   </div>
 
-  <!-- Tableau des réservations -->
   <div class="bg-white min-h-screen">
     <div class="table-wrapper">
       <table>
@@ -121,7 +116,6 @@ Alexis - Photobooth</textarea>
   </div>
 </div>
 
-<!-- Modal Nouvelle réservation / Modification -->
 <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-screen overflow-y-auto">
     <h2 class="text-3xl font-bold mb-6 text-blue-900" id="titre">Nouvelle réservation</h2>
@@ -182,7 +176,6 @@ Alexis - Photobooth</textarea>
   </div>
 </div>
 
-<!-- Modal Éditeur de contrat -->
 <div id="contractEditorModal" class="fixed inset-0 bg-black bg-opacity-80 hidden flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col">
     <div class="bg-blue-900 text-white p-6 rounded-t-2xl text-center">
@@ -198,18 +191,12 @@ Alexis - Photobooth</textarea>
 </div>
 
 <script>
-// ──────────────────────────────────────────────
-// CONFIGURATION
-// ──────────────────────────────────────────────
 const URL = "https://script.google.com/macros/s/AKfycbxCjTZax00MtTv3PJ6Vwc2W1s8E6wno9AdCtIk2Eung6H5ycyTHXL9agoFIWsJ-PQvU/exec";
 const PASSWORD = "amax";
 const CLIENT_ID = "Alexis";
 
-// ──────────────────────────────────────────────
-// FONCTIONS UTILITAIRES
-// ──────────────────────────────────────────────
 function getDefaultContract() {
-  return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>CONTRAT DE LOCATION ET CONDITIONS GÉNÉRALES POUR LE Photobooth LITE</title><style>body { font-family: Arial, sans-serif; font-size: 12pt; margin: 40pt; line-height: 1.5; } h1 { text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 20pt; } h2 { font-size: 12pt; font-weight: bold; margin-top: 20pt; margin-bottom: 10pt; } p { margin-bottom: 10pt; } table { width: 100%; border-collapse: collapse; } .label { font-weight: bold; width: 150pt; } .checkbox { margin-bottom: 5pt; } .page-break { page-break-before: always; }</style></head><body><h1>CONTRAT DE LOCATION ET CONDITIONS GÉNÉRALES POUR LE Photobooth LITE</h1><p>Contrat n° 001 / Date : {DATE}</p><h2>Le loueur :</h2><p>Mr CHIMOT Alexis,<br>3 Allée Michelet, 34410 Sauvian<br>06.68.17.24.63</p><h2>Le locataire :</h2><table><tr><td class="label">Nom :</td><td>{NOM}</td></tr><tr><td class="label">Prénom :</td><td>{PRENOM}</td></tr><tr><td class="label">Adresse :</td><td>{ADRESSE}</td></tr><tr><td class="label">Code postal :</td><td>{CODE_POSTAL}</td></tr><tr><td class="label">Ville :</td><td>{VILLE}</td></tr><tr><td class="label">Mail :</td><td>{EMAIL}</td></tr><tr><td class="label">Numéro de téléphone :</td><td>{TELEPHONE}</td></tr><tr><td class="label">Numéro pièce d'identité :</td><td>{ID_PIECE}</td></tr></table><h2>La location :</h2><p>Date : du {DATE_ENLEVEMENT} à 17h00 au {DATE_RESTITUTION} à 11h00</p><p>(enlèvement de dépôt à l'adresse du loueur)</p><p class="checkbox">☐ Offre Week-End 75 € (du vendredi au lundi)</p><p class="checkbox">☐ Offre Semaine 75 € (deux jours)</p><p class="checkbox">☐ Offre contour écran personnalisé 25 €</p><p class="checkbox">☐ Offre jour(s) supplémentaire(s) 22 €/jour → Nombre de jours : {JOURS_SUPP}</p><p>Total : {TOTAL} €</p><p>Adresse de votre événement : {ADRESSE_EVENEMENT}</p><p class="page-break"></p><h2>ARTICLE 1 – NATURE ET DATE D'EFFET DU CONTRAT</h2><p>Le loueur met à disposition du locataire un matériel complet de photographie présenté sous forme de photobooth.</p><p>Tout retard de restitution sera facturé 75 € par jour.</p><h2>ARTICLE 2 – PRIX DE LA LOCATION</h2><p>Tarif TTC — TVA non applicable (art. 293 B du CGI).</p><h2>ARTICLE 3 – ACOMPTE</h2><p>Acompte de 35 € à la réservation.</p><h2>ARTICLE 4 – DÉPÔT DE GARANTIE</h2><p>Dépôt de garantie de 250 € par chèque non encaissé.</p><p class="page-break"></p><h2>ARTICLE 5 – MISE À DISPOSITION DU MATÉRIEL</h2><p>Une fiche d'état des lieux est signée lors du retrait.</p><h2>ARTICLE 6 – UTILISATION DU MATÉRIEL</h2><p>Le locataire certifie être habilité à utiliser le matériel.</p><h2>ARTICLE 7 – RÉPARATIONS</h2><p>En cas de panne, prévenir immédiatement le loueur.</p><h2>ARTICLE 8 – RESPONSABILITÉS / ASSURANCE</h2><p>Le locataire assume la garde du matériel.</p><p class="page-break"></p><h2>ARTICLE 9 – DÉCLARATION EN CAS DE SINISTRE</h2><p>Déclaration obligatoire sous 12 heures.</p><h2>ARTICLE 10 – INFRACTIONS</h2><p>Le locataire reste responsable des infractions.</p><h2>ARTICLE 11 – RESTITUTION</h2><p>Le matériel doit être restitué aux dates prévues.</p><p class="page-break"></p><h2>ARTICLE 12 – ÉVICTION DU LOUEUR</h2><p>Le locataire ne peut modifier ou céder le matériel.</p><h2>ARTICLE 13 – RÉSERVATION / CONFIRMATION</h2><p>Réservation confirmée après réception du contrat signé + acompte.</p><h2>ARTICLE 14 – ANNULATION</h2><p>Moins de 15 jours avant l'événement → 100 % dû.</p><h2>ARTICLE 15 – RÈGLEMENT</h2><p>Acompte : 35 € — Solde : 40 € le jour du retrait.</p><h2>ARTICLE 16 – LOI APPLICABLE</h2><p>Le présent contrat est soumis au droit français.</p><p class="page-break"></p><p>Fait à {VILLE}, le {DATE}</p><table style="width: 100%; margin-top: 50pt;"><tr><td style="width: 50%; text-align: center;">Signature du loueur</td><td style="width: 50%; text-align: center;">Signature du locataire<br>Précédée de la mention « bon pour accord »</td></tr></table></body></html>`;
+  return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>CONTRAT DE LOCATION PHOTOBOOTH</title><style>body{font-family:Arial,sans-serif;font-size:12pt;margin:40pt;line-height:1.5}h1{text-align:center;font-size:16pt;font-weight:bold;margin-bottom:20pt}h2{font-size:12pt;font-weight:bold;margin-top:20pt;margin-bottom:10pt}p{margin-bottom:10pt}table{width:100%;border-collapse:collapse}.label{font-weight:bold;width:150pt}.page-break{page-break-before:always}</style></head><body><h1>CONTRAT DE LOCATION PHOTOBOOTH</h1><p>Date: {DATE}</p><h2>Le loueur:</h2><p>Mr CHIMOT Alexis<br>3 Allée Michelet, 34410 Sauvian<br>06.68.17.24.63</p><h2>Le locataire:</h2><table><tr><td class="label">Nom:</td><td>{NOM}</td></tr><tr><td class="label">Prénom:</td><td>{PRENOM}</td></tr><tr><td class="label">Adresse:</td><td>{ADRESSE}</td></tr><tr><td class="label">Code postal:</td><td>{CODE_POSTAL}</td></tr><tr><td class="label">Ville:</td><td>{VILLE}</td></tr><tr><td class="label">Email:</td><td>{EMAIL}</td></tr><tr><td class="label">Téléphone:</td><td>{TELEPHONE}</td></tr></table><h2>La location:</h2><p>Du {DATE_ENLEVEMENT} au {DATE_RESTITUTION}</p></body></html>`;
 }
 
 function tel(t) {
@@ -252,28 +239,25 @@ function generateAndSendContract(id, resa) {
     .replace(/{ADRESSE}/g, resa.adresse || '')
     .replace(/{CODE_POSTAL}/g, resa.codePostal || '')
     .replace(/{VILLE}/g, resa.ville || '')
-    .replace(/{ENLEVEMENT}/g, resa.enlevement ? new Date(resa.enlevement).toLocaleDateString('fr-FR') : '')
-    .replace(/{RESTITUTION}/g, resa.restitution ? new Date(resa.restitution).toLocaleDateString('fr-FR') : '')
+    .replace(/{DATE_ENLEVEMENT}/g, resa.enlevement ? new Date(resa.enlevement).toLocaleDateString('fr-FR') : '')
+    .replace(/{DATE_RESTITUTION}/g, resa.restitution ? new Date(resa.restitution).toLocaleDateString('fr-FR') : '')
     .replace(/{DATE}/g, today);
 
   const win = window.open('', '_blank');
   win.document.write(html);
   win.document.close();
-  setTimeout(function() { win.print(); }, 800);
+  setTimeout(() => win.print(), 800);
 
   const sujet = encodeURIComponent(document.getElementById('sujet').value || 'Votre contrat Photobooth');
   let corps = document.getElementById('corps').value
     .replace('{PRENOM}', resa.prenom || '')
     .replace('{NOM}', resa.nom || '');
   const gmail = 'https://mail.google.com/mail/?view=cm&to=' + (resa.email || '') + '&su=' + sujet + '&body=' + encodeURIComponent(corps);
-  setTimeout(function() { window.open(gmail, '_blank'); }, 1500);
+  setTimeout(() => window.open(gmail, '_blank'), 1500);
 
   maj(id, 'contratEnvoye', true);
 }
 
-// ──────────────────────────────────────────────
-// FONCTIONS RÉSERVATIONS
-// ──────────────────────────────────────────────
 async function load() {
   try {
     const r = await fetch(URL + '?clientId=' + CLIENT_ID);
@@ -282,19 +266,11 @@ async function load() {
     const data = j.data || [];
 
     const filtre = document.getElementById('filtre').value;
-    const mois = [...new Set(
-      data.map(function(x) {
-        return x.enlevement ? x.enlevement.slice(0, 7) : null;
-      })
-    )].filter(Boolean).sort().reverse();
+    const mois = [...new Set(data.map(x => x.enlevement ? x.enlevement.slice(0, 7) : null))].filter(Boolean).sort().reverse();
 
-    document.getElementById('filtre').innerHTML =
-      '<option value="">Tous les mois</option>' +
-      mois.map(function(m) {
-        return '<option value="' + m + '"' + (filtre === m ? ' selected' : '') + '>' +
-          new Date(m + '-01').toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' }) +
-        '</option>';
-      }).join('');
+    document.getElementById('filtre').innerHTML = '<option value="">Tous les mois</option>' +
+      mois.map(m => '<option value="' + m + '"' + (filtre === m ? ' selected' : '') + '>' +
+        new Date(m + '-01').toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' }) + '</option>').join('');
 
     const tbody = document.getElementById('tbody');
 
@@ -304,10 +280,8 @@ async function load() {
     }
 
     tbody.innerHTML = data
-      .filter(function(x) {
-        return !filtre || (x.enlevement && x.enlevement.startsWith(filtre));
-      })
-      .map(function(r) {
+      .filter(x => !filtre || (x.enlevement && x.enlevement.startsWith(filtre)))
+      .map(r => {
         const ok = r.contratSigne === 'Oui' && r.acompte === 'Oui';
         const dateEnlevement = r.enlevement ? new Date(r.enlevement).toLocaleDateString('fr-FR') : '-';
         const dateRestitution = r.restitution ? new Date(r.restitution).toLocaleDateString('fr-FR') : '-';
@@ -325,95 +299,62 @@ async function load() {
           '<td>' + (r.codePostal || '') + '</td>' +
           '<td>' + (r.ville || '') + '</td>' +
           '<td>' + (r.pseudo || '') + '</td>' +
-          '<td class="text-center">' +
-            '<button class="btn-send-contract bg-orange-600 hover:bg-orange-700 text-white px-3 py-1.5 rounded-lg font-bold text-sm whitespace-nowrap transition" ' +
-            'data-id="' + r.id + '" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\'>📧</button>' +
-          '</td>' +
-          '<td class="text-center">' +
-            '<input type="checkbox" class="w-5 h-5 cursor-pointer chk-signe" data-id="' + r.id + '" ' + (r.contratSigne === 'Oui' ? 'checked' : '') + '>' +
-          '</td>' +
-          '<td class="text-center">' +
-            '<input type="checkbox" class="w-5 h-5 cursor-pointer chk-acompte" data-id="' + r.id + '" ' + (r.acompte === 'Oui' ? 'checked' : '') + '>' +
-          '</td>' +
-          '<td class="text-center">' +
-            '<input type="checkbox" class="w-5 h-5 cursor-pointer chk-caution" data-id="' + r.id + '" ' + (r.caution === 'Oui' ? 'checked' : '') + '>' +
-          '</td>' +
+          '<td class="text-center"><button class="btn-send-contract bg-orange-600 hover:bg-orange-700 text-white px-3 py-1.5 rounded-lg font-bold text-sm whitespace-nowrap transition" data-id="' + r.id + '" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\'>📧</button></td>' +
+          '<td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer chk-signe" data-id="' + r.id + '" ' + (r.contratSigne === 'Oui' ? 'checked' : '') + '></td>' +
+          '<td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer chk-acompte" data-id="' + r.id + '" ' + (r.acompte === 'Oui' ? 'checked' : '') + '></td>' +
+          '<td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer chk-caution" data-id="' + r.id + '" ' + (r.caution === 'Oui' ? 'checked' : '') + '></td>' +
           '<td>' + (r.template || '') + '</td>' +
           '<td class="text-center whitespace-nowrap">' +
             '<button class="btn-edit text-2xl hover:scale-110 transition mr-2" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\' title="Modifier">✏️</button>' +
             '<button class="btn-delete text-2xl hover:scale-110 transition" data-id="' + r.id + '" title="Supprimer">🗑️</button>' +
-          '</td>' +
-        '</tr>';
+          '</td></tr>';
       }).join('');
 
-    document.querySelectorAll('.btn-send-contract').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
+    document.querySelectorAll('.btn-send-contract').forEach(btn => {
+      btn.addEventListener('click', e => {
         const target = e.currentTarget;
         generateAndSendContract(target.dataset.id, JSON.parse(target.dataset.resa.replace(/&#39;/g, "'")));
       });
     });
 
-    document.querySelectorAll('.chk-signe').forEach(function(cb) {
-      cb.addEventListener('change', function(e) {
-        maj(e.target.dataset.id, 'contratSigne', e.target.checked);
-      });
+    document.querySelectorAll('.chk-signe').forEach(cb => {
+      cb.addEventListener('change', e => maj(e.target.dataset.id, 'contratSigne', e.target.checked));
     });
 
-    document.querySelectorAll('.chk-acompte').forEach(function(cb) {
-      cb.addEventListener('change', function(e) {
-        maj(e.target.dataset.id, 'acompte', e.target.checked);
-      });
+    document.querySelectorAll('.chk-acompte').forEach(cb => {
+      cb.addEventListener('change', e => maj(e.target.dataset.id, 'acompte', e.target.checked));
     });
 
-    document.querySelectorAll('.chk-caution').forEach(function(cb) {
-      cb.addEventListener('change', function(e) {
-        maj(e.target.dataset.id, 'caution', e.target.checked);
-      });
+    document.querySelectorAll('.chk-caution').forEach(cb => {
+      cb.addEventListener('change', e => maj(e.target.dataset.id, 'caution', e.target.checked));
     });
 
-    document.querySelectorAll('.btn-edit').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        const target = e.currentTarget;
-        editer(JSON.parse(target.dataset.resa.replace(/&#39;/g, "'")));
-      });
+    document.querySelectorAll('.btn-edit').forEach(btn => {
+      btn.addEventListener('click', e => editer(JSON.parse(e.currentTarget.dataset.resa.replace(/&#39;/g, "'"))));
     });
 
-    document.querySelectorAll('.btn-delete').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        supprimer(e.currentTarget.dataset.id);
-      });
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+      btn.addEventListener('click', e => supprimer(e.currentTarget.dataset.id));
     });
   } catch (err) {
     console.error('❌ Erreur:', err);
-    document.getElementById('tbody').innerHTML =
-      '<tr><td colspan="15" class="text-center py-8 text-red-500">❌ Erreur</td></tr>';
+    document.getElementById('tbody').innerHTML = '<tr><td colspan="15" class="text-center py-8 text-red-500">❌ Erreur</td></tr>';
   }
 }
 
 async function maj(id, champ, val) {
   try {
     console.log('🔄 MAJ:', id, champ, val);
+    const update = { id: id, [champ]: val ? 'Oui' : 'Non' };
     
-    // NE PAS récupérer toute la réservation, juste mettre à jour le champ
-    const update = {
-      id: id,
-      [champ]: val ? 'Oui' : 'Non'
-    };
-    
-    // Envoyer SEULEMENT le champ à mettre à jour
     await fetch(URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        clientId: CLIENT_ID,
-        action: 'update',
-        reservation: update
-      }),
+      body: JSON.stringify({ clientId: CLIENT_ID, action: 'update', reservation: update }),
       mode: 'no-cors'
     });
     
-    // Attendre 3 secondes puis recharger
-    setTimeout(function() { load(); }, 3000);
+    setTimeout(() => load(), 3000);
   } catch (err) {
     console.error('❌', err);
     Swal.fire('Erreur', 'Impossible de mettre à jour', 'error');
@@ -452,14 +393,10 @@ async function supprimer(id) {
       await fetch(URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          clientId: CLIENT_ID,
-          action: 'delete',
-          id: parseInt(id, 10)
-        }),
+        body: JSON.stringify({ clientId: CLIENT_ID, action: 'delete', id: parseInt(id, 10) }),
         mode: 'no-cors'
       });
-      setTimeout(function() {
+      setTimeout(() => {
         load();
         Swal.fire('Supprimé !', '', 'success');
       }, 1000);
@@ -471,32 +408,48 @@ async function supprimer(id) {
 
 async function save() {
   const edit = document.getElementById('id').value;
+  
+  const enlevement = document.getElementById('enlevement').value;
+  const restitution = document.getElementById('restitution').value;
+  const nom = document.getElementById('nom').value;
+  const prenom = document.getElementById('prenom').value;
+  const email = document.getElementById('email').value;
+  const telephone = document.getElementById('telephone').value;
+  const adresse = document.getElementById('adresse').value;
+  const codePostal = document.getElementById('codePostal').value;
+  const ville = document.getElementById('ville').value;
+  const pseudo = document.getElementById('pseudo').value;
+  const template = document.getElementById('template').value;
+  
+  console.log('📋 Valeurs du formulaire:');
+  console.log('codePostal:', codePostal);
+  console.log('ville:', ville);
+  console.log('pseudo:', pseudo);
+  
   const resa = {
     id: edit || Date.now().toString(),
-    enlevement: document.getElementById('enlevement').value,
-    restitution: document.getElementById('restitution').value,
-    nom: document.getElementById('nom').value,
-    prenom: document.getElementById('prenom').value,
-    email: document.getElementById('email').value,
-    telephone: document.getElementById('telephone').value,
-    adresse: document.getElementById('adresse').value,
-    codePostal: document.getElementById('codePostal').value,  // ✅ Valeur texte
-    ville: document.getElementById('ville').value,            // ✅ Valeur texte
-    pseudo: document.getElementById('pseudo').value,          // ✅ Valeur texte
-    template: document.getElementById('template').value,
-    contratSigne: 'Non',   // ✅ Boolean
-    acompte: 'Non',        // ✅ Boolean
-    caution: 'Non'         // ✅ Boolean
+    enlevement: enlevement,
+    restitution: restitution,
+    nom: nom,
+    prenom: prenom,
+    email: email,
+    telephone: telephone,
+    adresse: adresse,
+    codePostal: codePostal,
+    ville: ville,
+    pseudo: pseudo,
+    template: template,
+    contratSigne: 'Non',
+    acompte: 'Non',
+    caution: 'Non'
   };
 
-  console.log('🚀 Envoi:', resa);
+  console.log('🚀 Objet envoyé:', resa);
 
   Swal.fire({
     title: 'Enregistrement...',
     allowOutsideClick: false,
-    didOpen: function() {
-      Swal.showLoading();
-    }
+    didOpen: () => Swal.showLoading()
   });
 
   try {
@@ -511,8 +464,7 @@ async function save() {
       mode: 'no-cors'
     });
 
-    // MODIFICATION ICI : Attendre 5 secondes au lieu de 3
-    await new Promise(function(r) { setTimeout(r, 5000); });
+    await new Promise(r => setTimeout(r, 5000));
     document.getElementById('modal').classList.add('hidden');
     await load();
     Swal.fire('Succès !', 'Réservation enregistrée + Événement ajouté au calendrier', 'success');
@@ -530,17 +482,13 @@ function saveEmailConfig() {
   };
   localStorage.setItem('emailConfig_' + CLIENT_ID, JSON.stringify(config));
 }
-// ──────────────────────────────────────────────
-// ÉVÉNEMENTS
-// ──────────────────────────────────────────────
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Login
   document.getElementById('loginBtn')?.addEventListener('click', () => {
     if (document.getElementById('password').value === PASSWORD) {
       document.getElementById('login').classList.add('hidden');
       document.getElementById('app').classList.remove('hidden');
 
-      // Load saved email config
       const saved = localStorage.getItem('emailConfig_' + CLIENT_ID);
       if (saved) {
         const c = JSON.parse(saved);
@@ -548,64 +496,41 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('sujet').value = c.sujet || '';
         document.getElementById('corps').value = c.corps || '';
       }
-
       load();
     } else {
       Swal.fire('Erreur', 'Mot de passe incorrect', 'error');
     }
   });
 
-  // Afficher/cacher mot de passe
-  document.getElementById('showPassword')?.addEventListener('change', (e) => {
+  document.getElementById('showPassword')?.addEventListener('change', e => {
     document.getElementById('password').type = e.target.checked ? 'text' : 'password';
   });
 
-  // Bouton Nouvelle réservation
   document.getElementById('newBtn')?.addEventListener('click', () => {
     document.getElementById('titre').textContent = 'Nouvelle réservation';
     document.getElementById('id').value = '';
-    // Reset formulaire
     ['enlevement','restitution','nom','prenom','email','telephone','adresse','codePostal','ville','pseudo','template']
       .forEach(id => document.getElementById(id).value = '');
     document.getElementById('modal').classList.remove('hidden');
   });
 
-  // Bouton Modifier contrat
   document.getElementById('openContractBtn')?.addEventListener('click', openContractEditor);
-
-  // Fermer éditeur contrat
   document.getElementById('closeContractBtn')?.addEventListener('click', () => {
     document.getElementById('contractEditorModal').classList.add('hidden');
   });
-
-  // Sauvegarder contrat personnalisé
   document.getElementById('saveContractBtn')?.addEventListener('click', saveCustomContract);
-
-  // Réinitialiser contrat
   document.getElementById('resetContractBtn')?.addEventListener('click', resetToDefaultContract);
-
-  // Annuler modal réservation
   document.getElementById('cancelBtn')?.addEventListener('click', () => {
     document.getElementById('modal').classList.add('hidden');
   });
-
-  // Enregistrer réservation
   document.getElementById('saveBtn')?.addEventListener('click', save);
-
-  // Déconnexion
   document.getElementById('logoutBtn')?.addEventListener('click', () => location.reload());
-
-  // Changement de filtre
   document.getElementById('filtre')?.addEventListener('change', load);
-
-  // Changement date enlèvement
   document.getElementById('enlevement')?.addEventListener('change', function() {
     if (this.value && !document.getElementById('restitution').value) {
       document.getElementById('restitution').value = this.value;
     }
   });
-
-  // Sauvegarde config email sur changement
   document.getElementById('sujet')?.addEventListener('change', saveEmailConfig);
   document.getElementById('emailCopie')?.addEventListener('change', saveEmailConfig);
   document.getElementById('corps')?.addEventListener('change', saveEmailConfig);
