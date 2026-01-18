@@ -202,9 +202,9 @@ function tel(t) {
   if (!t) return '';
   const str = String(t).replace(/\D/g, '');
   if (str.length === 10) {
-    return str.match(/.{1,2}/g).join(' ');
+    return str.substring(0, 2) + ' ' + str.substring(2, 4) + ' ' + str.substring(4, 6) + ' ' + str.substring(6, 8) + ' ' + str.substring(8, 10);
   }
-  return t;
+  return str;
 }
 
 function openContractEditor() {
@@ -356,7 +356,8 @@ async function maj(id, champ, val) {
       mode: 'no-cors'
     });
     
-    setTimeout(() => load(), 3000);
+    // Délai plus long pour laisser le temps au serveur de mettre à jour
+    setTimeout(() => load(), 6000);
   } catch (err) {
     console.error('❌', err);
     Swal.fire('Erreur', 'Impossible de mettre à jour', 'error');
