@@ -189,7 +189,7 @@ Alexis - Photobooth</textarea>
   </div>
 </div>
 <script>
-const URL = "https://script.google.com/macros/s/AKfycbwjAQMTA-LEBdjwGv5gSfPHzbKw6YJpo0suylFsnVRce52mX8dd2a5UiW9eVmS8v7bD/exec";
+const URL = "https://script.google.com/macros/s/AKfycbyiA8myLBDSvT1CehFlKovkzkxelAaaScfNOuO2_p5n5UpK9QSUor0AZbQKFqFVcjjd/exec";
 const PASSWORD = "amax";
 const CLIENT_ID = "Alexis";
 
@@ -364,16 +364,26 @@ function editer(resa) {
   document.getElementById('titre').textContent = 'Modifier';
   document.getElementById('id').value = resa.id;
   
-  // FIX : Convertir les dates au format YYYY-MM-DD pour les inputs date
+  // ✅ FIX : Gérer le décalage de fuseau horaire
   if (resa.enlevement) {
-    const dateEnl = resa.enlevement.includes('T') ? resa.enlevement.split('T')[0] : resa.enlevement;
+    let dateEnl = resa.enlevement.includes('T') ? resa.enlevement.split('T')[0] : resa.enlevement;
+    // Si c'est au format DD/MM/YYYY, convertir en YYYY-MM-DD
+    if (dateEnl.includes('/')) {
+      const parts = dateEnl.split('/');
+      dateEnl = parts[2] + '-' + parts[1].padStart(2, '0') + '-' + parts[0].padStart(2, '0');
+    }
     document.getElementById('enlevement').value = dateEnl;
   } else {
     document.getElementById('enlevement').value = '';
   }
   
   if (resa.restitution) {
-    const dateRest = resa.restitution.includes('T') ? resa.restitution.split('T')[0] : resa.restitution;
+    let dateRest = resa.restitution.includes('T') ? resa.restitution.split('T')[0] : resa.restitution;
+    // Si c'est au format DD/MM/YYYY, convertir en YYYY-MM-DD
+    if (dateRest.includes('/')) {
+      const parts = dateRest.split('/');
+      dateRest = parts[2] + '-' + parts[1].padStart(2, '0') + '-' + parts[0].padStart(2, '0');
+    }
     document.getElementById('restitution').value = dateRest;
   } else {
     document.getElementById('restitution').value = '';
