@@ -302,7 +302,7 @@ async function load() {
           '<td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer chk-signe" data-id="' + r.id + '" ' + (r.contratSigne === 'Oui' ? 'checked' : '') + '></td>' +
           '<td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer chk-acompte" data-id="' + r.id + '" ' + (r.acompte === 'Oui' ? 'checked' : '') + '></td>' +
           '<td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer chk-caution" data-id="' + r.id + '" ' + (r.caution === 'Oui' ? 'checked' : '') + '></td>' +
-          '<td>' + (r.template || '') + '</td>' +
+          '<td>' + (r.template || 'Non') + '</td>' +
           '<td class="text-center whitespace-nowrap">' +
             '<button class="btn-edit text-2xl hover:scale-110 transition mr-2" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\' title="Modifier">✏️</button>' +
             '<button class="btn-delete text-2xl hover:scale-110 transition" data-id="' + r.id + '" title="Supprimer">🗑️</button>' +
