@@ -62,7 +62,7 @@
 
   <div class="bg-yellow-50 border-l-4 border-yellow-500">
     <div class="px-4 py-6 max-w-full">
-      <h3 class="text-2xl font-bold mb-4 text-yellow-900">📧 Configuration Email Contrat</h3>
+      <h3 class="text-2xl font-bold mb-4 text-yellow-900">🔧 Configuration Email Contrat</h3>
       <div class="grid md:grid-cols-2 gap-6">
         <div>
           <label class="block text-sm font-bold mb-2 text-gray-700">Objet du mail :</label>
@@ -115,7 +115,6 @@ Alexis - Photobooth</textarea>
     </div>
   </div>
 </div>
-
 <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-screen overflow-y-auto">
     <h2 class="text-3xl font-bold mb-6 text-blue-900" id="titre">Nouvelle réservation</h2>
@@ -164,7 +163,7 @@ Alexis - Photobooth</textarea>
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-700">Template</label>
         <select id="template" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500 cursor-pointer">
-          <option value="">Non</option>
+          <option value="Non">Non</option>
           <option value="Oui">Oui</option>
         </select>
       </div>
@@ -202,7 +201,10 @@ function getDefaultContract() {
 function tel(t) {
   if (!t) return '';
   const str = String(t).replace(/\D/g, '');
-  return str.length === 10 ? str.replace(/(\d{2})(?=\d)/g, '$1 ') : str;
+  if (str.length === 10) {
+    return str.match(/.{1,2}/g).join(' ');
+  }
+  return t;
 }
 
 function openContractEditor() {
@@ -257,12 +259,11 @@ function generateAndSendContract(id, resa) {
 
   maj(id, 'contratEnvoye', true);
 }
-
 async function load() {
   try {
     const r = await fetch(URL + '?clientId=' + CLIENT_ID);
     const j = await r.json();
-    console.log('📥 Données:', j);
+    console.log('🔥 Données:', j);
     const data = j.data || [];
 
     const filtre = document.getElementById('filtre').value;
@@ -288,6 +289,7 @@ async function load() {
         const telephone = tel(r.telephone || '');
         const nomComplet = (r.nom || '') + ' ' + (r.prenom || '');
         const rowClass = ok ? 'paid' : 'notpaid';
+        const templateValue = r.template === 'Oui' ? 'Oui' : 'Non';
 
         return '<tr class="' + rowClass + '" data-id="' + r.id + '">' +
           '<td>' + dateEnlevement + '</td>' +
@@ -303,7 +305,7 @@ async function load() {
           '<td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer chk-signe" data-id="' + r.id + '" ' + (r.contratSigne === 'Oui' ? 'checked' : '') + '></td>' +
           '<td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer chk-acompte" data-id="' + r.id + '" ' + (r.acompte === 'Oui' ? 'checked' : '') + '></td>' +
           '<td class="text-center"><input type="checkbox" class="w-5 h-5 cursor-pointer chk-caution" data-id="' + r.id + '" ' + (r.caution === 'Oui' ? 'checked' : '') + '></td>' +
-          '<td>' + (r.template || '') + '</td>' +
+          '<td>' + templateValue + '</td>' +
           '<td class="text-center whitespace-nowrap">' +
             '<button class="btn-edit text-2xl hover:scale-110 transition mr-2" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\' title="Modifier">✏️</button>' +
             '<button class="btn-delete text-2xl hover:scale-110 transition" data-id="' + r.id + '" title="Supprimer">🗑️</button>' +
@@ -362,10 +364,37 @@ async function maj(id, champ, val) {
 }
 
 function editer(resa) {
+  console.log('📝 Édition réservation:', resa);
+  
   document.getElementById('titre').textContent = 'Modifier';
-  document.getElementById('id').value = resa.id;
-  document.getElementById('enlevement').value = resa.enlevement || '';
-  document.getElementById('restitution').value = resa.restitution || '';
+  document.getElementById('id').value = resa.id || '';
+  
+  let dateEnl = '';
+  if (resa.enlevement) {
+    if (resa.enlevement.includes('T')) {
+      dateEnl = resa.enlevement.split('T')[0];
+    } else if (resa.enlevement.includes('/')) {
+      const parts = resa.enlevement.split('/');
+      dateEnl = parts[2] + '-' + parts[1].padStart(2, '0') + '-' + parts[0].padStart(2, '0');
+    } else {
+      dateEnl = resa.enlevement;
+    }
+  }
+  document.getElementById('enlevement').value = dateEnl;
+  
+  let dateRest = '';
+  if (resa.restitution) {
+    if (resa.restitution.includes('T')) {
+      dateRest = resa.restitution.split('T')[0];
+    } else if (resa.restitution.includes('/')) {
+      const parts = resa.restitution.split('/');
+      dateRest = parts[2] + '-' + parts[1].padStart(2, '0') + '-' + parts[0].padStart(2, '0');
+    } else {
+      dateRest = resa.restitution;
+    }
+  }
+  document.getElementById('restitution').value = dateRest;
+  
   document.getElementById('nom').value = resa.nom || '';
   document.getElementById('prenom').value = resa.prenom || '';
   document.getElementById('email').value = resa.email || '';
@@ -374,7 +403,10 @@ function editer(resa) {
   document.getElementById('codePostal').value = resa.codePostal || '';
   document.getElementById('ville').value = resa.ville || '';
   document.getElementById('pseudo').value = resa.pseudo || '';
-  document.getElementById('template').value = resa.template || '';
+  document.getElementById('template').value = resa.template || 'Non';
+  
+  console.log('✅ Dates chargées - Enlèvement:', dateEnl, 'Restitution:', dateRest);
+  
   document.getElementById('modal').classList.remove('hidden');
 }
 
@@ -421,10 +453,7 @@ async function save() {
   const pseudo = document.getElementById('pseudo').value;
   const template = document.getElementById('template').value;
   
-  console.log('📋 Valeurs du formulaire:');
-  console.log('codePostal:', codePostal);
-  console.log('ville:', ville);
-  console.log('pseudo:', pseudo);
+  console.log('📋 Valeurs du formulaire - template:', template);
   
   const resa = {
     id: edit || Date.now().toString(),
@@ -438,7 +467,7 @@ async function save() {
     codePostal: codePostal,
     ville: ville,
     pseudo: pseudo,
-    template: template,
+    template: template || 'Non',
     contratSigne: 'Non',
     acompte: 'Non',
     caution: 'Non'
@@ -509,8 +538,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('newBtn')?.addEventListener('click', () => {
     document.getElementById('titre').textContent = 'Nouvelle réservation';
     document.getElementById('id').value = '';
-    ['enlevement','restitution','nom','prenom','email','telephone','adresse','codePostal','ville','pseudo','template']
+    ['enlevement','restitution','nom','prenom','email','telephone','adresse','codePostal','ville','pseudo']
       .forEach(id => document.getElementById(id).value = '');
+    document.getElementById('template').value = 'Non';
     document.getElementById('modal').classList.remove('hidden');
   });
 
