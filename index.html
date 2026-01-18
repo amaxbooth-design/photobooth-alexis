@@ -32,7 +32,7 @@
     <h1 class="text-4xl font-bold text-blue-900 mb-8">🎉 Photobooth</h1>
     <p class="text-gray-600 mb-2">Bienvenue Alexis</p>
     <p class="text-sm text-gray-500 mb-8">Gestion de vos réservations</p>
-    <input id="password" type="password" class="w-full p-4 border-2 rounded-lg text-xl mb-2 focus:outline-none focus:border-blue-500" placeholder="Mot de passe">
+    <input id="password" type="password" class="w-full p-4 border-2 rounded-lg text-xl mb-2 focus:outline-none focus:border-blue-500" placeholder="Mot de passe" autocomplete="off">
     <div class="flex items-center mb-4">
       <input type="checkbox" id="showPassword" class="w-5 h-5 mr-3 cursor-pointer">
       <label for="showPassword" class="text-base text-gray-700 cursor-pointer select-none">Afficher le mot de passe</label>
@@ -66,15 +66,15 @@
       <div class="grid md:grid-cols-2 gap-6">
         <div>
           <label class="block text-sm font-bold mb-2 text-gray-700">Objet du mail :</label>
-          <input id="sujet" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" value="Votre contrat Photobooth - À signer">
+          <input id="sujet" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" value="Votre contrat Photobooth - À signer" autocomplete="off">
         </div>
         <div>
           <label class="block text-sm font-bold mb-2 text-gray-700">📧 Mon email (pour recevoir les copies) :</label>
-          <input id="emailCopie" type="email" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" placeholder="alexis@exemple.com" value="">
+          <input id="emailCopie" type="email" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" placeholder="alexis@exemple.com" value="" autocomplete="off">
         </div>
         <div class="md:col-span-2">
           <label class="block text-sm font-bold mb-2 text-gray-700">Corps du mail (utilisez {PRENOM} et {NOM}) :</label>
-          <textarea id="corps" rows="6" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500">Bonjour {PRENOM} {NOM},
+          <textarea id="corps" rows="6" class="w-full p-4 border-2 rounded-lg bg-white focus:outline-none focus:border-blue-500" autocomplete="off">Bonjour {PRENOM} {NOM},
 
 Veuillez trouver ci-joint votre contrat de location Photobooth à signer.
 
@@ -115,51 +115,50 @@ Alexis - Photobooth</textarea>
     </div>
   </div>
 </div>
-
 <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
-  <div class="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-screen overflow-y-auto">
+  <div class="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-screen overflow-y-auto" autocomplete="off">
     <h2 class="text-3xl font-bold mb-6 text-blue-900" id="titre">Nouvelle réservation</h2>
     <div class="grid md:grid-cols-2 gap-6">
       <input type="hidden" id="id">
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-700">Date d'enlèvement</label>
-        <input type="date" id="enlevement" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <input type="date" id="enlevement" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" autocomplete="off">
       </div>
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-700">Date de restitution</label>
-        <input type="date" id="restitution" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <input type="date" id="restitution" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" autocomplete="off">
       </div>
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-700">Nom</label>
-        <input type="text" id="nom" placeholder="Nom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <input type="text" id="nom" placeholder="Nom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" autocomplete="off">
       </div>
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-700">Prénom</label>
-        <input type="text" id="prenom" placeholder="Prénom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <input type="text" id="prenom" placeholder="Prénom" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" autocomplete="off">
       </div>
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-700">Email</label>
-        <input type="email" id="email" placeholder="email@example.com" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <input type="email" id="email" placeholder="email@example.com" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" autocomplete="off">
       </div>
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-700">Téléphone</label>
-        <input type="tel" id="telephone" placeholder="0612345678" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <input type="tel" id="telephone" placeholder="0612345678" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" autocomplete="off">
       </div>
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-700">Adresse</label>
-        <input type="text" id="adresse" placeholder="Adresse" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <input type="text" id="adresse" placeholder="Adresse" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" autocomplete="off">
       </div>
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-700">Code Postal</label>
-        <input type="text" id="codePostal" placeholder="Code Postal" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <input type="text" id="codePostal" placeholder="Code Postal" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" autocomplete="off">
       </div>
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-700">Ville</label>
-        <input type="text" id="ville" placeholder="Ville" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <input type="text" id="ville" placeholder="Ville" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" autocomplete="off">
       </div>
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-700">Pseudo</label>
-        <input type="text" id="pseudo" placeholder="Pseudo" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500">
+        <input type="text" id="pseudo" placeholder="Pseudo" class="w-full p-3 border-2 rounded-lg focus:outline-none focus:border-blue-500" autocomplete="off">
       </div>
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-700">Template</label>
@@ -175,7 +174,6 @@ Alexis - Photobooth</textarea>
     </div>
   </div>
 </div>
-
 <div id="contractEditorModal" class="fixed inset-0 bg-black bg-opacity-80 hidden flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col">
     <div class="bg-blue-900 text-white p-6 rounded-t-2xl text-center">
@@ -189,7 +187,6 @@ Alexis - Photobooth</textarea>
     </div>
   </div>
 </div>
-
 <script>
 const URL = "https://script.google.com/macros/s/AKfycbx9_UxfC_c4XOCk21bVpqPchJK_jUzuRhgsy9j-b5fdENepw7_JV9tCKyjAbnYwh9aZ/exec";
 const PASSWORD = "amax";
@@ -237,8 +234,10 @@ function generateAndSendContract(id, resa) {
     .replace(/{EMAIL}/g, resa.email || '')
     .replace(/{TELEPHONE}/g, resa.telephone || '')
     .replace(/{ADRESSE}/g, resa.adresse || '')
-    .replace(/{ENLEVEMENT}/g, resa.enlevement ? new Date(resa.enlevement).toLocaleDateString('fr-FR') : '')
-    .replace(/{RESTITUTION}/g, resa.restitution ? new Date(resa.restitution).toLocaleDateString('fr-FR') : '')
+    .replace(/{CODE_POSTAL}/g, resa.codePostal || '')
+    .replace(/{VILLE}/g, resa.ville || '')
+    .replace(/{DATE_ENLEVEMENT}/g, resa.enlevement ? new Date(resa.enlevement).toLocaleDateString('fr-FR') : '')
+    .replace(/{DATE_RESTITUTION}/g, resa.restitution ? new Date(resa.restitution).toLocaleDateString('fr-FR') : '')
     .replace(/{DATE}/g, today);
 
   const win = window.open('', '_blank');
@@ -255,6 +254,7 @@ function generateAndSendContract(id, resa) {
 
   maj(id, 'contratEnvoye', true);
 }
+
 async function load() {
   try {
     const r = await fetch(URL + '?clientId=' + CLIENT_ID);
@@ -393,7 +393,6 @@ async function maj(id, champ, val) {
     Swal.fire('Erreur', 'Impossible de mettre à jour', 'error');
   }
 }
-
 function editer(resa) {
   document.getElementById('titre').textContent = 'Modifier';
   document.getElementById('id').value = resa.id;
@@ -497,6 +496,7 @@ async function save() {
   const pseudo = document.getElementById('pseudo').value;
   const template = document.getElementById('template').value;
   
+  // ✅ FIX : N'envoyer QUE les champs modifiés (pas contratSigne, acompte, caution si on édite)
   const resa = {
     id: edit || Date.now().toString(),
     enlevement: enlevement,
@@ -509,11 +509,15 @@ async function save() {
     codePostal: codePostal,
     ville: ville,
     pseudo: pseudo,
-    template: template,
-    contratSigne: 'Non',
-    acompte: 'Non',
-    caution: 'Non'
+    template: template
   };
+
+  // ✅ N'ajouter contratSigne, acompte, caution QUE pour les nouvelles réservations
+  if (!edit) {
+    resa.contratSigne = 'Non';
+    resa.acompte = 'Non';
+    resa.caution = 'Non';
+  }
 
   console.log('🚀 Objet envoyé:', resa);
 
@@ -553,6 +557,7 @@ function saveEmailConfig() {
   };
   localStorage.setItem('emailConfig_' + CLIENT_ID, JSON.stringify(config));
 }
+
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('loginBtn')?.addEventListener('click', () => {
     if (document.getElementById('password').value === PASSWORD) {
