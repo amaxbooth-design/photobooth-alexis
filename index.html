@@ -115,7 +115,6 @@ Alexis - Photobooth</textarea>
     </div>
   </div>
 </div>
-
 <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-screen overflow-y-auto">
     <h2 class="text-3xl font-bold mb-6 text-blue-900" id="titre">Nouvelle réservation</h2>
@@ -189,7 +188,6 @@ Alexis - Photobooth</textarea>
     </div>
   </div>
 </div>
-
 <script>
 const URL = "https://script.google.com/macros/s/AKfycbxELEg6qjzlC-pFPamqq_Alymewe16gMUeYAP5j4eebRUwmWdRwB9pjxcHgrwlg0crq/exec";
 const PASSWORD = "amax";
@@ -199,6 +197,7 @@ function getDefaultContract() {
   return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>CONTRAT DE LOCATION PHOTOBOOTH</title><style>body{font-family:Arial,sans-serif;font-size:12pt;margin:40pt;line-height:1.5}h1{text-align:center;font-size:16pt;font-weight:bold;margin-bottom:20pt}h2{font-size:12pt;font-weight:bold;margin-top:20pt;margin-bottom:10pt}p{margin-bottom:10pt}table{width:100%;border-collapse:collapse}.label{font-weight:bold;width:150pt}.page-break{page-break-before:always}</style></head><body><h1>CONTRAT DE LOCATION PHOTOBOOTH</h1><p>Date: {DATE}</p><h2>Le loueur:</h2><p>Mr CHIMOT Alexis<br>3 Allée Michelet, 34410 Sauvian<br>06.68.17.24.63</p><h2>Le locataire:</h2><table><tr><td class="label">Nom:</td><td>{NOM}</td></tr><tr><td class="label">Prénom:</td><td>{PRENOM}</td></tr><tr><td class="label">Adresse:</td><td>{ADRESSE}</td></tr><tr><td class="label">Code postal:</td><td>{CODE_POSTAL}</td></tr><tr><td class="label">Ville:</td><td>{VILLE}</td></tr><tr><td class="label">Email:</td><td>{EMAIL}</td></tr><tr><td class="label">Téléphone:</td><td>{TELEPHONE}</td></tr></table><h2>La location:</h2><p>Du {DATE_ENLEVEMENT} au {DATE_RESTITUTION}</p></body></html>`;
 }
 
+// ✅ BUG FIX #2 : Format téléphone 06 06 05 58 78
 function tel(t) {
   if (!t) return '';
   const str = String(t).replace(/\D/g, '');
@@ -360,12 +359,26 @@ async function maj(id, champ, val) {
     Swal.fire('Erreur', 'Impossible de mettre à jour', 'error');
   }
 }
-
+// ✅ BUG FIX #3 : Dates disparaissent lors de l'édition
 function editer(resa) {
   document.getElementById('titre').textContent = 'Modifier';
   document.getElementById('id').value = resa.id;
-  document.getElementById('enlevement').value = resa.enlevement || '';
-  document.getElementById('restitution').value = resa.restitution || '';
+  
+  // FIX : Convertir les dates au format YYYY-MM-DD pour les inputs date
+  if (resa.enlevement) {
+    const dateEnl = resa.enlevement.includes('T') ? resa.enlevement.split('T')[0] : resa.enlevement;
+    document.getElementById('enlevement').value = dateEnl;
+  } else {
+    document.getElementById('enlevement').value = '';
+  }
+  
+  if (resa.restitution) {
+    const dateRest = resa.restitution.includes('T') ? resa.restitution.split('T')[0] : resa.restitution;
+    document.getElementById('restitution').value = dateRest;
+  } else {
+    document.getElementById('restitution').value = '';
+  }
+  
   document.getElementById('nom').value = resa.nom || '';
   document.getElementById('prenom').value = resa.prenom || '';
   document.getElementById('email').value = resa.email || '';
@@ -421,11 +434,7 @@ async function save() {
   const pseudo = document.getElementById('pseudo').value;
   const template = document.getElementById('template').value;
   
-  console.log('📋 Valeurs du formulaire:');
-  console.log('codePostal:', codePostal);
-  console.log('ville:', ville);
-  console.log('pseudo:', pseudo);
-  
+  // ✅ BUG FIX #1 : Template vide reste vide (pas "Non")
   const resa = {
     id: edit || Date.now().toString(),
     enlevement: enlevement,
