@@ -115,6 +115,7 @@ Alexis - Photobooth</textarea>
     </div>
   </div>
 </div>
+
 <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-screen overflow-y-auto">
     <h2 class="text-3xl font-bold mb-6 text-blue-900" id="titre">Nouvelle réservation</h2>
@@ -175,7 +176,6 @@ Alexis - Photobooth</textarea>
   </div>
 </div>
 
-<!-- Modal Éditeur de contrat -->
 <div id="contractEditorModal" class="fixed inset-0 bg-black bg-opacity-80 hidden flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col">
     <div class="bg-blue-900 text-white p-6 rounded-t-2xl text-center">
@@ -191,18 +191,12 @@ Alexis - Photobooth</textarea>
 </div>
 
 <script>
-// ──────────────────────────────────────────────
-// CONFIGURATION
-// ──────────────────────────────────────────────
 const URL = "https://script.google.com/macros/s/AKfycbx9_UxfC_c4XOCk21bVpqPchJK_jUzuRhgsy9j-b5fdENepw7_JV9tCKyjAbnYwh9aZ/exec";
 const PASSWORD = "amax";
 const CLIENT_ID = "Alexis";
 
-// ──────────────────────────────────────────────
-// FONCTIONS UTILITAIRES
-// ──────────────────────────────────────────────
 function getDefaultContract() {
-  return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>CONTRAT DE LOCATION ET CONDITIONS GÉNÉRALES POUR LE Photobooth LITE</title><style>body { font-family: Arial, sans-serif; font-size: 12pt; margin: 40pt; line-height: 1.5; } h1 { text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 20pt; } h2 { font-size: 12pt; font-weight: bold; margin-top: 20pt; margin-bottom: 10pt; } p { margin-bottom: 10pt; } table { width: 100%; border-collapse: collapse; } .label { font-weight: bold; width: 150pt; } .checkbox { margin-bottom: 5pt; } .page-break { page-break-before: always; }</style></head><body><h1>CONTRAT DE LOCATION ET CONDITIONS GÉNÉRALES POUR LE Photobooth LITE</h1><p>Contrat n° 001 / Date : {DATE}</p><h2>Le loueur :</h2><p>Mr CHIMOT Alexis,<br>3 Allée Michelet, 34410 Sauvian<br>06.68.17.24.63</p><h2>Le locataire :</h2><table><tr><td class="label">Nom :</td><td>{NOM}</td></tr><tr><td class="label">Prénom :</td><td>{PRENOM}</td></tr><tr><td class="label">Adresse :</td><td>{ADRESSE}</td></tr><tr><td class="label">Ville :</td><td>{VILLE}</td></tr><tr><td class="label">Code postal :</td><td>{CODE_POSTAL}</td></tr><tr><td class="label">Mail :</td><td>{EMAIL}</td></tr><tr><td class="label">Numéro de téléphone :</td><td>{TELEPHONE}</td></tr><tr><td class="label">Numéro pièce d’identité :</td><td>{ID_PIECE}</td></tr></table><h2>La location :</h2><p>Date : du {DATE_ENLEVEMENT} à 17h00 au {DATE_RESTITUTION} à 11h00</p><p>(enlèvement de dépôt à l’adresse du loueur)</p><p class="checkbox">☐ Offre Week-End 75 € (du vendredi au lundi)</p><p class="checkbox">☐ Offre Semaine 75 € (deux jours)</p><p class="checkbox">☐ Offre contour écran personnalisé 25 €</p><p class="checkbox">☐ Offre jour(s) supplémentaire(s) 22 €/jour → Nombre de jours : {JOURS_SUPP}</p><p>Total : {TOTAL} €</p><p>Adresse de votre événement : {ADRESSE_EVENEMENT}</p><p class="page-break"></p><h2>ARTICLE 1 – NATURE ET DATE D’EFFET DU CONTRAT</h2><p>Le loueur met à disposition du locataire un matériel complet de photographie présenté sous forme de photobooth.</p><p>Tout retard de restitution sera facturé 75 € par jour.</p><h2>ARTICLE 2 – PRIX DE LA LOCATION</h2><p>Tarif TTC — TVA non applicable (art. 293 B du CGI).</p><h2>ARTICLE 3 – ACOMPTE</h2><p>Acompte de 35 € à la réservation.</p><h2>ARTICLE 4 – DÉPÔT DE GARANTIE</h2><p>Dépôt de garantie de 250 € par chèque non encaissé.</p><p class="page-break"></p><h2>ARTICLE 5 – MISE À DISPOSITION DU MATÉRIEL</h2><p>Une fiche d’état des lieux est signée lors du retrait.</p><h2>ARTICLE 6 – UTILISATION DU MATÉRIEL</h2><p>Le locataire certifie être habilité à utiliser le matériel.</p><h2>ARTICLE 7 – RÉPARATIONS</h2><p>En cas de panne, prévenir immédiatement le loueur.</p><h2>ARTICLE 8 – RESPONSABILITÉS / ASSURANCE</h2><p>Le locataire assume la garde du matériel.</p><p class="page-break"></p><h2>ARTICLE 9 – DÉCLARATION EN CAS DE SINISTRE</h2><p>Déclaration obligatoire sous 12 heures.</p><h2>ARTICLE 10 – INFRACTIONS</h2><p>Le locataire reste responsable des infractions.</p><h2>ARTICLE 11 – RESTITUTION</h2><p>Le matériel doit être restitué aux dates prévues.</p><p class="page-break"></p><h2>ARTICLE 12 – ÉVICTION DU LOUEUR</h2><p>Le locataire ne peut modifier ou céder le matériel.</p><h2>ARTICLE 13 – RÉSERVATION / CONFIRMATION</h2><p>Réservation confirmée après réception du contrat signé + acompte.</p><h2>ARTICLE 14 – ANNULATION</h2><p>Moins de 15 jours avant l’événement → 100 % dû.</p><h2>ARTICLE 15 – RÈGLEMENT</h2><p>Acompte : 35 € — Solde : 40 € le jour du retrait.</p><h2>ARTICLE 16 – LOI APPLICABLE</h2><p>Le présent contrat est soumis au droit français.</p><p class="page-break"></p><p>Fait à {VILLE}, le {DATE}</p><table style="width: 100%; margin-top: 50pt;"><tr><td style="width: 50%; text-align: center;">Signature du loueur</td><td style="width: 50%; text-align: center;">Signature du locataire<br>Précédée de la mention « bon pour accord »</td></tr></table></body></html>`;
+  return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>CONTRAT DE LOCATION ET CONDITIONS GÉNÉRALES POUR LE Photobooth LITE</title><style>body { font-family: Arial, sans-serif; font-size: 12pt; margin: 40pt; line-height: 1.5; } h1 { text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 20pt; } h2 { font-size: 12pt; font-weight: bold; margin-top: 20pt; margin-bottom: 10pt; } p { margin-bottom: 10pt; } table { width: 100%; border-collapse: collapse; } .label { font-weight: bold; width: 150pt; } .checkbox { margin-bottom: 5pt; } .page-break { page-break-before: always; }</style></head><body><h1>CONTRAT DE LOCATION ET CONDITIONS GÉNÉRALES POUR LE Photobooth LITE</h1><p>Contrat n° 001 / Date : {DATE}</p><h2>Le loueur :</h2><p>Mr CHIMOT Alexis,<br>3 Allée Michelet, 34410 Sauvian<br>06.68.17.24.63</p><h2>Le locataire :</h2><table><tr><td class="label">Nom :</td><td>{NOM}</td></tr><tr><td class="label">Prénom :</td><td>{PRENOM}</td></tr><tr><td class="label">Adresse :</td><td>{ADRESSE}</td></tr><tr><td class="label">Ville :</td><td>{VILLE}</td></tr><tr><td class="label">Code postal :</td><td>{CODE_POSTAL}</td></tr><tr><td class="label">Mail :</td><td>{EMAIL}</td></tr><tr><td class="label">Numéro de téléphone :</td><td>{TELEPHONE}</td></tr><tr><td class="label">Numéro pièce d'identité :</td><td>{ID_PIECE}</td></tr></table><h2>La location :</h2><p>Date : du {DATE_ENLEVEMENT} à 17h00 au {DATE_RESTITUTION} à 11h00</p><p>(enlèvement de dépôt à l'adresse du loueur)</p><p class="checkbox">☐ Offre Week-End 75 € (du vendredi au lundi)</p><p class="checkbox">☐ Offre Semaine 75 € (deux jours)</p><p class="checkbox">☐ Offre contour écran personnalisé 25 €</p><p class="checkbox">☐ Offre jour(s) supplémentaire(s) 22 €/jour → Nombre de jours : {JOURS_SUPP}</p><p>Total : {TOTAL} €</p><p>Adresse de votre événement : {ADRESSE_EVENEMENT}</p><p class="page-break"></p><h2>ARTICLE 1 – NATURE ET DATE D'EFFET DU CONTRAT</h2><p>Le loueur met à disposition du locataire un matériel complet de photographie présenté sous forme de photobooth.</p><p>Tout retard de restitution sera facturé 75 € par jour.</p><h2>ARTICLE 2 – PRIX DE LA LOCATION</h2><p>Tarif TTC – TVA non applicable (art. 293 B du CGI).</p><h2>ARTICLE 3 – ACOMPTE</h2><p>Acompte de 35 € à la réservation.</p><h2>ARTICLE 4 – DÉPÔT DE GARANTIE</h2><p>Dépôt de garantie de 250 € par chèque non encaissé.</p><p class="page-break"></p><h2>ARTICLE 5 – MISE À DISPOSITION DU MATÉRIEL</h2><p>Une fiche d'état des lieux est signée lors du retrait.</p><h2>ARTICLE 6 – UTILISATION DU MATÉRIEL</h2><p>Le locataire certifie être habilité à utiliser le matériel.</p><h2>ARTICLE 7 – RÉPARATIONS</h2><p>En cas de panne, prévenir immédiatement le loueur.</p><h2>ARTICLE 8 – RESPONSABILITÉS / ASSURANCE</h2><p>Le locataire assume la garde du matériel.</p><p class="page-break"></p><h2>ARTICLE 9 – DÉCLARATION EN CAS DE SINISTRE</h2><p>Déclaration obligatoire sous 12 heures.</p><h2>ARTICLE 10 – INFRACTIONS</h2><p>Le locataire reste responsable des infractions.</p><h2>ARTICLE 11 – RESTITUTION</h2><p>Le matériel doit être restitué aux dates prévues.</p><p class="page-break"></p><h2>ARTICLE 12 – ÉVICTION DU LOUEUR</h2><p>Le locataire ne peut modifier ou céder le matériel.</p><h2>ARTICLE 13 – RÉSERVATION / CONFIRMATION</h2><p>Réservation confirmée après réception du contrat signé + acompte.</p><h2>ARTICLE 14 – ANNULATION</h2><p>Moins de 15 jours avant l'événement → 100 % dû.</p><h2>ARTICLE 15 – RÈGLEMENT</h2><p>Acompte : 35 € – Solde : 40 € le jour du retrait.</p><h2>ARTICLE 16 – LOI APPLICABLE</h2><p>Le présent contrat est soumis au droit français.</p><p class="page-break"></p><p>Fait à {VILLE}, le {DATE}</p><table style="width: 100%; margin-top: 50pt;"><tr><td style="width: 50%; text-align: center;">Signature du loueur</td><td style="width: 50%; text-align: center;">Signature du locataire<br>Précédée de la mention « bon pour accord »</td></tr></table></body></html>`;
 }
 
 function tel(t) {
@@ -261,10 +255,6 @@ function generateAndSendContract(id, resa) {
 
   maj(id, 'contratEnvoye', true);
 }
-
-// ──────────────────────────────────────────────
-// FONCTIONS RÉSERVATIONS
-// ──────────────────────────────────────────────
 async function load() {
   try {
     const r = await fetch(URL + '?clientId=' + CLIENT_ID);
@@ -329,7 +319,7 @@ async function load() {
           '<td class="text-center">' +
             '<input type="checkbox" class="w-5 h-5 cursor-pointer chk-caution" data-id="' + r.id + '" ' + (r.caution === 'Oui' ? 'checked' : '') + '>' +
           '</td>' +
-          '<td>' + (r.template || '') + '</td>' +
+          '<td>' + (r.template || 'Non') + '</td>' +
           '<td class="text-center whitespace-nowrap">' +
             '<button class="btn-edit text-2xl hover:scale-110 transition mr-2" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\' title="Modifier">✏️</button>' +
             '<button class="btn-delete text-2xl hover:scale-110 transition" data-id="' + r.id + '" title="Supprimer">🗑️</button>' +
@@ -404,15 +394,54 @@ async function maj(id, champ, val) {
   }
 }
 
-// ✅ REMPLACEZ cette fonction dans votre HTML
 function editer(resa) {
   document.getElementById('titre').textContent = 'Modifier';
   document.getElementById('id').value = resa.id;
- 
-  // ✅ FIX : Garder les dates telles quelles sans conversion
-  document.getElementById('enlevement').value = resa.enlevement || '';
-  document.getElementById('restitution').value = resa.restitution || '';
- 
+  
+  if (resa.enlevement) {
+    let dateEnl = resa.enlevement;
+    if (dateEnl instanceof Date) {
+      const year = dateEnl.getFullYear();
+      const month = String(dateEnl.getMonth() + 1).padStart(2, '0');
+      const day = String(dateEnl.getDate()).padStart(2, '0');
+      dateEnl = `${year}-${month}-${day}`;
+    } 
+    else if (typeof dateEnl === 'string' && dateEnl.includes('T')) {
+      dateEnl = dateEnl.split('T')[0];
+    }
+    else if (typeof dateEnl === 'string' && dateEnl.includes('/')) {
+      const parts = dateEnl.split('/');
+      if (parts.length === 3) {
+        dateEnl = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+      }
+    }
+    document.getElementById('enlevement').value = dateEnl;
+  } else {
+    document.getElementById('enlevement').value = '';
+  }
+  
+  if (resa.restitution) {
+    let dateRest = resa.restitution;
+    if (dateRest instanceof Date) {
+      const year = dateRest.getFullYear();
+      const month = String(dateRest.getMonth() + 1).padStart(2, '0');
+      const day = String(dateRest.getDate()).padStart(2, '0');
+      dateRest = `${year}-${month}-${day}`;
+    }
+    else if (typeof dateRest === 'string' && dateRest.includes('T')) {
+      dateRest = dateRest.split('T')[0];
+    }
+    else if (typeof dateRest === 'string' && dateRest.includes('/')) {
+      const parts = dateRest.split('/');
+      if (parts.length === 3) {
+        dateRest = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+      }
+    }
+    document.getElementById('restitution').value = dateRest;
+  } else {
+    document.getElementById('restitution').value = '';
+  }
+  
   document.getElementById('nom').value = resa.nom || '';
   document.getElementById('prenom').value = resa.prenom || '';
   document.getElementById('email').value = resa.email || '';
@@ -468,7 +497,6 @@ async function save() {
   const pseudo = document.getElementById('pseudo').value;
   const template = document.getElementById('template').value;
   
-  // ✅ BUG FIX #1 : Template vide reste vide (pas "Non")
   const resa = {
     id: edit || Date.now().toString(),
     enlevement: enlevement,
@@ -525,7 +553,6 @@ function saveEmailConfig() {
   };
   localStorage.setItem('emailConfig_' + CLIENT_ID, JSON.stringify(config));
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('loginBtn')?.addEventListener('click', () => {
     if (document.getElementById('password').value === PASSWORD) {
