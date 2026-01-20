@@ -205,7 +205,7 @@ function tel(t) {
   return str.length === 10 ? str.replace(/(\d{2})(?=\d)/g, '$1 ') : str;
 }
 
-// ✅ FONCTION AMÉLIORÉE : Conversion de date sécurisée avec débogage
+// ✅ FONCTION CORRIGÉE : Gestion correcte des dates UTC
 function dateToInputValue(dateStr) {
   if (!dateStr) return '';
   
@@ -228,10 +228,15 @@ function dateToInputValue(dateStr) {
     return result;
   }
   
-  // Si format ISO avec T (2026-01-26T00:00:00.000Z)
+  // ✅ FIX : Si format ISO avec T et Z (date UTC)
   if (dateStr.includes('T')) {
-    const result = dateStr.split('T')[0];
-    console.log('✅ Format ISO avec T converti:', dateStr, '→', result);
+    // Parser la date et extraire la date locale (pas UTC)
+    const d = new Date(dateStr);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const result = `${year}-${month}-${day}`;
+    console.log('✅ Format ISO UTC converti en date locale:', dateStr, '→', result);
     return result;
   }
   
@@ -243,22 +248,6 @@ function dateToInputValue(dateStr) {
     const result = `${year}-${month}-${day}`;
     console.log('✅ Objet Date converti:', dateStr, '→', result);
     return result;
-  }
-  
-  // Dernier recours : parser la date en mode UTC pour éviter le décalage
-  try {
-    // Créer une date en interprétant la chaîne comme UTC
-    const d = new Date(dateStr + 'T00:00:00Z');
-    if (!isNaN(d.getTime())) {
-      const year = d.getUTCFullYear();
-      const month = String(d.getUTCMonth() + 1).padStart(2, '0');
-      const day = String(d.getUTCDate()).padStart(2, '0');
-      const result = `${year}-${month}-${day}`;
-      console.log('✅ Parsing UTC:', dateStr, '→', result);
-      return result;
-    }
-  } catch (e) {
-    console.error('❌ Erreur parsing:', e);
   }
   
   console.warn('⚠️ Format de date non reconnu:', dateStr);
@@ -638,21 +627,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-```
-
----
-
-## **Instructions pour tester :**
-
-1. **Copiez les 3 parties** dans un seul fichier HTML
-2. **Ouvrez la console du navigateur** (F12 → onglet Console)
-3. **Connectez-vous** et chargez vos données
-4. **Cliquez sur le crayon ✏️** pour modifier une réservation du 26/01/2026
-5. **Regardez dans la console** les messages de débogage :
-
-Vous devriez voir quelque chose comme :
-```
-🖊️ Édition de la réservation: {id: "123", enlevement: "2026-01-26", ...}
-📅 Date reçue: 2026-01-26 Type: string
-✅ Format YYYY-MM-DD détecté: 2026-01-26
-
