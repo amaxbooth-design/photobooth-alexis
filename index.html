@@ -115,6 +115,7 @@ Alexis - Photobooth</textarea>
     </div>
   </div>
 </div>
+
 <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-screen overflow-y-auto" autocomplete="off">
     <h2 class="text-3xl font-bold mb-6 text-blue-900" id="titre">Nouvelle réservation</h2>
@@ -174,6 +175,7 @@ Alexis - Photobooth</textarea>
     </div>
   </div>
 </div>
+
 <div id="contractEditorModal" class="fixed inset-0 bg-black bg-opacity-80 hidden flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col">
     <div class="bg-blue-900 text-white p-6 rounded-t-2xl text-center">
@@ -187,6 +189,7 @@ Alexis - Photobooth</textarea>
     </div>
   </div>
 </div>
+
 <script>
 const URL = "https://script.google.com/macros/s/AKfycbx9_UxfC_c4XOCk21bVpqPchJK_jUzuRhgsy9j-b5fdENepw7_JV9tCKyjAbnYwh9aZ/exec";
 const PASSWORD = "amax";
@@ -202,6 +205,41 @@ function tel(t) {
   return str.length === 10 ? str.replace(/(\d{2})(?=\d)/g, '$1 ') : str;
 }
 
+// ✅ NOUVELLE FONCTION : Conversion de date sécurisée sans décalage de fuseau horaire
+function dateToInputValue(dateStr) {
+  if (!dateStr) return '';
+  
+  // Si c'est déjà au format YYYY-MM-DD, retourner tel quel
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    return dateStr;
+  }
+  
+  // Si format DD/MM/YYYY
+  if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateStr)) {
+    const parts = dateStr.split('/');
+    const day = parts[0].padStart(2, '0');
+    const month = parts[1].padStart(2, '0');
+    const year = parts[2];
+    return `${year}-${month}-${day}`;
+  }
+  
+  // Si format ISO avec T (2026-01-26T00:00:00)
+  if (dateStr.includes('T')) {
+    return dateStr.split('T')[0];
+  }
+  
+  // Sinon, extraire manuellement année/mois/jour pour éviter les problèmes de timezone
+  try {
+    // On crée une date en mode local pour éviter le décalage UTC
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
+    }
+    return '';
+  } catch {
+    return '';
+  }
+}
 function openContractEditor() {
   const preview = document.getElementById('contractPreview');
   let html = localStorage.getItem('contrat_' + CLIENT_ID);
@@ -259,7 +297,7 @@ async function load() {
   try {
     const r = await fetch(URL + '?clientId=' + CLIENT_ID);
     const j = await r.json();
-    console.log('📥 Données:', j);
+    console.log('🔥 Données:', j);
     const data = j.data || [];
 
     const filtre = document.getElementById('filtre').value;
@@ -393,53 +431,15 @@ async function maj(id, champ, val) {
     Swal.fire('Erreur', 'Impossible de mettre à jour', 'error');
   }
 }
+
+// ✅ FONCTION MODIFIÉE : editer() avec correction du décalage de date
 function editer(resa) {
   document.getElementById('titre').textContent = 'Modifier';
   document.getElementById('id').value = resa.id;
   
-  if (resa.enlevement) {
-    let dateEnl = resa.enlevement;
-    if (dateEnl instanceof Date) {
-      const year = dateEnl.getFullYear();
-      const month = String(dateEnl.getMonth() + 1).padStart(2, '0');
-      const day = String(dateEnl.getDate()).padStart(2, '0');
-      dateEnl = `${year}-${month}-${day}`;
-    } 
-    else if (typeof dateEnl === 'string' && dateEnl.includes('T')) {
-      dateEnl = dateEnl.split('T')[0];
-    }
-    else if (typeof dateEnl === 'string' && dateEnl.includes('/')) {
-      const parts = dateEnl.split('/');
-      if (parts.length === 3) {
-        dateEnl = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
-      }
-    }
-    document.getElementById('enlevement').value = dateEnl;
-  } else {
-    document.getElementById('enlevement').value = '';
-  }
-  
-  if (resa.restitution) {
-    let dateRest = resa.restitution;
-    if (dateRest instanceof Date) {
-      const year = dateRest.getFullYear();
-      const month = String(dateRest.getMonth() + 1).padStart(2, '0');
-      const day = String(dateRest.getDate()).padStart(2, '0');
-      dateRest = `${year}-${month}-${day}`;
-    }
-    else if (typeof dateRest === 'string' && dateRest.includes('T')) {
-      dateRest = dateRest.split('T')[0];
-    }
-    else if (typeof dateRest === 'string' && dateRest.includes('/')) {
-      const parts = dateRest.split('/');
-      if (parts.length === 3) {
-        dateRest = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
-      }
-    }
-    document.getElementById('restitution').value = dateRest;
-  } else {
-    document.getElementById('restitution').value = '';
-  }
+  // ✅ Utilisation de la nouvelle fonction pour éviter le décalage
+  document.getElementById('enlevement').value = dateToInputValue(resa.enlevement);
+  document.getElementById('restitution').value = dateToInputValue(resa.restitution);
   
   document.getElementById('nom').value = resa.nom || '';
   document.getElementById('prenom').value = resa.prenom || '';
@@ -496,7 +496,7 @@ async function save() {
   const pseudo = document.getElementById('pseudo').value;
   const template = document.getElementById('template').value;
   
-  // ✅ FIX : N'envoyer QUE les champs modifiés (pas contratSigne, acompte, caution si on édite)
+  // ✅ N'envoyer QUE les champs modifiés (pas contratSigne, acompte, caution si on édite)
   const resa = {
     id: edit || Date.now().toString(),
     enlevement: enlevement,
@@ -557,7 +557,6 @@ function saveEmailConfig() {
   };
   localStorage.setItem('emailConfig_' + CLIENT_ID, JSON.stringify(config));
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('loginBtn')?.addEventListener('click', () => {
     if (document.getElementById('password').value === PASSWORD) {
