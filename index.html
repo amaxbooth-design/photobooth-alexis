@@ -9,6 +9,8 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
+    
     /* Dark Mode Premium Styles */
     body {
       background: #0f0f23;
@@ -32,6 +34,10 @@
     
     .glow-purple {
       box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    }
+    
+    .glow-orange {
+      box-shadow: 0 0 20px rgba(251, 146, 60, 0.5);
     }
     
     .btn-neon {
@@ -66,6 +72,13 @@
       background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
     }
     
+    .powered-by {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      font-style: italic;
+    }
+    
     /* Table Styles Dark */
     .table-wrapper { 
       width: 100%; 
@@ -78,22 +91,22 @@
     }
     
     th {
-      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-      color: white;
-      padding: 1rem 0.75rem;
+      background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%);
+      color: #94a3b8;
+      padding: 0.75rem 0.5rem;
       position: sticky;
       top: 0;
       z-index: 10;
       text-align: center;
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 0.7rem;
+      font-weight: 600;
       letter-spacing: 0.05em;
       text-transform: uppercase;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
     
     td {
-      padding: 1rem 0.75rem;
+      padding: 0.875rem 0.5rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       text-align: center;
       font-size: 0.875rem;
@@ -110,22 +123,22 @@
       transform: scale(1.01);
     }
     
-    .paid {
+    .status-confirmed {
       background: rgba(34, 197, 94, 0.1);
       border-left: 3px solid #22c55e;
     }
     
-    .paid:hover {
+    .status-confirmed:hover {
       background: rgba(34, 197, 94, 0.15) !important;
     }
     
-    .notpaid {
-      background: rgba(239, 68, 68, 0.1);
-      border-left: 3px solid #ef4444;
+    .status-pending {
+      background: rgba(251, 146, 60, 0.1);
+      border-left: 3px solid #fb923c;
     }
     
-    .notpaid:hover {
-      background: rgba(239, 68, 68, 0.15) !important;
+    .status-pending:hover {
+      background: rgba(251, 146, 60, 0.15) !important;
     }
     
     /* Stats Cards */
@@ -164,21 +177,37 @@
       background: #22c55e;
     }
     
-    .stat-card.purple::before {
-      background: #8b5cf6;
+    .stat-card.orange::before {
+      background: #fb923c;
     }
     
-    /* Avatar circles */
-    .avatar-circle {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 0.75rem;
-      display: flex;
+    /* Colonnes réduites */
+    th:nth-child(11), td:nth-child(11) { width: 60px; } /* Signé */
+    th:nth-child(12), td:nth-child(12) { width: 60px; } /* Acompte */
+    th:nth-child(13), td:nth-child(13) { width: 60px; } /* Caution */
+    th:nth-child(14), td:nth-child(14) { width: 70px; } /* Template */
+    
+    /* Badge statut avec icône */
+    .status-badge {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 0.875rem;
-      color: white;
+      gap: 0.375rem;
+      padding: 0.375rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .status-badge.confirmed {
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    
+    .status-badge.pending {
+      background: rgba(251, 146, 60, 0.2);
+      color: #fb923c;
+      border: 1px solid rgba(251, 146, 60, 0.3);
     }
   </style>
 </head>
@@ -189,7 +218,7 @@
   <div class="card-dark p-10 rounded-2xl max-w-md w-full">
     <div class="text-center mb-8">
       <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-4xl glow-blue">
-        🎉
+        📸
       </div>
       <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 mb-2">
         Photobooth Pro
@@ -226,13 +255,13 @@
     <div class="flex flex-wrap justify-between items-center gap-4 mt-2">
       <div class="flex items-center gap-4">
         <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-3xl glow-blue">
-          🎉
+          📸
         </div>
         <div>
           <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
             Photobooth Pro
           </h1>
-          <p class="text-gray-400 text-sm">Dashboard de gestion avancé</p>
+          <p class="text-gray-400 text-sm powered-by">Powered by AmaxBooth</p>
         </div>
       </div>
       
@@ -258,24 +287,29 @@
     <div class="stat-card blue">
       <div class="text-blue-400 text-sm font-semibold mb-2">RÉSERVATIONS TOTALES</div>
       <div class="text-4xl font-bold text-white mb-1" id="statTotal">-</div>
-      <div class="text-gray-400 text-sm">Ce mois-ci</div>
+      <div class="text-gray-400 text-sm">Toutes périodes</div>
     </div>
     <div class="stat-card green">
-      <div class="text-green-400 text-sm font-semibold mb-2">CONFIRMÉES</div>
-      <div class="text-4xl font-bold text-white mb-1" id="statConfirmed">-</div>
-      <div class="text-gray-400 text-sm">Prêtes</div>
+      <div class="text-green-400 text-sm font-semibold mb-2">REVENUS</div>
+      <div class="text-4xl font-bold text-white mb-1" id="statRevenue">-</div>
+      <div class="text-gray-400 text-sm">Confirmés</div>
     </div>
-    <div class="stat-card purple">
+    <div class="stat-card orange">
       <div class="text-orange-400 text-sm font-semibold mb-2">EN ATTENTE</div>
       <div class="text-4xl font-bold text-white mb-1" id="statPending">-</div>
       <div class="text-gray-400 text-sm">Action requise</div>
     </div>
   </div>
-<!-- Configuration Email Dark -->
+<!-- Configuration Email Dark avec icône clé -->
   <div class="card-dark rounded-2xl p-8 mb-6 border-l-4 border-yellow-500">
-    <h3 class="text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
-      📧 Configuration Email Contrat
-    </h3>
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center text-2xl glow-orange">
+        🔑
+      </div>
+      <h3 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
+        Configuration Email Contrat
+      </h3>
+    </div>
     <div class="grid md:grid-cols-2 gap-6">
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-300">Objet du mail :</label>
@@ -310,38 +344,42 @@ Alexis - Photobooth</textarea>
     </button>
   </div>
 
-  <!-- Tableau principal Dark Mode -->
+  <!-- Tableau principal Dark Mode avec colonnes style image 1 -->
   <div class="card-dark rounded-2xl overflow-hidden">
     <div class="p-6 border-b border-gray-700">
-      <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-        📋 Réservations
-      </h2>
+      <div class="flex items-center gap-3">
+        <div class="text-3xl">📋</div>
+        <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+          Réservations
+        </h2>
+      </div>
     </div>
     
     <div class="table-wrapper">
       <table>
         <thead>
           <tr>
-            <th>📅 Enlèvement</th>
-            <th>📅 Restitution</th>
-            <th>👤 Nom Prénom</th>
-            <th>📧 Email</th>
-            <th>📞 Téléphone</th>
-            <th>📍 Adresse</th>
+            <th>📅 ENLÈVEMENT</th>
+            <th>📅 RESTITUTION</th>
+            <th>👤 NOM PRÉNOM</th>
+            <th>📧 EMAIL</th>
+            <th>📞 TÉLÉPHONE</th>
+            <th>📍 ADRESSE</th>
             <th>📮 CP</th>
-            <th>🏙️ Ville</th>
-            <th>🎭 Pseudo</th>
-            <th>✉️ Contrat</th>
-            <th>✅ Signé</th>
-            <th>💰 Acompte</th>
-            <th>🔒 Caution</th>
-            <th>🎨 Template</th>
-            <th>⚙️ Actions</th>
+            <th>🏙️ VILLE</th>
+            <th>🎭 PSEUDO</th>
+            <th>✉️ ENVOYER</th>
+            <th>✅</th>
+            <th>💰</th>
+            <th>🔒</th>
+            <th>🎨</th>
+            <th>🔧 STATUT</th>
+            <th>⚙️ ACTIONS</th>
           </tr>
         </thead>
         <tbody id="tbody">
           <tr>
-            <td colspan="15" class="text-center py-8 text-gray-400">
+            <td colspan="16" class="text-center py-8 text-gray-400">
               <div class="flex flex-col items-center gap-3">
                 <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                 <div>Chargement des données...</div>
@@ -495,19 +533,16 @@ function tel(t) {
   return str.length === 10 ? str.replace(/(\d{2})(?=\d)/g, '$1 ') : str;
 }
 
-// ✅ FONCTION CORRIGÉE : Gestion correcte des dates UTC
 function dateToInputValue(dateStr) {
   if (!dateStr) return '';
   
   console.log('📅 Date reçue:', dateStr, 'Type:', typeof dateStr);
   
-  // Si c'est déjà au format YYYY-MM-DD, retourner tel quel
   if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
     console.log('✅ Format YYYY-MM-DD détecté:', dateStr);
     return dateStr;
   }
   
-  // Si format DD/MM/YYYY
   if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateStr)) {
     const parts = dateStr.split('/');
     const day = parts[0].padStart(2, '0');
@@ -518,7 +553,6 @@ function dateToInputValue(dateStr) {
     return result;
   }
   
-  // ✅ FIX : Si format ISO avec T et Z (date UTC)
   if (dateStr.includes('T')) {
     const d = new Date(dateStr);
     const year = d.getFullYear();
@@ -529,7 +563,6 @@ function dateToInputValue(dateStr) {
     return result;
   }
   
-  // Si c'est un objet Date
   if (dateStr instanceof Date) {
     const year = dateStr.getFullYear();
     const month = String(dateStr.getMonth() + 1).padStart(2, '0');
@@ -621,17 +654,24 @@ async function load() {
     const tbody = document.getElementById('tbody');
 
     if (data.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="15" class="text-center py-8 text-gray-400">Aucune réservation</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="16" class="text-center py-8 text-gray-400">Aucune réservation</td></tr>';
       return;
     }
 
-    // Calcul des stats
+    // ✅ Calcul des stats avec revenus
     const total = data.length;
-    const confirmed = data.filter(r => r.contratSigne === 'Oui' && r.acompte === 'Oui').length;
-    const pending = total - confirmed;
+    const confirmed = data.filter(r => r.contratSigne === 'Oui' && r.acompte === 'Oui');
+    const pending = total - confirmed.length;
+    
+    // Calcul des revenus : 75€ base + 25€ si template = Oui
+    const revenue = confirmed.reduce((sum, r) => {
+      let price = 75;
+      if (r.template === 'Oui') price += 25;
+      return sum + price;
+    }, 0);
     
     document.getElementById('statTotal').textContent = total;
-    document.getElementById('statConfirmed').textContent = confirmed;
+    document.getElementById('statRevenue').textContent = revenue + '€';
     document.getElementById('statPending').textContent = pending;
 
     tbody.innerHTML = data
@@ -639,12 +679,17 @@ async function load() {
         return !filtre || (x.enlevement && x.enlevement.startsWith(filtre));
       })
       .map(function(r) {
-        const ok = r.contratSigne === 'Oui' && r.acompte === 'Oui';
+        // ✅ Détermination du statut : Confirmé si les 2 cases cochées, sinon En attente
+        const isConfirmed = r.contratSigne === 'Oui' && r.acompte === 'Oui';
+        const rowClass = isConfirmed ? 'status-confirmed' : 'status-pending';
+        const statusBadge = isConfirmed 
+          ? '<span class="status-badge confirmed">✓ Confirmé</span>'
+          : '<span class="status-badge pending">⚠ En attente</span>';
+        
         const dateEnlevement = r.enlevement ? new Date(r.enlevement).toLocaleDateString('fr-FR') : '-';
         const dateRestitution = r.restitution ? new Date(r.restitution).toLocaleDateString('fr-FR') : '-';
         const telephone = tel(r.telephone || '');
         const nomComplet = (r.nom || '') + ' ' + (r.prenom || '');
-        const rowClass = ok ? 'paid' : 'notpaid';
 
         return '<tr class="' + rowClass + '" data-id="' + r.id + '">' +
           '<td class="text-white font-medium">' + dateEnlevement + '</td>' +
@@ -657,8 +702,8 @@ async function load() {
           '<td class="text-gray-300">' + (r.ville || '') + '</td>' +
           '<td class="text-gray-300">' + (r.pseudo || '') + '</td>' +
           '<td class="text-center">' +
-            '<button class="btn-send-contract bg-gradient-to-r from-orange-500 to-red-600 text-white px-3 py-2 rounded-lg font-bold text-sm whitespace-nowrap transition hover:shadow-lg" ' +
-            'data-id="' + r.id + '" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\'>📧</button>' +
+            '<button class="btn-send-contract bg-gradient-to-r from-orange-500 to-red-600 text-white p-2 rounded-lg font-bold text-sm transition hover:shadow-lg" ' +
+            'data-id="' + r.id + '" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\' title="Envoyer contrat">📧</button>' +
           '</td>' +
           '<td class="text-center">' +
             '<input type="checkbox" class="w-5 h-5 cursor-pointer chk-signe" data-id="' + r.id + '" ' + (r.contratSigne === 'Oui' ? 'checked' : '') + '>' +
@@ -670,6 +715,7 @@ async function load() {
             '<input type="checkbox" class="w-5 h-5 cursor-pointer chk-caution" data-id="' + r.id + '" ' + (r.caution === 'Oui' ? 'checked' : '') + '>' +
           '</td>' +
           '<td class="text-gray-300">' + (r.template || 'Non') + '</td>' +
+          '<td class="text-center">' + statusBadge + '</td>' +
           '<td class="text-center whitespace-nowrap">' +
             '<button class="btn-edit bg-blue-500 bg-opacity-20 text-blue-400 p-2 rounded-lg hover:bg-opacity-30 transition border border-blue-500 border-opacity-30 mr-2" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\' title="Modifier">✏️</button>' +
             '<button class="btn-delete bg-red-500 bg-opacity-20 text-red-400 p-2 rounded-lg hover:bg-opacity-30 transition border border-red-500 border-opacity-30" data-id="' + r.id + '" title="Supprimer">🗑️</button>' +
@@ -717,7 +763,7 @@ async function load() {
   } catch (err) {
     console.error('❌ Erreur:', err);
     document.getElementById('tbody').innerHTML =
-      '<tr><td colspan="15" class="text-center py-8 text-red-400">❌ Erreur de chargement</td></tr>';
+      '<tr><td colspan="16" class="text-center py-8 text-red-400">❌ Erreur de chargement</td></tr>';
   }
 }
 
