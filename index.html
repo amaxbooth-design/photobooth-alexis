@@ -205,12 +205,15 @@ function tel(t) {
   return str.length === 10 ? str.replace(/(\d{2})(?=\d)/g, '$1 ') : str;
 }
 
-// ✅ NOUVELLE FONCTION : Conversion de date sécurisée sans décalage de fuseau horaire
+// ✅ FONCTION AMÉLIORÉE : Conversion de date sécurisée avec débogage
 function dateToInputValue(dateStr) {
   if (!dateStr) return '';
   
+  console.log('📅 Date reçue:', dateStr, 'Type:', typeof dateStr);
+  
   // Si c'est déjà au format YYYY-MM-DD, retourner tel quel
   if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    console.log('✅ Format YYYY-MM-DD détecté:', dateStr);
     return dateStr;
   }
   
@@ -220,25 +223,46 @@ function dateToInputValue(dateStr) {
     const day = parts[0].padStart(2, '0');
     const month = parts[1].padStart(2, '0');
     const year = parts[2];
-    return `${year}-${month}-${day}`;
+    const result = `${year}-${month}-${day}`;
+    console.log('✅ Format DD/MM/YYYY converti:', dateStr, '→', result);
+    return result;
   }
   
-  // Si format ISO avec T (2026-01-26T00:00:00)
+  // Si format ISO avec T (2026-01-26T00:00:00.000Z)
   if (dateStr.includes('T')) {
-    return dateStr.split('T')[0];
+    const result = dateStr.split('T')[0];
+    console.log('✅ Format ISO avec T converti:', dateStr, '→', result);
+    return result;
   }
   
-  // Sinon, extraire manuellement année/mois/jour pour éviter les problèmes de timezone
-  try {
-    // On crée une date en mode local pour éviter le décalage UTC
-    const parts = dateStr.split('-');
-    if (parts.length === 3) {
-      return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
-    }
-    return '';
-  } catch {
-    return '';
+  // Si c'est un objet Date
+  if (dateStr instanceof Date) {
+    const year = dateStr.getFullYear();
+    const month = String(dateStr.getMonth() + 1).padStart(2, '0');
+    const day = String(dateStr.getDate()).padStart(2, '0');
+    const result = `${year}-${month}-${day}`;
+    console.log('✅ Objet Date converti:', dateStr, '→', result);
+    return result;
   }
+  
+  // Dernier recours : parser la date en mode UTC pour éviter le décalage
+  try {
+    // Créer une date en interprétant la chaîne comme UTC
+    const d = new Date(dateStr + 'T00:00:00Z');
+    if (!isNaN(d.getTime())) {
+      const year = d.getUTCFullYear();
+      const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+      const day = String(d.getUTCDate()).padStart(2, '0');
+      const result = `${year}-${month}-${day}`;
+      console.log('✅ Parsing UTC:', dateStr, '→', result);
+      return result;
+    }
+  } catch (e) {
+    console.error('❌ Erreur parsing:', e);
+  }
+  
+  console.warn('⚠️ Format de date non reconnu:', dateStr);
+  return '';
 }
 function openContractEditor() {
   const preview = document.getElementById('contractPreview');
@@ -434,6 +458,8 @@ async function maj(id, champ, val) {
 
 // ✅ FONCTION MODIFIÉE : editer() avec correction du décalage de date
 function editer(resa) {
+  console.log('🖊️ Édition de la réservation:', resa);
+  
   document.getElementById('titre').textContent = 'Modifier';
   document.getElementById('id').value = resa.id;
   
@@ -612,3 +638,21 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+```
+
+---
+
+## **Instructions pour tester :**
+
+1. **Copiez les 3 parties** dans un seul fichier HTML
+2. **Ouvrez la console du navigateur** (F12 → onglet Console)
+3. **Connectez-vous** et chargez vos données
+4. **Cliquez sur le crayon ✏️** pour modifier une réservation du 26/01/2026
+5. **Regardez dans la console** les messages de débogage :
+
+Vous devriez voir quelque chose comme :
+```
+🖊️ Édition de la réservation: {id: "123", enlevement: "2026-01-26", ...}
+📅 Date reçue: 2026-01-26 Type: string
+✅ Format YYYY-MM-DD détecté: 2026-01-26
+
