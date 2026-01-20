@@ -8,45 +8,12 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { 
-      width: 100%; 
-      min-height: 100vh; 
-      margin: 0; 
-      padding: 0; 
+    
+    /* Dark Mode Premium Styles */
+    body {
       background: #0f0f23;
       font-family: 'Inter', sans-serif;
-      overflow-x: hidden; 
-    }
-    
-    /* Login Dark Mode */
-    .login-container {
-      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-      position: relative;
-      overflow: hidden;
-    }
-    .login-container::before {
-      content: '';
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
-      top: -200px;
-      right: -200px;
-      animation: pulse 4s ease-in-out infinite;
-    }
-    .login-container::after {
-      content: '';
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
-      bottom: -150px;
-      left: -150px;
-      animation: pulse 4s ease-in-out infinite 2s;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.5; }
-      50% { transform: scale(1.1); opacity: 0.8; }
+      min-height: 100vh;
     }
     
     .card-dark {
@@ -58,14 +25,13 @@
     .glow-blue {
       box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
     }
+    
     .glow-green {
       box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
     }
+    
     .glow-purple {
       box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
-    }
-    .glow-orange {
-      box-shadow: 0 0 20px rgba(251, 146, 60, 0.5);
     }
     
     .btn-neon {
@@ -74,10 +40,12 @@
       position: relative;
       overflow: hidden;
     }
+    
     .btn-neon:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
     }
+    
     .btn-neon::before {
       content: '';
       position: absolute;
@@ -88,6 +56,7 @@
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
       transition: left 0.5s;
     }
+    
     .btn-neon:hover::before {
       left: 100%;
     }
@@ -97,171 +66,237 @@
       background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
     }
     
-    .table-wrapper { width: 100%; overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; }
-    thead tr {
-      background: rgba(0, 0, 0, 0.3);
-      border-bottom: 2px solid rgba(59, 130, 246, 0.3);
-    }
-    th { 
-      color: #9ca3af; 
-      padding: 1rem 0.75rem; 
-      position: sticky; 
-      top: 0; 
-      z-index: 10; 
-      white-space: nowrap; 
-      text-align: center; 
-      font-size: 0.75rem; 
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    td { 
-      padding: 0.875rem 0.75rem; 
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
-      text-align: center; 
-      font-size: 0.875rem;
-      color: #d1d5db;
-    }
-    tbody tr { transition: all 0.2s; }
-    tbody tr:hover { 
-      background: rgba(59, 130, 246, 0.1);
-      transform: translateX(2px);
+    /* Table Styles Dark */
+    .table-wrapper { 
+      width: 100%; 
+      overflow-x: auto; 
     }
     
-    .paid { 
-      background: linear-gradient(90deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%);
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+    }
+    
+    th {
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      color: white;
+      padding: 1rem 0.75rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    td {
+      padding: 1rem 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+      font-size: 0.875rem;
+      color: #e5e7eb;
+    }
+    
+    tbody tr {
+      transition: all 0.3s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    tbody tr:hover {
+      background: rgba(59, 130, 246, 0.1);
+      transform: scale(1.01);
+    }
+    
+    .paid {
+      background: rgba(34, 197, 94, 0.1);
       border-left: 3px solid #22c55e;
     }
-    .paid:hover { 
-      background: linear-gradient(90deg, rgba(34, 197, 94, 0.25) 0%, rgba(34, 197, 94, 0.1) 100%) !important;
+    
+    .paid:hover {
+      background: rgba(34, 197, 94, 0.15) !important;
     }
     
-    .notpaid { 
-      background: linear-gradient(90deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
+    .notpaid {
+      background: rgba(239, 68, 68, 0.1);
       border-left: 3px solid #ef4444;
     }
-    .notpaid:hover { 
-      background: linear-gradient(90deg, rgba(239, 68, 68, 0.25) 0%, rgba(239, 68, 68, 0.1) 100%) !important;
+    
+    .notpaid:hover {
+      background: rgba(239, 68, 68, 0.15) !important;
     }
     
+    /* Stats Cards */
     .stat-card {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      padding: 1.5rem;
       position: relative;
       overflow: hidden;
+      transition: all 0.3s ease;
     }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    
     .stat-card::before {
       content: '';
       position: absolute;
       top: 0;
       right: 0;
-      width: 150px;
-      height: 150px;
+      width: 8rem;
+      height: 8rem;
       border-radius: 50%;
-      filter: blur(40px);
       opacity: 0.1;
+      filter: blur(3rem);
+    }
+    
+    .stat-card.blue::before {
+      background: #3b82f6;
+    }
+    
+    .stat-card.green::before {
+      background: #22c55e;
+    }
+    
+    .stat-card.purple::before {
+      background: #8b5cf6;
+    }
+    
+    /* Avatar circles */
+    .avatar-circle {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.875rem;
+      color: white;
     }
   </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
-<div id="login" class="login-container flex items-center justify-center min-h-screen">
-  <div class="card-dark p-10 rounded-2xl shadow-2xl text-center max-w-md w-full mx-4 relative z-10">
-    <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-4xl glow-blue">
-      🎉
+<!-- Login Dark Mode -->
+<div id="login" class="flex items-center justify-center min-h-screen p-4">
+  <div class="card-dark p-10 rounded-2xl max-w-md w-full">
+    <div class="text-center mb-8">
+      <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-4xl glow-blue">
+        🎉
+      </div>
+      <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 mb-2">
+        Photobooth Pro
+      </h1>
+      <p class="text-gray-400">Bienvenue Alexis</p>
+      <p class="text-sm text-gray-500 mt-1">Gestion de vos réservations</p>
     </div>
-    <h1 class="text-4xl font-bold text-white mb-2">
-      Photobooth <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Pro</span>
-    </h1>
-    <p class="text-gray-400 mb-1">Bienvenue Alexis</p>
-    <p class="text-sm text-gray-500 mb-8">Dashboard de gestion avancé</p>
     
-    <input id="password" type="password" class="w-full p-4 border-2 border-gray-700 rounded-lg text-xl mb-2 focus:outline-none focus:border-blue-500 bg-gray-900 text-white placeholder-gray-500" placeholder="Mot de passe" autocomplete="off">
+    <input id="password" type="password" 
+      class="w-full p-4 border-2 border-gray-600 bg-gray-800 text-white rounded-lg text-xl mb-3 focus:outline-none focus:border-blue-500 transition" 
+      placeholder="Mot de passe" 
+      autocomplete="off">
     
-    <div class="flex items-center mb-6 justify-center">
+    <div class="flex items-center mb-6">
       <input type="checkbox" id="showPassword" class="w-5 h-5 mr-3 cursor-pointer">
-      <label for="showPassword" class="text-base text-gray-400 cursor-pointer select-none">Afficher le mot de passe</label>
+      <label for="showPassword" class="text-base text-gray-400 cursor-pointer select-none">
+        Afficher le mot de passe
+      </label>
     </div>
     
-    <button id="loginBtn" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 rounded-lg font-bold text-xl transition hover:shadow-lg glow-blue">
+    <button id="loginBtn" 
+      class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 rounded-lg font-bold text-xl transition hover:shadow-lg glow-blue">
       Se connecter
     </button>
   </div>
 </div>
 
-<!-- MAIN APP -->
-<div id="app" class="hidden min-h-screen p-6">
+<!-- App Dark Mode -->
+<div id="app" class="hidden p-6">
   
-  <!-- HEADER PREMIUM -->
+  <!-- Header Premium avec accent line -->
   <div class="card-dark rounded-2xl p-8 mb-6 relative overflow-hidden">
     <div class="accent-line absolute top-0 left-0 right-0"></div>
-    <div class="flex flex-wrap justify-between items-center mt-2 gap-4">
-      <div>
-        <div class="flex items-center gap-4 mb-3">
-          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-3xl glow-blue">
-            🎉
-          </div>
-          <div>
-            <h1 class="text-4xl font-bold text-white">
-              Photobooth <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Pro</span>
-            </h1>
-            <p class="text-gray-400 text-sm">Dashboard de gestion avancé</p>
-          </div>
+    <div class="flex flex-wrap justify-between items-center gap-4 mt-2">
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-3xl glow-blue">
+          🎉
+        </div>
+        <div>
+          <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+            Photobooth Pro
+          </h1>
+          <p class="text-gray-400 text-sm">Dashboard de gestion avancé</p>
         </div>
       </div>
+      
       <div class="flex gap-3 flex-wrap">
-        <select id="filtre" class="btn-neon border-blue-500 text-blue-400 px-6 py-3 rounded-xl font-semibold bg-transparent cursor-pointer">
-          <option value="" class="bg-gray-900">Tous les mois</option>
+        <select id="filtre" 
+          class="btn-neon border-blue-500 text-blue-400 px-6 py-3 rounded-xl font-semibold bg-transparent cursor-pointer focus:outline-none">
+          <option value="" class="bg-gray-800">Tous les mois</option>
         </select>
-        <button id="newBtn" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition glow-green">
+        <button id="newBtn" 
+          class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition glow-green">
           + Nouvelle réservation
         </button>
-        <button id="logoutBtn" class="bg-gradient-to-r from-red-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition">
+        <button id="logoutBtn" 
+          class="bg-gradient-to-r from-red-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition">
           🚪 Déconnexion
         </button>
       </div>
     </div>
   </div>
 
-  <!-- STATS CARDS -->
+  <!-- Stats rapides -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-    <div class="card-dark rounded-xl p-6 stat-card">
-      <div class="stat-card::before" style="background: #3b82f6;"></div>
-      <div class="text-blue-400 text-sm font-semibold mb-2">TOTAL RÉSERVATIONS</div>
-      <div class="text-4xl font-bold text-white mb-1" id="statTotal">0</div>
-      <div class="text-gray-400 text-sm">Ce mois</div>
+    <div class="stat-card blue">
+      <div class="text-blue-400 text-sm font-semibold mb-2">RÉSERVATIONS TOTALES</div>
+      <div class="text-4xl font-bold text-white mb-1" id="statTotal">-</div>
+      <div class="text-gray-400 text-sm">Ce mois-ci</div>
     </div>
-    
-    <div class="card-dark rounded-xl p-6 stat-card">
-      <div class="stat-card::before" style="background: #22c55e;"></div>
-      <div class="text-green-400 text-sm font-semibold mb-2">REVENUS</div>
-      <div class="text-4xl font-bold text-white mb-1" id="statRevenus">0€</div>
-      <div class="text-gray-400 text-sm">Acomptes reçus</div>
+    <div class="stat-card green">
+      <div class="text-green-400 text-sm font-semibold mb-2">CONFIRMÉES</div>
+      <div class="text-4xl font-bold text-white mb-1" id="statConfirmed">-</div>
+      <div class="text-gray-400 text-sm">Prêtes</div>
     </div>
-    
-    <div class="card-dark rounded-xl p-6 stat-card">
-      <div class="stat-card::before" style="background: #f97316;"></div>
+    <div class="stat-card purple">
       <div class="text-orange-400 text-sm font-semibold mb-2">EN ATTENTE</div>
-      <div class="text-4xl font-bold text-white mb-1" id="statAttente">0</div>
-      <div class="text-orange-400 text-sm">⚠ Action requise</div>
+      <div class="text-4xl font-bold text-white mb-1" id="statPending">-</div>
+      <div class="text-gray-400 text-sm">Action requise</div>
     </div>
   </div>
-
-  <!-- CONFIG EMAIL -->
-  <div class="card-dark rounded-2xl p-6 mb-6 border-l-4 border-yellow-500">
-    <h3 class="text-2xl font-bold mb-4 text-yellow-400">🔧 Configuration Email Contrat</h3>
+<!-- Configuration Email Dark -->
+  <div class="card-dark rounded-2xl p-8 mb-6 border-l-4 border-yellow-500">
+    <h3 class="text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
+      📧 Configuration Email Contrat
+    </h3>
     <div class="grid md:grid-cols-2 gap-6">
       <div>
-        <label class="block text-sm font-bold mb-2 text-gray-400">Objet du mail :</label>
-        <input id="sujet" class="w-full p-4 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500" value="Votre contrat Photobooth - À signer" autocomplete="off">
+        <label class="block text-sm font-bold mb-2 text-gray-300">Objet du mail :</label>
+        <input id="sujet" 
+          class="w-full p-4 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
+          value="Votre contrat Photobooth - À signer" 
+          autocomplete="off">
       </div>
       <div>
-        <label class="block text-sm font-bold mb-2 text-gray-400">📧 Mon email (pour recevoir les copies) :</label>
-        <input id="emailCopie" type="email" class="w-full p-4 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500" placeholder="alexis@exemple.com" value="" autocomplete="off">
+        <label class="block text-sm font-bold mb-2 text-gray-300">📧 Mon email (pour recevoir les copies) :</label>
+        <input id="emailCopie" type="email" 
+          class="w-full p-4 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
+          placeholder="alexis@exemple.com" 
+          value="" 
+          autocomplete="off">
       </div>
       <div class="md:col-span-2">
-        <label class="block text-sm font-bold mb-2 text-gray-400">Corps du mail (utilisez {PRENOM} et {NOM}) :</label>
-        <textarea id="corps" rows="6" class="w-full p-4 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500" autocomplete="off">Bonjour {PRENOM} {NOM},
+        <label class="block text-sm font-bold mb-2 text-gray-300">Corps du mail (utilisez {PRENOM} et {NOM}) :</label>
+        <textarea id="corps" rows="6" 
+          class="w-full p-4 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
+          autocomplete="off">Bonjour {PRENOM} {NOM},
 
 Veuillez trouver ci-joint votre contrat de location Photobooth à signer.
 
@@ -269,16 +304,20 @@ Cordialement,
 Alexis - Photobooth</textarea>
       </div>
     </div>
-    <button id="openContractBtn" class="mt-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-3 rounded-lg font-bold transition hover:shadow-lg glow-purple">
+    <button id="openContractBtn" 
+      class="mt-6 bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition glow-purple">
       📝 Modifier mon contrat
     </button>
   </div>
 
-  <!-- TABLEAU PRINCIPAL -->
+  <!-- Tableau principal Dark Mode -->
   <div class="card-dark rounded-2xl overflow-hidden">
     <div class="p-6 border-b border-gray-700">
-      <h2 class="text-2xl font-bold text-white">📋 Réservations</h2>
+      <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+        📋 Réservations
+      </h2>
     </div>
+    
     <div class="table-wrapper">
       <table>
         <thead>
@@ -289,11 +328,10 @@ Alexis - Photobooth</textarea>
             <th>📧 Email</th>
             <th>📞 Téléphone</th>
             <th>📍 Adresse</th>
-            <th>🔮 CP</th>
+            <th>📮 CP</th>
             <th>🏙️ Ville</th>
             <th>🎭 Pseudo</th>
-            <th>📊 Statut</th>
-            <th>✉️ Envoyer</th>
+            <th>✉️ Contrat</th>
             <th>✅ Signé</th>
             <th>💰 Acompte</th>
             <th>🔒 Caution</th>
@@ -302,33 +340,150 @@ Alexis - Photobooth</textarea>
           </tr>
         </thead>
         <tbody id="tbody">
-          <tr><td colspan="16" class="text-center py-8 text-gray-500">Chargement...</td></tr>
+          <tr>
+            <td colspan="15" class="text-center py-8 text-gray-400">
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                <div>Chargement des données...</div>
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
   </div>
+  
 </div>
 
+<!-- Modal Nouvelle/Modifier réservation Dark -->
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-80 hidden flex items-center justify-center z-50 p-4">
+  <div class="card-dark rounded-2xl p-8 max-w-4xl w-full max-h-screen overflow-y-auto">
+    <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400" id="titre">
+      Nouvelle réservation
+    </h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <input type="hidden" id="id">
+      
+      <div>
+        <label class="block text-sm font-bold mb-2 text-gray-300">Date d'enlèvement</label>
+        <input type="date" id="enlevement" 
+          class="w-full p-3 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
+          autocomplete="off">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-bold mb-2 text-gray-300">Date de restitution</label>
+        <input type="date" id="restitution" 
+          class="w-full p-3 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
+          autocomplete="off">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-bold mb-2 text-gray-300">Nom</label>
+        <input type="text" id="nom" placeholder="Nom" 
+          class="w-full p-3 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
+          autocomplete="off">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-bold mb-2 text-gray-300">Prénom</label>
+        <input type="text" id="prenom" placeholder="Prénom" 
+          class="w-full p-3 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
+          autocomplete="off">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-bold mb-2 text-gray-300">Email</label>
+        <input type="email" id="email" placeholder="email@example.com" 
+          class="w-full p-3 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
+          autocomplete="off">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-bold mb-2 text-gray-300">Téléphone</label>
+        <input type="tel" id="telephone" placeholder="0612345678" 
+          class="w-full p-3 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
+          autocomplete="off">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-bold mb-2 text-gray-300">Adresse</label>
+        <input type="text" id="adresse" placeholder="Adresse" 
+          class="w-full p-3 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
+          autocomplete="off">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-bold mb-2 text-gray-300">Code Postal</label>
+        <input type="text" id="codePostal" placeholder="Code Postal" 
+          class="w-full p-3 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
+          autocomplete="off">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-bold mb-2 text-gray-300">Ville</label>
+        <input type="text" id="ville" placeholder="Ville" 
+          class="w-full p-3 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
+          autocomplete="off">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-bold mb-2 text-gray-300">Pseudo</label>
+        <input type="text" id="pseudo" placeholder="Pseudo" 
+          class="w-full p-3 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
+          autocomplete="off">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-bold mb-2 text-gray-300">Template</label>
+        <select id="template" 
+          class="w-full p-3 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 cursor-pointer transition">
+          <option value="">Non</option>
+          <option value="Oui">Oui</option>
+        </select>
+      </div>
+      
+      <div class="md:col-span-2 flex gap-4">
+        <button id="saveBtn" 
+          class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-lg font-bold text-lg flex-1 transition hover:shadow-lg glow-blue">
+          💾 Enregistrer
+        </button>
+        <button id="cancelBtn" 
+          class="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition hover:shadow-lg">
+          ❌ Annuler
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Éditeur de contrat Dark -->
+<div id="contractEditorModal" class="fixed inset-0 bg-black bg-opacity-90 hidden flex items-center justify-center z-50 p-4">
+  <div class="card-dark rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 text-center">
+      <h2 class="text-3xl font-bold">📝 Modifier mon contrat Photobooth</h2>
+    </div>
+    <div class="flex-1 overflow-y-auto p-10 bg-white" id="contractPreview" contenteditable="true"></div>
+    <div class="p-6 bg-gray-900 flex justify-center gap-6 border-t border-gray-700">
+      <button id="saveContractBtn" 
+        class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-10 py-4 rounded-lg font-bold text-xl hover:shadow-lg transition glow-green">
+        💾 Sauvegarder
+      </button>
+      <button id="resetContractBtn" 
+        class="bg-gradient-to-r from-orange-500 to-red-600 text-white px-10 py-4 rounded-lg font-bold text-xl hover:shadow-lg transition">
+        🔄 Réinitialiser
+      </button>
+      <button id="closeContractBtn" 
+        class="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-10 py-4 rounded-lg font-bold text-xl hover:shadow-lg transition">
+        ❌ Fermer
+      </button>
+    </div>
+  </div>
+</div>
 <script>
 const URL = "https://script.google.com/macros/s/AKfycbx9_UxfC_c4XOCk21bVpqPchJK_jUzuRhgsy9j-b5fdENepw7_JV9tCKyjAbnYwh9aZ/exec";
 const PASSWORD = "amax";
 const CLIENT_ID = "Alexis";
-
-// ✅ Conversion date sans décalage
-function toLocalDateString(dateInput) {
-  if (!dateInput) return '';
-  if (typeof dateInput === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dateInput)) return dateInput;
-  if (typeof dateInput === 'string' && dateInput.includes('T')) return dateInput.split('T')[0];
-  if (typeof dateInput === 'string' && dateInput.includes('/')) {
-    const parts = dateInput.split('/');
-    if (parts.length === 3) return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
-  }
-  let date = dateInput instanceof Date ? dateInput : new Date(dateInput);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
 
 function getDefaultContract() {
   return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>CONTRAT DE LOCATION ET CONDITIONS GÉNÉRALES POUR LE Photobooth LITE</title><style>body { font-family: Arial, sans-serif; font-size: 12pt; margin: 40pt; line-height: 1.5; } h1 { text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 20pt; } h2 { font-size: 12pt; font-weight: bold; margin-top: 20pt; margin-bottom: 10pt; } p { margin-bottom: 10pt; } table { width: 100%; border-collapse: collapse; } .label { font-weight: bold; width: 150pt; } .checkbox { margin-bottom: 5pt; } .page-break { page-break-before: always; }</style></head><body><h1>CONTRAT DE LOCATION ET CONDITIONS GÉNÉRALES POUR LE Photobooth LITE</h1><p>Contrat n° 001 / Date : {DATE}</p><h2>Le loueur :</h2><p>Mr CHIMOT Alexis,<br>3 Allée Michelet, 34410 Sauvian<br>06.68.17.24.63</p><h2>Le locataire :</h2><table><tr><td class="label">Nom :</td><td>{NOM}</td></tr><tr><td class="label">Prénom :</td><td>{PRENOM}</td></tr><tr><td class="label">Adresse :</td><td>{ADRESSE}</td></tr><tr><td class="label">Ville :</td><td>{VILLE}</td></tr><tr><td class="label">Code postal :</td><td>{CODE_POSTAL}</td></tr><tr><td class="label">Mail :</td><td>{EMAIL}</td></tr><tr><td class="label">Numéro de téléphone :</td><td>{TELEPHONE}</td></tr><tr><td class="label">Numéro pièce d'identité :</td><td>{ID_PIECE}</td></tr></table><h2>La location :</h2><p>Date : du {DATE_ENLEVEMENT} à 17h00 au {DATE_RESTITUTION} à 11h00</p><p>(enlèvement de dépôt à l'adresse du loueur)</p><p class="checkbox">☐ Offre Week-End 75 € (du vendredi au lundi)</p><p class="checkbox">☐ Offre Semaine 75 € (deux jours)</p><p class="checkbox">☐ Offre contour écran personnalisé 25 €</p><p class="checkbox">☐ Offre jour(s) supplémentaire(s) 22 €/jour → Nombre de jours : {JOURS_SUPP}</p><p>Total : {TOTAL} €</p><p>Adresse de votre événement : {ADRESSE_EVENEMENT}</p><p class="page-break"></p><h2>ARTICLE 1 – NATURE ET DATE D'EFFET DU CONTRAT</h2><p>Le loueur met à disposition du locataire un matériel complet de photographie présenté sous forme de photobooth.</p><p>Tout retard de restitution sera facturé 75 € par jour.</p><h2>ARTICLE 2 – PRIX DE LA LOCATION</h2><p>Tarif TTC – TVA non applicable (art. 293 B du CGI).</p><h2>ARTICLE 3 – ACOMPTE</h2><p>Acompte de 35 € à la réservation.</p><h2>ARTICLE 4 – DÉPÔT DE GARANTIE</h2><p>Dépôt de garantie de 250 € par chèque non encaissé.</p><p class="page-break"></p><h2>ARTICLE 5 – MISE À DISPOSITION DU MATÉRIEL</h2><p>Une fiche d'état des lieux est signée lors du retrait.</p><h2>ARTICLE 6 – UTILISATION DU MATÉRIEL</h2><p>Le locataire certifie être habilité à utiliser le matériel.</p><h2>ARTICLE 7 – RÉPARATIONS</h2><p>En cas de panne, prévenir immédiatement le loueur.</p><h2>ARTICLE 8 – RESPONSABILITÉS / ASSURANCE</h2><p>Le locataire assume la garde du matériel.</p><p class="page-break"></p><h2>ARTICLE 9 – DÉCLARATION EN CAS DE SINISTRE</h2><p>Déclaration obligatoire sous 12 heures.</p><h2>ARTICLE 10 – INFRACTIONS</h2><p>Le locataire reste responsable des infractions.</p><h2>ARTICLE 11 – RESTITUTION</h2><p>Le matériel doit être restitué aux dates prévues.</p><p class="page-break"></p><h2>ARTICLE 12 – ÉVICTION DU LOUEUR</h2><p>Le locataire ne peut modifier ou céder le matériel.</p><h2>ARTICLE 13 – RÉSERVATION / CONFIRMATION</h2><p>Réservation confirmée après réception du contrat signé + acompte.</p><h2>ARTICLE 14 – ANNULATION</h2><p>Moins de 15 jours avant l'événement → 100 % dû.</p><h2>ARTICLE 15 – RÈGLEMENT</h2><p>Acompte : 35 € – Solde : 40 € le jour du retrait.</p><h2>ARTICLE 16 – LOI APPLICABLE</h2><p>Le présent contrat est soumis au droit français.</p><p class="page-break"></p><p>Fait à {VILLE}, le {DATE}</p><table style="width: 100%; margin-top: 50pt;"><tr><td style="width: 50%; text-align: center;">Signature du loueur</td><td style="width: 50%; text-align: center;">Signature du locataire<br>Précédée de la mention « bon pour accord »</td></tr></table></body></html>`;
@@ -340,21 +495,52 @@ function tel(t) {
   return str.length === 10 ? str.replace(/(\d{2})(?=\d)/g, '$1 ') : str;
 }
 
-// ✅ Fonction pour générer les badges de statut
-function getStatutBadge(acompte, contratSigne) {
-  const hasAcompte = acompte === 'Oui';
-  const hasContrat = contratSigne === 'Oui';
+// ✅ FONCTION CORRIGÉE : Gestion correcte des dates UTC
+function dateToInputValue(dateStr) {
+  if (!dateStr) return '';
   
-  if (hasAcompte && hasContrat) {
-    return '<span class="bg-green-500 bg-opacity-20 text-green-400 px-3 py-1 rounded-full text-xs font-semibold border border-green-500 border-opacity-30">✓ Confirmé</span>';
+  console.log('📅 Date reçue:', dateStr, 'Type:', typeof dateStr);
+  
+  // Si c'est déjà au format YYYY-MM-DD, retourner tel quel
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    console.log('✅ Format YYYY-MM-DD détecté:', dateStr);
+    return dateStr;
   }
-  if (hasAcompte && !hasContrat) {
-    return '<span class="bg-orange-500 bg-opacity-20 text-orange-400 px-3 py-1 rounded-full text-xs font-semibold border border-orange-500 border-opacity-30">✓ Confirmé<br><span class="text-xs">Contrat non signé</span></span>';
+  
+  // Si format DD/MM/YYYY
+  if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateStr)) {
+    const parts = dateStr.split('/');
+    const day = parts[0].padStart(2, '0');
+    const month = parts[1].padStart(2, '0');
+    const year = parts[2];
+    const result = `${year}-${month}-${day}`;
+    console.log('✅ Format DD/MM/YYYY converti:', dateStr, '→', result);
+    return result;
   }
-  if (!hasAcompte && hasContrat) {
-    return '<span class="bg-orange-500 bg-opacity-20 text-orange-400 px-3 py-1 rounded-full text-xs font-semibold border border-orange-500 border-opacity-30">⏳ En attente<br><span class="text-xs">Contrat signé</span></span>';
+  
+  // ✅ FIX : Si format ISO avec T et Z (date UTC)
+  if (dateStr.includes('T')) {
+    const d = new Date(dateStr);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const result = `${year}-${month}-${day}`;
+    console.log('✅ Format ISO UTC converti en date locale:', dateStr, '→', result);
+    return result;
   }
-  return '<span class="bg-red-500 bg-opacity-20 text-red-400 px-3 py-1 rounded-full text-xs font-semibold border border-red-500 border-opacity-30">❌ En attente</span>';
+  
+  // Si c'est un objet Date
+  if (dateStr instanceof Date) {
+    const year = dateStr.getFullYear();
+    const month = String(dateStr.getMonth() + 1).padStart(2, '0');
+    const day = String(dateStr.getDate()).padStart(2, '0');
+    const result = `${year}-${month}-${day}`;
+    console.log('✅ Objet Date converti:', dateStr, '→', result);
+    return result;
+  }
+  
+  console.warn('⚠️ Format de date non reconnu:', dateStr);
+  return '';
 }
 
 function openContractEditor() {
@@ -417,16 +603,6 @@ async function load() {
     console.log('🔥 Données:', j);
     const data = j.data || [];
 
-    // ✅ Calcul des statistiques
-    const totalResa = data.length;
-    const resaAvecAcompte = data.filter(x => x.acompte === 'Oui').length;
-    const revenus = resaAvecAcompte * 75;
-    const enAttente = data.filter(x => x.acompte !== 'Oui').length;
-    
-    document.getElementById('statTotal').textContent = totalResa;
-    document.getElementById('statRevenus').textContent = revenus + '€';
-    document.getElementById('statAttente').textContent = enAttente;
-
     const filtre = document.getElementById('filtre').value;
     const mois = [...new Set(
       data.map(function(x) {
@@ -435,9 +611,9 @@ async function load() {
     )].filter(Boolean).sort().reverse();
 
     document.getElementById('filtre').innerHTML =
-      '<option value="" class="bg-gray-900">Tous les mois</option>' +
+      '<option value="" class="bg-gray-800">Tous les mois</option>' +
       mois.map(function(m) {
-        return '<option value="' + m + '" class="bg-gray-900"' + (filtre === m ? ' selected' : '') + '>' +
+        return '<option value="' + m + '" class="bg-gray-800"' + (filtre === m ? ' selected' : '') + '>' +
           new Date(m + '-01').toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' }) +
         '</option>';
       }).join('');
@@ -445,9 +621,18 @@ async function load() {
     const tbody = document.getElementById('tbody');
 
     if (data.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="16" class="text-center py-8 text-gray-500">Aucune réservation</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="15" class="text-center py-8 text-gray-400">Aucune réservation</td></tr>';
       return;
     }
+
+    // Calcul des stats
+    const total = data.length;
+    const confirmed = data.filter(r => r.contratSigne === 'Oui' && r.acompte === 'Oui').length;
+    const pending = total - confirmed;
+    
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statConfirmed').textContent = confirmed;
+    document.getElementById('statPending').textContent = pending;
 
     tbody.innerHTML = data
       .filter(function(x) {
@@ -460,7 +645,6 @@ async function load() {
         const telephone = tel(r.telephone || '');
         const nomComplet = (r.nom || '') + ' ' + (r.prenom || '');
         const rowClass = ok ? 'paid' : 'notpaid';
-        const statutBadge = getStatutBadge(r.acompte, r.contratSigne);
 
         return '<tr class="' + rowClass + '" data-id="' + r.id + '">' +
           '<td class="text-white font-medium">' + dateEnlevement + '</td>' +
@@ -472,9 +656,8 @@ async function load() {
           '<td class="text-gray-300">' + (r.codePostal || '') + '</td>' +
           '<td class="text-gray-300">' + (r.ville || '') + '</td>' +
           '<td class="text-gray-300">' + (r.pseudo || '') + '</td>' +
-          '<td class="text-center">' + statutBadge + '</td>' +
           '<td class="text-center">' +
-            '<button class="btn-send-contract bg-orange-500 bg-opacity-20 text-orange-400 px-3 py-2 rounded-lg hover:bg-opacity-30 transition border border-orange-500 border-opacity-30" ' +
+            '<button class="btn-send-contract bg-gradient-to-r from-orange-500 to-red-600 text-white px-3 py-2 rounded-lg font-bold text-sm whitespace-nowrap transition hover:shadow-lg" ' +
             'data-id="' + r.id + '" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\'>📧</button>' +
           '</td>' +
           '<td class="text-center">' +
@@ -488,13 +671,12 @@ async function load() {
           '</td>' +
           '<td class="text-gray-300">' + (r.template || 'Non') + '</td>' +
           '<td class="text-center whitespace-nowrap">' +
-            '<button class="bg-blue-500 bg-opacity-20 text-blue-400 px-2 py-2 rounded-lg hover:bg-opacity-30 transition border border-blue-500 border-opacity-30 mr-2" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\' title="Modifier">✏️</button>' +
-            '<button class="btn-delete bg-red-500 bg-opacity-20 text-red-400 px-2 py-2 rounded-lg hover:bg-opacity-30 transition border border-red-500 border-opacity-30" data-id="' + r.id + '" title="Supprimer">🗑️</button>' +
+            '<button class="btn-edit bg-blue-500 bg-opacity-20 text-blue-400 p-2 rounded-lg hover:bg-opacity-30 transition border border-blue-500 border-opacity-30 mr-2" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\' title="Modifier">✏️</button>' +
+            '<button class="btn-delete bg-red-500 bg-opacity-20 text-red-400 p-2 rounded-lg hover:bg-opacity-30 transition border border-red-500 border-opacity-30" data-id="' + r.id + '" title="Supprimer">🗑️</button>' +
           '</td>' +
         '</tr>';
       }).join('');
 
-    // Event listeners pour les boutons
     document.querySelectorAll('.btn-send-contract').forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         const target = e.currentTarget;
@@ -520,13 +702,11 @@ async function load() {
       });
     });
 
-    document.querySelectorAll('button[data-resa]').forEach(function(btn) {
-      if (!btn.classList.contains('btn-send-contract')) {
-        btn.addEventListener('click', function(e) {
-          const target = e.currentTarget;
-          editer(JSON.parse(target.dataset.resa.replace(/&#39;/g, "'")));
-        });
-      }
+    document.querySelectorAll('.btn-edit').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        const target = e.currentTarget;
+        editer(JSON.parse(target.dataset.resa.replace(/&#39;/g, "'")));
+      });
     });
 
     document.querySelectorAll('.btn-delete').forEach(function(btn) {
@@ -537,7 +717,7 @@ async function load() {
   } catch (err) {
     console.error('❌ Erreur:', err);
     document.getElementById('tbody').innerHTML =
-      '<tr><td colspan="16" class="text-center py-8 text-red-500">❌ Erreur de chargement</td></tr>';
+      '<tr><td colspan="15" class="text-center py-8 text-red-400">❌ Erreur de chargement</td></tr>';
   }
 }
 
@@ -566,10 +746,13 @@ async function maj(id, champ, val) {
 
 function editer(resa) {
   console.log('🖊️ Édition de la réservation:', resa);
+  
   document.getElementById('titre').textContent = 'Modifier';
   document.getElementById('id').value = resa.id;
-  document.getElementById('enlevement').value = toLocalDateString(resa.enlevement);
-  document.getElementById('restitution').value = toLocalDateString(resa.restitution);
+  
+  document.getElementById('enlevement').value = dateToInputValue(resa.enlevement);
+  document.getElementById('restitution').value = dateToInputValue(resa.restitution);
+  
   document.getElementById('nom').value = resa.nom || '';
   document.getElementById('prenom').value = resa.prenom || '';
   document.getElementById('email').value = resa.email || '';
@@ -589,9 +772,7 @@ async function supprimer(id) {
     showCancelButton: true,
     confirmButtonColor: '#dc2626',
     confirmButtonText: 'Oui',
-    cancelButtonText: 'Non',
-    background: '#1a1a2e',
-    color: '#fff'
+    cancelButtonText: 'Non'
   });
 
   if (conf.isConfirmed) {
@@ -604,27 +785,17 @@ async function supprimer(id) {
       });
       setTimeout(() => {
         load();
-        Swal.fire({
-          title: 'Supprimé !',
-          icon: 'success',
-          background: '#1a1a2e',
-          color: '#fff'
-        });
+        Swal.fire('Supprimé !', '', 'success');
       }, 1000);
     } catch (err) {
-      Swal.fire({
-        title: 'Erreur',
-        text: 'Impossible de supprimer',
-        icon: 'error',
-        background: '#1a1a2e',
-        color: '#fff'
-      });
+      Swal.fire('Erreur', 'Impossible de supprimer', 'error');
     }
   }
 }
 
 async function save() {
   const edit = document.getElementById('id').value;
+  
   const enlevement = document.getElementById('enlevement').value;
   const restitution = document.getElementById('restitution').value;
   const nom = document.getElementById('nom').value;
@@ -663,8 +834,6 @@ async function save() {
   Swal.fire({
     title: 'Enregistrement...',
     allowOutsideClick: false,
-    background: '#1a1a2e',
-    color: '#fff',
     didOpen: () => Swal.showLoading()
   });
 
@@ -683,22 +852,10 @@ async function save() {
     await new Promise(r => setTimeout(r, 5000));
     document.getElementById('modal').classList.add('hidden');
     await load();
-    Swal.fire({
-      title: 'Succès !',
-      text: 'Réservation enregistrée + Événement ajouté au calendrier',
-      icon: 'success',
-      background: '#1a1a2e',
-      color: '#fff'
-    });
+    Swal.fire('Succès !', 'Réservation enregistrée + Événement ajouté au calendrier', 'success');
   } catch (err) {
     console.error('❌', err);
-    Swal.fire({
-      title: 'Erreur',
-      text: 'Impossible d\'enregistrer',
-      icon: 'error',
-      background: '#1a1a2e',
-      color: '#fff'
-    });
+    Swal.fire('Erreur', 'Impossible d\'enregistrer', 'error');
   }
 }
 
@@ -711,7 +868,6 @@ function saveEmailConfig() {
   localStorage.setItem('emailConfig_' + CLIENT_ID, JSON.stringify(config));
 }
 
-// Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('loginBtn')?.addEventListener('click', () => {
     if (document.getElementById('password').value === PASSWORD) {
@@ -727,13 +883,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       load();
     } else {
-      Swal.fire({
-        title: 'Erreur',
-        text: 'Mot de passe incorrect',
-        icon: 'error',
-        background: '#1a1a2e',
-        color: '#fff'
-      });
+      Swal.fire('Erreur', 'Mot de passe incorrect', 'error');
     }
   });
 
@@ -773,79 +923,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-
-<!-- MODAL RESERVATION -->
-<div id="modal" class="fixed inset-0 bg-black bg-opacity-80 hidden flex items-center justify-center z-50 p-4">
-  <div class="card-dark rounded-2xl p-8 max-w-4xl w-full max-h-screen overflow-y-auto" autocomplete="off">
-    <h2 class="text-3xl font-bold mb-6 text-white" id="titre">Nouvelle réservation</h2>
-    <div class="grid md:grid-cols-2 gap-6">
-      <input type="hidden" id="id">
-      <div>
-        <label class="block text-sm font-bold mb-2 text-gray-400">Date d'enlèvement</label>
-        <input type="date" id="enlevement" class="w-full p-3 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500" autocomplete="off">
-      </div>
-      <div>
-        <label class="block text-sm font-bold mb-2 text-gray-400">Date de restitution</label>
-        <input type="date" id="restitution" class="w-full p-3 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500" autocomplete="off">
-      </div>
-      <div>
-        <label class="block text-sm font-bold mb-2 text-gray-400">Nom</label>
-        <input type="text" id="nom" placeholder="Nom" class="w-full p-3 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500" autocomplete="off">
-      </div>
-      <div>
-        <label class="block text-sm font-bold mb-2 text-gray-400">Prénom</label>
-        <input type="text" id="prenom" placeholder="Prénom" class="w-full p-3 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500" autocomplete="off">
-      </div>
-      <div>
-        <label class="block text-sm font-bold mb-2 text-gray-400">Email</label>
-        <input type="email" id="email" placeholder="email@example.com" class="w-full p-3 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500" autocomplete="off">
-      </div>
-      <div>
-        <label class="block text-sm font-bold mb-2 text-gray-400">Téléphone</label>
-        <input type="tel" id="telephone" placeholder="0612345678" class="w-full p-3 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500" autocomplete="off">
-      </div>
-      <div>
-        <label class="block text-sm font-bold mb-2 text-gray-400">Adresse</label>
-        <input type="text" id="adresse" placeholder="Adresse" class="w-full p-3 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500" autocomplete="off">
-      </div>
-      <div>
-        <label class="block text-sm font-bold mb-2 text-gray-400">Code Postal</label>
-        <input type="text" id="codePostal" placeholder="Code Postal" class="w-full p-3 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500" autocomplete="off">
-      </div>
-      <div>
-        <label class="block text-sm font-bold mb-2 text-gray-400">Ville</label>
-        <input type="text" id="ville" placeholder="Ville" class="w-full p-3 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500" autocomplete="off">
-      </div>
-      <div>
-        <label class="block text-sm font-bold mb-2 text-gray-400">Pseudo</label>
-        <input type="text" id="pseudo" placeholder="Pseudo" class="w-full p-3 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500" autocomplete="off">
-      </div>
-      <div>
-        <label class="block text-sm font-bold mb-2 text-gray-400">Template</label>
-        <select id="template" class="w-full p-3 border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-500 cursor-pointer">
-          <option value="">Non</option>
-          <option value="Oui">Oui</option>
-        </select>
-      </div>
-      <div class="md:col-span-2 flex gap-4">
-        <button id="saveBtn" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-lg font-bold text-lg flex-1 transition hover:shadow-lg">💾 Enregistrer</button>
-        <button id="cancelBtn" class="bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 rounded-lg font-bold text-lg transition">❌ Annuler</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL CONTRAT -->
-<div id="contractEditorModal" class="fixed inset-0 bg-black bg-opacity-90 hidden flex items-center justify-center z-50 p-4">
-  <div class="card-dark rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col">
-    <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-t-2xl text-center">
-      <h2 class="text-3xl font-bold">📝 Modifier mon contrat Photobooth</h2>
-    </div>
-    <div class="flex-1 overflow-y-auto p-10 bg-white" id="contractPreview" contenteditable="true"></div>
-    <div class="p-6 bg-gray-900 flex justify-center gap-6 rounded-b-2xl">
-      <button id="saveContractBtn" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-10 py-4 rounded-lg font-bold text-xl hover:shadow-lg">💾 Sauvegarder</button>
-      <button id="resetContractBtn" class="bg-gradient-to-r from-orange-500 to-red-600 text-white px-10 py-4 rounded-lg font-bold text-xl hover:shadow-lg">🔄 Réinitialiser</button>
-      <button id="closeContractBtn" class="bg-gray-700 hover:bg-gray-600 text-white px-10 py-4 rounded-lg font-bold text-xl">❌ Fermer</button>
-    </div>
-  </div>
-</div>
