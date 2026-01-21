@@ -73,11 +73,12 @@
     }
     
     .powered-by {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      letter-spacing: 0.05em;
-      font-style: italic;
-    }
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  font-style: italic;
+  font-size: 1.125rem;
+}
     
     /* Table Styles Dark */
     .table-wrapper { 
@@ -182,10 +183,12 @@
     }
     
     /* Colonnes réduites */
-    th:nth-child(11), td:nth-child(11) { width: 60px; } /* Signé */
-    th:nth-child(12), td:nth-child(12) { width: 60px; } /* Acompte */
-    th:nth-child(13), td:nth-child(13) { width: 60px; } /* Caution */
-    th:nth-child(14), td:nth-child(14) { width: 70px; } /* Template */
+th:nth-child(1), td:nth-child(1) { width: 80px; } /* Enlèvement réduit */
+th:nth-child(2), td:nth-child(2) { width: 80px; } /* Restitution réduit */
+th:nth-child(11), td:nth-child(11) { width: 90px; } /* Signé */
+th:nth-child(12), td:nth-child(12) { width: 100px; } /* Acompte */
+th:nth-child(13), td:nth-child(13) { width: 100px; } /* Caution */
+th:nth-child(14), td:nth-child(14) { width: 110px; } /* Template */
     
     /* Badge statut avec icône */
     .status-badge {
@@ -250,37 +253,37 @@
 <div id="app" class="hidden p-6">
   
   <!-- Header Premium avec accent line -->
-  <div class="card-dark rounded-2xl p-8 mb-6 relative overflow-hidden">
-    <div class="accent-line absolute top-0 left-0 right-0"></div>
-    <div class="flex flex-wrap justify-between items-center gap-4 mt-2">
-      <div class="flex items-center gap-4">
-        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-3xl glow-blue">
-          📸
-        </div>
-        <div>
-          <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-            Photobooth Pro
-          </h1>
-          <p class="text-gray-400 text-sm powered-by">Powered by AmaxBooth</p>
-        </div>
+<div class="card-dark rounded-2xl p-8 mb-6 relative overflow-hidden">
+  <div class="accent-line absolute top-0 left-0 right-0"></div>
+  <div class="flex flex-wrap justify-between items-center gap-4 mt-2">
+    <div class="flex items-center gap-4">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-3xl glow-blue">
+        📸
       </div>
-      
-      <div class="flex gap-3 flex-wrap">
-        <select id="filtre" 
-          class="btn-neon border-blue-500 text-blue-400 px-6 py-3 rounded-xl font-semibold bg-transparent cursor-pointer focus:outline-none">
-          <option value="" class="bg-gray-800">Tous les mois</option>
-        </select>
-        <button id="newBtn" 
-          class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition glow-green">
-          + Nouvelle réservation
-        </button>
-        <button id="logoutBtn" 
-          class="bg-gradient-to-r from-red-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition">
-          🚪 Déconnexion
-        </button>
+      <div>
+        <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+          Photobooth Pro
+        </h1>
+        <p class="text-gray-400 text-lg powered-by">Powered by AmaxBooth</p>
       </div>
     </div>
+    
+    <div class="flex gap-3 flex-wrap">
+      <select id="filtre" 
+        class="btn-neon border-blue-500 text-blue-400 px-6 py-3 rounded-xl font-semibold bg-transparent cursor-pointer focus:outline-none">
+        <option value="" class="bg-gray-800">Tous les mois</option>
+      </select>
+      <button id="newBtn" 
+        class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition glow-green">
+        + Nouvelle réservation
+      </button>
+      <button id="logoutBtn" 
+        class="bg-gradient-to-r from-red-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition">
+        🚪 Déconnexion
+      </button>
+    </div>
   </div>
+</div>
 
   <!-- Stats rapides -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -300,16 +303,16 @@
       <div class="text-gray-400 text-sm">Action requise</div>
     </div>
   </div>
-<!-- Configuration Email Dark avec icône clé -->
-  <div class="card-dark rounded-2xl p-8 mb-6 border-l-4 border-yellow-500">
-    <div class="flex items-center gap-3 mb-6">
-      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center text-2xl glow-orange">
-        🔑
-      </div>
-      <h3 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
-        Configuration Email Contrat
-      </h3>
+<!-- Configuration Email Dark avec icône engrenage -->
+<div class="card-dark rounded-2xl p-8 mb-6 border-l-4 border-yellow-500">
+  <div class="flex items-center gap-3 mb-6">
+    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center text-2xl glow-orange">
+      ⚙️
     </div>
+    <h3 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
+      Configuration Email Contrat
+    </h3>
+  </div>
     <div class="grid md:grid-cols-2 gap-6">
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-300">Objet du mail :</label>
@@ -358,25 +361,25 @@ Alexis - Photobooth</textarea>
     <div class="table-wrapper">
       <table>
         <thead>
-          <tr>
-            <th>📅 ENLÈVEMENT</th>
-            <th>📅 RESTITUTION</th>
-            <th>👤 NOM PRÉNOM</th>
-            <th>📧 EMAIL</th>
-            <th>📞 TÉLÉPHONE</th>
-            <th>📍 ADRESSE</th>
-            <th>📮 CP</th>
-            <th>🏙️ VILLE</th>
-            <th>🎭 PSEUDO</th>
-            <th>✉️ ENVOYER</th>
-            <th>✅</th>
-            <th>💰</th>
-            <th>🔒</th>
-            <th>🎨</th>
-            <th>🔧 STATUT</th>
-            <th>⚙️ ACTIONS</th>
-          </tr>
-        </thead>
+  <tr>
+    <th>📅 ENLÈVEMENT</th>
+    <th>📅 RESTITUTION</th>
+    <th>👤 NOM PRÉNOM</th>
+    <th>📧 EMAIL</th>
+    <th>📞 TÉLÉPHONE</th>
+    <th>📍 ADRESSE</th>
+    <th>📮 CP</th>
+    <th>🏙️ VILLE</th>
+    <th>🎭 PSEUDO</th>
+    <th>✉️ ENVOYER</th>
+    <th>✅ SIGNÉ</th>
+    <th>💰 ACOMPTE</th>
+    <th>🔒 CAUTION</th>
+    <th>🎨 TEMPLATE</th>
+    <th>🔧 STATUT</th>
+    <th>⚙️ ACTIONS</th>
+  </tr>
+</thead>
         <tbody id="tbody">
           <tr>
             <td colspan="16" class="text-center py-8 text-gray-400">
