@@ -73,12 +73,12 @@
     }
     
     .powered-by {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  font-style: italic;
-  font-size: 1.125rem;
-}
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      font-style: italic;
+      font-size: 1.125rem;
+    }
     
     /* Table Styles Dark */
     .table-wrapper { 
@@ -170,25 +170,17 @@
       filter: blur(3rem);
     }
     
-    .stat-card.blue::before {
-      background: #3b82f6;
-    }
-    
-    .stat-card.green::before {
-      background: #22c55e;
-    }
-    
-    .stat-card.orange::before {
-      background: #fb923c;
-    }
+    .stat-card.blue::before { background: #3b82f6; }
+    .stat-card.green::before { background: #22c55e; }
+    .stat-card.orange::before { background: #fb923c; }
     
     /* Colonnes réduites */
-th:nth-child(1), td:nth-child(1) { width: 80px; } /* Enlèvement réduit */
-th:nth-child(2), td:nth-child(2) { width: 80px; } /* Restitution réduit */
-th:nth-child(11), td:nth-child(11) { width: 90px; } /* Signé */
-th:nth-child(12), td:nth-child(12) { width: 100px; } /* Acompte */
-th:nth-child(13), td:nth-child(13) { width: 100px; } /* Caution */
-th:nth-child(14), td:nth-child(14) { width: 110px; } /* Template */
+    th:nth-child(1), td:nth-child(1) { width: 80px; }
+    th:nth-child(2), td:nth-child(2) { width: 80px; }
+    th:nth-child(11), td:nth-child(11) { width: 90px; }
+    th:nth-child(12), td:nth-child(12) { width: 100px; }
+    th:nth-child(13), td:nth-child(13) { width: 100px; }
+    th:nth-child(14), td:nth-child(14) { width: 110px; }
     
     /* Badge statut avec icône */
     .status-badge {
@@ -211,6 +203,14 @@ th:nth-child(14), td:nth-child(14) { width: 110px; } /* Template */
       background: rgba(251, 146, 60, 0.2);
       color: #fb923c;
       border: 1px solid rgba(251, 146, 60, 0.3);
+    }
+
+    /* ✅ FIX: iframe contrat isolé */
+    #contractFrame {
+      width: 100%;
+      min-height: 60vh;
+      border: none;
+      flex: 1;
     }
   </style>
 </head>
@@ -253,37 +253,37 @@ th:nth-child(14), td:nth-child(14) { width: 110px; } /* Template */
 <div id="app" class="hidden p-6">
   
   <!-- Header Premium avec accent line -->
-<div class="card-dark rounded-2xl p-8 mb-6 relative overflow-hidden">
-  <div class="accent-line absolute top-0 left-0 right-0"></div>
-  <div class="flex flex-wrap justify-between items-center gap-4 mt-2">
-    <div class="flex items-center gap-4">
-      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-3xl glow-blue">
-        📸
+  <div class="card-dark rounded-2xl p-8 mb-6 relative overflow-hidden">
+    <div class="accent-line absolute top-0 left-0 right-0"></div>
+    <div class="flex flex-wrap justify-between items-center gap-4 mt-2">
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-3xl glow-blue">
+          📸
+        </div>
+        <div>
+          <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+            Photobooth Pro
+          </h1>
+          <p class="text-gray-400 text-lg powered-by">Powered by AmaxBooth</p>
+        </div>
       </div>
-      <div>
-        <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-          Photobooth Pro
-        </h1>
-        <p class="text-gray-400 text-lg powered-by">Powered by AmaxBooth</p>
+      
+      <div class="flex gap-3 flex-wrap">
+        <select id="filtre" 
+          class="btn-neon border-blue-500 text-blue-400 px-6 py-3 rounded-xl font-semibold bg-transparent cursor-pointer focus:outline-none">
+          <option value="" class="bg-gray-800">Tous les mois</option>
+        </select>
+        <button id="newBtn" 
+          class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition glow-green">
+          + Nouvelle réservation
+        </button>
+        <button id="logoutBtn" 
+          class="bg-gradient-to-r from-red-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition">
+          🚪 Déconnexion
+        </button>
       </div>
-    </div>
-    
-    <div class="flex gap-3 flex-wrap">
-      <select id="filtre" 
-        class="btn-neon border-blue-500 text-blue-400 px-6 py-3 rounded-xl font-semibold bg-transparent cursor-pointer focus:outline-none">
-        <option value="" class="bg-gray-800">Tous les mois</option>
-      </select>
-      <button id="newBtn" 
-        class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition glow-green">
-        + Nouvelle réservation
-      </button>
-      <button id="logoutBtn" 
-        class="bg-gradient-to-r from-red-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition">
-        🚪 Déconnexion
-      </button>
     </div>
   </div>
-</div>
 
   <!-- Stats rapides -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -303,16 +303,17 @@ th:nth-child(14), td:nth-child(14) { width: 110px; } /* Template */
       <div class="text-gray-400 text-sm">Action requise</div>
     </div>
   </div>
-<!-- Configuration Email Dark avec icône engrenage -->
-<div class="card-dark rounded-2xl p-8 mb-6 border-l-4 border-yellow-500">
-  <div class="flex items-center gap-3 mb-6">
-    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center text-2xl glow-orange">
-      ⚙️
+
+  <!-- Configuration Email Dark avec icône engrenage -->
+  <div class="card-dark rounded-2xl p-8 mb-6 border-l-4 border-yellow-500">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center text-2xl glow-orange">
+        ⚙️
+      </div>
+      <h3 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
+        Configuration Email Contrat
+      </h3>
     </div>
-    <h3 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
-      Configuration Email Contrat
-    </h3>
-  </div>
     <div class="grid md:grid-cols-2 gap-6">
       <div>
         <label class="block text-sm font-bold mb-2 text-gray-300">Objet du mail :</label>
@@ -347,7 +348,7 @@ Alexis - Photobooth</textarea>
     </button>
   </div>
 
-  <!-- Tableau principal Dark Mode avec colonnes style image 1 -->
+  <!-- Tableau principal Dark Mode -->
   <div class="card-dark rounded-2xl overflow-hidden">
     <div class="p-6 border-b border-gray-700">
       <div class="flex items-center gap-3">
@@ -361,25 +362,25 @@ Alexis - Photobooth</textarea>
     <div class="table-wrapper">
       <table>
         <thead>
-  <tr>
-    <th>📅 ENLÈVEMENT</th>
-    <th>📅 RESTITUTION</th>
-    <th>👤 NOM PRÉNOM</th>
-    <th>📧 EMAIL</th>
-    <th>📞 TÉLÉPHONE</th>
-    <th>📍 ADRESSE</th>
-    <th>📮 CP</th>
-    <th>🏙️ VILLE</th>
-    <th>🎭 PSEUDO</th>
-    <th>✉️ ENVOYER</th>
-    <th>✅ SIGNÉ</th>
-    <th>💰 ACOMPTE</th>
-    <th>🔒 CAUTION</th>
-    <th>🎨 TEMPLATE</th>
-    <th>🔧 STATUT</th>
-    <th>⚙️ ACTIONS</th>
-  </tr>
-</thead>
+          <tr>
+            <th>📅 ENLÈVEMENT</th>
+            <th>📅 RESTITUTION</th>
+            <th>👤 NOM PRÉNOM</th>
+            <th>📧 EMAIL</th>
+            <th>📞 TÉLÉPHONE</th>
+            <th>📍 ADRESSE</th>
+            <th>📮 CP</th>
+            <th>🏙️ VILLE</th>
+            <th>🎭 PSEUDO</th>
+            <th>✉️ ENVOYER</th>
+            <th>✅ SIGNÉ</th>
+            <th>💰 ACOMPTE</th>
+            <th>🔒 CAUTION</th>
+            <th>🎨 TEMPLATE</th>
+            <th>🔧 STATUT</th>
+            <th>⚙️ ACTIONS</th>
+          </tr>
+        </thead>
         <tbody id="tbody">
           <tr>
             <td colspan="16" class="text-center py-8 text-gray-400">
@@ -498,14 +499,15 @@ Alexis - Photobooth</textarea>
   </div>
 </div>
 
-<!-- Modal Éditeur de contrat Dark -->
+<!-- ✅ Modal Éditeur de contrat - avec IFRAME pour isoler les styles -->
 <div id="contractEditorModal" class="fixed inset-0 bg-black bg-opacity-90 hidden flex items-center justify-center z-50 p-4">
   <div class="card-dark rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col overflow-hidden">
-    <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 text-center">
+    <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 text-center flex-shrink-0">
       <h2 class="text-3xl font-bold">📝 Modifier mon contrat Photobooth</h2>
     </div>
-    <div class="flex-1 overflow-y-auto p-10" style="background: #fff;" id="contractPreview" contenteditable="true"></div>
-    <div class="p-6 bg-gray-900 flex justify-center gap-6 border-t border-gray-700">
+    <!-- ✅ IFRAME au lieu de div contenteditable — les styles du contrat restent isolés -->
+    <iframe id="contractFrame" style="width:100%;flex:1;min-height:500px;border:none;background:#fff;"></iframe>
+    <div class="p-6 bg-gray-900 flex justify-center gap-6 border-t border-gray-700 flex-shrink-0">
       <button id="saveContractBtn" 
         class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-10 py-4 rounded-lg font-bold text-xl hover:shadow-lg transition glow-green">
         💾 Sauvegarder
@@ -521,6 +523,7 @@ Alexis - Photobooth</textarea>
     </div>
   </div>
 </div>
+
 <script>
 const URL = "https://script.google.com/macros/s/AKfycbx9_UxfC_c4XOCk21bVpqPchJK_jUzuRhgsy9j-b5fdENepw7_JV9tCKyjAbnYwh9aZ/exec";
 const PASSWORD = "amax";
@@ -725,59 +728,53 @@ function tel(t) {
 
 function dateToInputValue(dateStr) {
   if (!dateStr) return '';
-  
-  console.log('📅 Date reçue:', dateStr, 'Type:', typeof dateStr);
-  
-  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-    console.log('✅ Format YYYY-MM-DD détecté:', dateStr);
-    return dateStr;
-  }
-  
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
   if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateStr)) {
     const parts = dateStr.split('/');
-    const day = parts[0].padStart(2, '0');
-    const month = parts[1].padStart(2, '0');
-    const year = parts[2];
-    const result = `${year}-${month}-${day}`;
-    console.log('✅ Format DD/MM/YYYY converti:', dateStr, '→', result);
-    return result;
+    return `${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`;
   }
-  
   if (dateStr.includes('T')) {
     const d = new Date(dateStr);
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    const result = `${year}-${month}-${day}`;
-    console.log('✅ Format ISO UTC converti en date locale:', dateStr, '→', result);
-    return result;
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
   }
-  
   if (dateStr instanceof Date) {
-    const year = dateStr.getFullYear();
-    const month = String(dateStr.getMonth() + 1).padStart(2, '0');
-    const day = String(dateStr.getDate()).padStart(2, '0');
-    const result = `${year}-${month}-${day}`;
-    console.log('✅ Objet Date converti:', dateStr, '→', result);
-    return result;
+    return `${dateStr.getFullYear()}-${String(dateStr.getMonth()+1).padStart(2,'0')}-${String(dateStr.getDate()).padStart(2,'0')}`;
   }
-  
-  console.warn('⚠️ Format de date non reconnu:', dateStr);
   return '';
 }
 
+// ✅ FIX PRINCIPAL : utilise srcdoc sur l'iframe pour isoler les styles du contrat
 function openContractEditor() {
-  const preview = document.getElementById('contractPreview');
+  const frame = document.getElementById('contractFrame');
   let html = localStorage.getItem('contrat_' + CLIENT_ID);
   if (!html) html = getDefaultContract();
-  preview.innerHTML = html;
+
+  // srcdoc injecte le HTML dans l'iframe sans contaminer la page principale
+  frame.srcdoc = html;
+
+  // Rendre le contenu éditable une fois l'iframe chargée
+  frame.onload = function() {
+    try {
+      frame.contentDocument.body.contentEditable = 'true';
+      frame.contentDocument.designMode = 'on';
+    } catch(e) {
+      console.warn('iframe contentEditable:', e);
+    }
+  };
+
   document.getElementById('contractEditorModal').classList.remove('hidden');
 }
 
+// ✅ Sauvegarde le innerHTML de l'iframe
 function saveCustomContract() {
-  const html = document.getElementById('contractPreview').innerHTML;
-  localStorage.setItem('contrat_' + CLIENT_ID, html);
-  Swal.fire('Sauvegardé !', 'Votre contrat personnalisé est enregistré', 'success');
+  const frame = document.getElementById('contractFrame');
+  try {
+    const html = frame.contentDocument.documentElement.outerHTML;
+    localStorage.setItem('contrat_' + CLIENT_ID, html);
+    Swal.fire('Sauvegardé !', 'Votre contrat personnalisé est enregistré', 'success');
+  } catch(e) {
+    Swal.fire('Erreur', 'Impossible de sauvegarder le contrat', 'error');
+  }
 }
 
 function resetToDefaultContract() {
@@ -823,7 +820,6 @@ async function load() {
   try {
     const r = await fetch(URL + '?clientId=' + CLIENT_ID);
     const j = await r.json();
-    console.log('🔥 Données:', j);
     const data = j.data || [];
 
     const filtre = document.getElementById('filtre').value;
@@ -848,12 +844,9 @@ async function load() {
       return;
     }
 
-    // ✅ Calcul des stats avec revenus
     const total = data.length;
     const confirmed = data.filter(r => r.contratSigne === 'Oui' && r.acompte === 'Oui');
     const pending = total - confirmed.length;
-    
-    // Calcul des revenus : 75€ base + 25€ si template = Oui
     const revenue = confirmed.reduce((sum, r) => {
       let price = 75;
       if (r.template === 'Oui') price += 25;
@@ -869,7 +862,6 @@ async function load() {
         return !filtre || (x.enlevement && x.enlevement.startsWith(filtre));
       })
       .map(function(r) {
-        // ✅ Détermination du statut : Confirmé si les 2 cases cochées, sinon En attente
         const isConfirmed = r.contratSigne === 'Oui' && r.acompte === 'Oui';
         const rowClass = isConfirmed ? 'status-confirmed' : 'status-pending';
         const statusBadge = isConfirmed 
@@ -959,7 +951,6 @@ async function load() {
 
 async function maj(id, champ, val) {
   try {
-    console.log('🔄 MAJ:', id, champ, val);
     await fetch(URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -981,14 +972,10 @@ async function maj(id, champ, val) {
 }
 
 function editer(resa) {
-  console.log('🖊️ Édition de la réservation:', resa);
-  
   document.getElementById('titre').textContent = 'Modifier';
   document.getElementById('id').value = resa.id;
-  
   document.getElementById('enlevement').value = dateToInputValue(resa.enlevement);
   document.getElementById('restitution').value = dateToInputValue(resa.restitution);
-  
   document.getElementById('nom').value = resa.nom || '';
   document.getElementById('prenom').value = resa.prenom || '';
   document.getElementById('email').value = resa.email || '';
@@ -1031,32 +1018,19 @@ async function supprimer(id) {
 
 async function save() {
   const edit = document.getElementById('id').value;
-  
-  const enlevement = document.getElementById('enlevement').value;
-  const restitution = document.getElementById('restitution').value;
-  const nom = document.getElementById('nom').value;
-  const prenom = document.getElementById('prenom').value;
-  const email = document.getElementById('email').value;
-  const telephone = document.getElementById('telephone').value;
-  const adresse = document.getElementById('adresse').value;
-  const codePostal = document.getElementById('codePostal').value;
-  const ville = document.getElementById('ville').value;
-  const pseudo = document.getElementById('pseudo').value;
-  const template = document.getElementById('template').value;
-  
   const resa = {
     id: edit || Date.now().toString(),
-    enlevement: enlevement,
-    restitution: restitution,
-    nom: nom,
-    prenom: prenom,
-    email: email,
-    telephone: telephone,
-    adresse: adresse,
-    codePostal: codePostal,
-    ville: ville,
-    pseudo: pseudo,
-    template: template
+    enlevement: document.getElementById('enlevement').value,
+    restitution: document.getElementById('restitution').value,
+    nom: document.getElementById('nom').value,
+    prenom: document.getElementById('prenom').value,
+    email: document.getElementById('email').value,
+    telephone: document.getElementById('telephone').value,
+    adresse: document.getElementById('adresse').value,
+    codePostal: document.getElementById('codePostal').value,
+    ville: document.getElementById('ville').value,
+    pseudo: document.getElementById('pseudo').value,
+    template: document.getElementById('template').value
   };
 
   if (!edit) {
@@ -1065,13 +1039,7 @@ async function save() {
     resa.caution = 'Non';
   }
 
-  console.log('🚀 Objet envoyé:', resa);
-
-  Swal.fire({
-    title: 'Enregistrement...',
-    allowOutsideClick: false,
-    didOpen: () => Swal.showLoading()
-  });
+  Swal.fire({ title: 'Enregistrement...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
   try {
     await fetch(URL, {
@@ -1084,13 +1052,11 @@ async function save() {
       }),
       mode: 'no-cors'
     });
-
     await new Promise(r => setTimeout(r, 5000));
     document.getElementById('modal').classList.add('hidden');
     await load();
-    Swal.fire('Succès !', 'Réservation enregistrée + Événement ajouté au calendrier', 'success');
+    Swal.fire('Succès !', 'Réservation enregistrée', 'success');
   } catch (err) {
-    console.error('❌', err);
     Swal.fire('Erreur', 'Impossible d\'enregistrer', 'error');
   }
 }
@@ -1109,7 +1075,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('password').value === PASSWORD) {
       document.getElementById('login').classList.add('hidden');
       document.getElementById('app').classList.remove('hidden');
-
       const saved = localStorage.getItem('emailConfig_' + CLIENT_ID);
       if (saved) {
         const c = JSON.parse(saved);
@@ -1136,22 +1101,30 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('openContractBtn')?.addEventListener('click', openContractEditor);
+
   document.getElementById('closeContractBtn')?.addEventListener('click', () => {
     document.getElementById('contractEditorModal').classList.add('hidden');
   });
+
   document.getElementById('saveContractBtn')?.addEventListener('click', saveCustomContract);
   document.getElementById('resetContractBtn')?.addEventListener('click', resetToDefaultContract);
+
   document.getElementById('cancelBtn')?.addEventListener('click', () => {
     document.getElementById('modal').classList.add('hidden');
   });
+
   document.getElementById('saveBtn')?.addEventListener('click', save);
+
   document.getElementById('logoutBtn')?.addEventListener('click', () => location.reload());
+
   document.getElementById('filtre')?.addEventListener('change', load);
+
   document.getElementById('enlevement')?.addEventListener('change', function() {
     if (this.value && !document.getElementById('restitution').value) {
       document.getElementById('restitution').value = this.value;
     }
   });
+
   document.getElementById('sujet')?.addEventListener('change', saveEmailConfig);
   document.getElementById('emailCopie')?.addEventListener('change', saveEmailConfig);
   document.getElementById('corps')?.addEventListener('change', saveEmailConfig);
