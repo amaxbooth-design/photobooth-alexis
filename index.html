@@ -1009,16 +1009,28 @@ async function load() {
           '<td class="text-gray-300">' + (r.codePostal || '') + '</td>' +
           '<td class="text-gray-300">' + (r.ville || '') + '</td>' +
           '<td class="text-gray-300">' + (r.pseudo || '') + '</td>' +
+
+          // ✉️ Envoyer : toggle simple (click = bascule Oui/Non, pas d'envoi)
           '<td class="text-center">' +
-            '<button class="' + btnContratClass + ' btn-send-contract" ' +
-            'data-id="' + r.id + '" data-resa=\'' + resaJson + '\' title="' + btnContratTitle + '">' + btnContratIcon + '</button>' +
+            '<button class="' + btnContratClass + ' btn-toggle-envoye" ' +
+            'data-id="' + r.id + '" data-envoye="' + (contratEnvoye ? 'Oui' : 'Non') + '" ' +
+            'data-resa=\'' + resaJson + '\' title="' + btnContratTitle + ' — cliquer pour changer">' + btnContratIcon + '</button>' +
           '</td>' +
+
+          // ✅ Signé : bouton toggle style identique
           '<td class="text-center">' +
-            '<input type="checkbox" class="w-5 h-5 cursor-pointer chk-signe" data-id="' + r.id + '" ' + (r.contratSigne === 'Oui' ? 'checked' : '') + '>' +
+            '<button class="' + (r.contratSigne === 'Oui' ? 'btn-contract-sent' : 'btn-contract-not-sent') + ' btn-toggle-signe" ' +
+            'data-id="' + r.id + '" data-signe="' + (r.contratSigne || 'Non') + '" title="' + (r.contratSigne === 'Oui' ? 'Signé ✓ — cliquer pour annuler' : 'Non signé — cliquer pour valider') + '">' +
+            (r.contratSigne === 'Oui' ? '✅' : '📝') +
+            '</button>' +
           '</td>' +
+
+          // 💰 Acompte badge cliquable
           '<td class="text-center">' +
-            '<div class="badge-pay ' + acompteClass + ' btn-acompte" data-id="' + r.id + '" data-montant="' + acompteMontant + '" data-mode="' + acompteMode + '">💰 ' + acompteLabel + '</div>' +
+            '<div class="badge-pay ' + acompteClass + ' btn-acompte" data-id="' + r.id + '" data-montant="' + acompteMontant + '" data-mode="' + acompteMode.replace(/'/g,'&#39;') + '">💰 ' + acompteLabel + '</div>' +
           '</td>' +
+
+          // 🔒 Caution checkbox inchangée
           '<td class="text-center">' +
             '<input type="checkbox" class="w-5 h-5 cursor-pointer chk-caution" data-id="' + r.id + '" ' + (r.caution === 'Oui' ? 'checked' : '') + '>' +
           '</td>' +
@@ -1031,20 +1043,45 @@ async function load() {
         '</tr>';
       }).join('');
 
-    document.querySelectorAll('.btn-send-contract').forEach(function(btn) {
+    // ✉️ Toggle envoyé (simple bascule, pas d'envoi automatique)
+    document.querySelectorAll('.btn-toggle-envoye').forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         const target = e.currentTarget;
-        const resa = JSON.parse(target.dataset.resa.replace(/&#39;/g, "'"));
-        generateAndSendContract(target.dataset.id, resa);
+        const estEnvoye = target.dataset.envoye === 'Oui';
+        // Si pas encore envoyé : on propose d'envoyer ET de marquer, ou juste marquer
+        if (!estEnvoye) {
+          Swal.fire({
+            title: 'Contrat',
+            text: 'Que voulez-vous faire ?',
+            icon: 'question',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: '📧 Envoyer + marquer',
+            denyButtonText: '✅ Juste marquer envoyé',
+            cancelButtonText: 'Annuler'
+          }).then(function(result) {
+            if (result.isConfirmed) {
+              generateAndSendContract(target.dataset.id, JSON.parse(target.dataset.resa.replace(/&#39;/g, "'")));
+            } else if (result.isDenied) {
+              maj(target.dataset.id, 'contratEnvoye', true);
+            }
+          });
+        } else {
+          maj(target.dataset.id, 'contratEnvoye', false);
+        }
       });
     });
 
-    document.querySelectorAll('.chk-signe').forEach(function(cb) {
-      cb.addEventListener('change', function(e) {
-        maj(e.target.dataset.id, 'contratSigne', e.target.checked);
+    // ✅ Toggle signé
+    document.querySelectorAll('.btn-toggle-signe').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        const target = e.currentTarget;
+        const estSigne = target.dataset.signe === 'Oui';
+        maj(target.dataset.id, 'contratSigne', !estSigne);
       });
     });
 
+    // 💰 Badge acompte
     document.querySelectorAll('.btn-acompte').forEach(function(badge) {
       badge.addEventListener('click', function(e) {
         const target = e.currentTarget;
@@ -1052,6 +1089,7 @@ async function load() {
       });
     });
 
+    // 🔒 Caution checkbox
     document.querySelectorAll('.chk-caution').forEach(function(cb) {
       cb.addEventListener('change', function(e) {
         maj(e.target.dataset.id, 'caution', e.target.checked);
@@ -1206,18 +1244,19 @@ let paySelectedMode = '';
 
 function openPayPopup(id, montant, mode) {
   payPopupId = id;
-  paySelectedMode = mode;
+  paySelectedMode = mode || '';
   document.getElementById('payMontant').value = montant || '';
   document.querySelectorAll('.mode-btn').forEach(function(btn) {
-    btn.classList.toggle('active', btn.dataset.mode === mode);
+    btn.classList.toggle('active', btn.dataset.mode === paySelectedMode);
   });
   document.getElementById('payPopup').style.display = 'flex';
+  document.getElementById('payMontant').focus();
 }
 
 function closePayPopup() {
   document.getElementById('payPopup').style.display = 'none';
   payPopupId = null;
-  paySelectedMode = '';
+  // Ne pas remettre paySelectedMode à '' ici pour éviter la perte
 }
 
 function savePayPopup() {
@@ -1236,8 +1275,10 @@ function savePayPopup() {
   maj(payPopupId, 'acompteInfo', acompteInfo);
   closePayPopup();
 }
+// ---- Fin popup acompte ----
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
+  // Boutons mode paiement popup
   document.querySelectorAll('.mode-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       paySelectedMode = btn.dataset.mode;
@@ -1250,11 +1291,6 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('payPopup').addEventListener('click', function(e) {
     if (e.target === document.getElementById('payPopup')) closePayPopup();
   });
-});
-
-// ---- Fin popup acompte ----
-
-document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('loginBtn')?.addEventListener('click', () => {
     if (document.getElementById('password').value === PASSWORD) {
       document.getElementById('login').classList.add('hidden');
