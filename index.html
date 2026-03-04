@@ -212,6 +212,95 @@
       border: none;
       flex: 1;
     }
+
+    /* Bouton contrat envoyé */
+    .btn-contract-sent {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 8px;
+      font-size: 1rem; cursor: pointer; transition: all 0.2s;
+      background: rgba(34,197,94,0.2); color: #22c55e;
+      border: 1px solid rgba(34,197,94,0.4);
+    }
+    .btn-contract-sent:hover { background: rgba(34,197,94,0.35); transform: scale(1.1); }
+    .btn-contract-not-sent {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 8px;
+      font-size: 1rem; cursor: pointer; transition: all 0.2s;
+      background: rgba(251,146,60,0.2); color: #fb923c;
+      border: 1px solid rgba(251,146,60,0.4);
+    }
+    .btn-contract-not-sent:hover { background: rgba(251,146,60,0.35); transform: scale(1.1); }
+
+    /* Badge acompte */
+    .badge-pay {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.3rem 0.65rem; border-radius: 8px;
+      font-size: 0.72rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .badge-pay.unpaid {
+      background: rgba(107,114,128,0.2); color: #9ca3af;
+      border: 1px dashed rgba(107,114,128,0.4);
+    }
+    .badge-pay.unpaid:hover { background: rgba(107,114,128,0.35); }
+    .badge-pay.partial {
+      background: rgba(251,191,36,0.15); color: #fbbf24;
+      border: 1px solid rgba(251,191,36,0.35);
+    }
+    .badge-pay.partial:hover { background: rgba(251,191,36,0.28); }
+    .badge-pay.full {
+      background: rgba(34,197,94,0.15); color: #22c55e;
+      border: 1px solid rgba(34,197,94,0.35);
+    }
+    .badge-pay.full:hover { background: rgba(34,197,94,0.28); }
+
+    /* Popup paiement */
+    .pay-popup-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 200; padding: 1rem;
+    }
+    .pay-popup-box {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 1rem; padding: 1.75rem; width: 100%; max-width: 380px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+    }
+    .pay-popup-title { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 1.25rem; }
+    .pay-popup-label { font-size: 0.75rem; font-weight: 600; color: #94a3b8; margin-bottom: 0.4rem; display: block; }
+    .pay-popup-input {
+      width: 100%; padding: 0.6rem 0.85rem;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 0.5rem; color: #fff; font-size: 0.875rem;
+      outline: none; transition: border 0.2s; margin-bottom: 1rem;
+    }
+    .pay-popup-input:focus { border-color: #3b82f6; }
+    .mode-btn {
+      flex: 1; padding: 0.5rem; border-radius: 0.5rem;
+      font-size: 0.78rem; font-weight: 600; cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05); color: #9ca3af;
+      transition: all 0.15s;
+    }
+    .mode-btn.active {
+      background: rgba(59,130,246,0.25); color: #60a5fa;
+      border-color: rgba(59,130,246,0.5);
+    }
+    .mode-btn:hover:not(.active) { background: rgba(255,255,255,0.1); color: #fff; }
+    .btn-save-pay {
+      width: 100%; padding: 0.65rem; margin-top: 1.25rem;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: #fff; border: none; border-radius: 0.65rem;
+      font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s;
+    }
+    .btn-save-pay:hover { opacity: 0.85; }
+    .btn-cancel-pay {
+      width: 100%; padding: 0.55rem; margin-top: 0.5rem;
+      background: transparent; color: #6b7280;
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 0.65rem;
+      font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-cancel-pay:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
   </style>
 </head>
 <body>
@@ -496,6 +585,24 @@ Alexis - Photobooth</textarea>
         </button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Popup acompte -->
+<div class="pay-popup-overlay" id="payPopup" style="display:none;">
+  <div class="pay-popup-box">
+    <div class="pay-popup-title">💰 Acompte reçu</div>
+    <label class="pay-popup-label">Montant reçu (€)</label>
+    <input type="number" id="payMontant" class="pay-popup-input" placeholder="ex: 35" min="0" max="500">
+    <label class="pay-popup-label">Moyen de paiement</label>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.25rem;">
+      <button class="mode-btn" data-mode="💵 Espèces">💵 Espèces</button>
+      <button class="mode-btn" data-mode="🏦 Virement">🏦 Virement</button>
+      <button class="mode-btn" data-mode="🅿️ PayPal">🅿️ PayPal</button>
+      <button class="mode-btn" data-mode="📝 Chèque">📝 Chèque</button>
+    </div>
+    <button class="btn-save-pay" id="paySaveBtn">💾 Enregistrer</button>
+    <button class="btn-cancel-pay" id="payCancelBtn">Annuler</button>
   </div>
 </div>
 
@@ -844,7 +951,10 @@ async function load() {
     }
 
     const total = data.length;
-    const confirmed = data.filter(r => r.contratSigne === 'Oui' && r.acompte === 'Oui');
+    const confirmed = data.filter(r => {
+      const m = parseInt((r.acompteInfo || '').split('|')[0]) || 0;
+      return r.contratSigne === 'Oui' && m > 0;
+    });
     const pending = total - confirmed.length;
     const revenue = confirmed.reduce((sum, r) => {
       let price = 75;
@@ -861,16 +971,33 @@ async function load() {
         return !filtre || (x.enlevement && x.enlevement.startsWith(filtre));
       })
       .map(function(r) {
-        const isConfirmed = r.contratSigne === 'Oui' && r.acompte === 'Oui';
+        // Acompte : montant + mode stockés dans acompteInfo (ex: "35|💵 Espèces")
+        const acompteInfo = r.acompteInfo || '';
+        const acompteParts = acompteInfo.split('|');
+        const acompteMontant = parseInt(acompteParts[0]) || 0;
+        const acompteMode = acompteParts[1] || '';
+        let acompteClass = 'unpaid', acompteLabel = '— Ajouter';
+        if (acompteMontant >= 75) { acompteClass = 'full'; acompteLabel = acompteMontant + '€ ' + acompteMode; }
+        else if (acompteMontant > 0) { acompteClass = 'partial'; acompteLabel = acompteMontant + '€ ' + acompteMode; }
+
+        // Statut confirmé si contrat signé + acompte reçu
+        const isConfirmed = r.contratSigne === 'Oui' && acompteMontant > 0;
         const rowClass = isConfirmed ? 'status-confirmed' : 'status-pending';
-        const statusBadge = isConfirmed 
+        const statusBadge = isConfirmed
           ? '<span class="status-badge confirmed">✓ Confirmé</span>'
           : '<span class="status-badge pending">⚠ En attente</span>';
-        
+
+        // Bouton contrat : vert si envoyé, orange sinon
+        const contratEnvoye = r.contratEnvoye === 'Oui';
+        const btnContratClass = contratEnvoye ? 'btn-contract-sent' : 'btn-contract-not-sent';
+        const btnContratTitle = contratEnvoye ? 'Envoyé ✓' : 'Non envoyé — cliquer pour envoyer';
+        const btnContratIcon = contratEnvoye ? '✅' : '📧';
+
         const dateEnlevement = r.enlevement ? new Date(r.enlevement).toLocaleDateString('fr-FR') : '-';
         const dateRestitution = r.restitution ? new Date(r.restitution).toLocaleDateString('fr-FR') : '-';
         const telephone = tel(r.telephone || '');
         const nomComplet = (r.nom || '') + ' ' + (r.prenom || '');
+        const resaJson = JSON.stringify(r).replace(/'/g, '&#39;');
 
         return '<tr class="' + rowClass + '" data-id="' + r.id + '">' +
           '<td class="text-white font-medium">' + dateEnlevement + '</td>' +
@@ -883,14 +1010,14 @@ async function load() {
           '<td class="text-gray-300">' + (r.ville || '') + '</td>' +
           '<td class="text-gray-300">' + (r.pseudo || '') + '</td>' +
           '<td class="text-center">' +
-            '<button class="btn-send-contract bg-gradient-to-r from-orange-500 to-red-600 text-white p-2 rounded-lg font-bold text-sm transition hover:shadow-lg" ' +
-            'data-id="' + r.id + '" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\' title="Envoyer contrat">📧</button>' +
+            '<button class="' + btnContratClass + ' btn-send-contract" ' +
+            'data-id="' + r.id + '" data-resa=\'' + resaJson + '\' title="' + btnContratTitle + '">' + btnContratIcon + '</button>' +
           '</td>' +
           '<td class="text-center">' +
             '<input type="checkbox" class="w-5 h-5 cursor-pointer chk-signe" data-id="' + r.id + '" ' + (r.contratSigne === 'Oui' ? 'checked' : '') + '>' +
           '</td>' +
           '<td class="text-center">' +
-            '<input type="checkbox" class="w-5 h-5 cursor-pointer chk-acompte" data-id="' + r.id + '" ' + (r.acompte === 'Oui' ? 'checked' : '') + '>' +
+            '<div class="badge-pay ' + acompteClass + ' btn-acompte" data-id="' + r.id + '" data-montant="' + acompteMontant + '" data-mode="' + acompteMode + '">💰 ' + acompteLabel + '</div>' +
           '</td>' +
           '<td class="text-center">' +
             '<input type="checkbox" class="w-5 h-5 cursor-pointer chk-caution" data-id="' + r.id + '" ' + (r.caution === 'Oui' ? 'checked' : '') + '>' +
@@ -898,7 +1025,7 @@ async function load() {
           '<td class="text-gray-300">' + (r.template || 'Non') + '</td>' +
           '<td class="text-center">' + statusBadge + '</td>' +
           '<td class="text-center whitespace-nowrap">' +
-            '<button class="btn-edit bg-blue-500 bg-opacity-20 text-blue-400 p-2 rounded-lg hover:bg-opacity-30 transition border border-blue-500 border-opacity-30 mr-2" data-resa=\'' + JSON.stringify(r).replace(/'/g, '&#39;') + '\' title="Modifier">✏️</button>' +
+            '<button class="btn-edit bg-blue-500 bg-opacity-20 text-blue-400 p-2 rounded-lg hover:bg-opacity-30 transition border border-blue-500 border-opacity-30 mr-2" data-resa=\'' + resaJson + '\' title="Modifier">✏️</button>' +
             '<button class="btn-delete bg-red-500 bg-opacity-20 text-red-400 p-2 rounded-lg hover:bg-opacity-30 transition border border-red-500 border-opacity-30" data-id="' + r.id + '" title="Supprimer">🗑️</button>' +
           '</td>' +
         '</tr>';
@@ -907,7 +1034,8 @@ async function load() {
     document.querySelectorAll('.btn-send-contract').forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         const target = e.currentTarget;
-        generateAndSendContract(target.dataset.id, JSON.parse(target.dataset.resa.replace(/&#39;/g, "'")));
+        const resa = JSON.parse(target.dataset.resa.replace(/&#39;/g, "'"));
+        generateAndSendContract(target.dataset.id, resa);
       });
     });
 
@@ -917,9 +1045,10 @@ async function load() {
       });
     });
 
-    document.querySelectorAll('.chk-acompte').forEach(function(cb) {
-      cb.addEventListener('change', function(e) {
-        maj(e.target.dataset.id, 'acompte', e.target.checked);
+    document.querySelectorAll('.btn-acompte').forEach(function(badge) {
+      badge.addEventListener('click', function(e) {
+        const target = e.currentTarget;
+        openPayPopup(target.dataset.id, parseInt(target.dataset.montant) || 0, target.dataset.mode || '');
       });
     });
 
@@ -950,6 +1079,8 @@ async function load() {
 
 async function maj(id, champ, val) {
   try {
+    // acompteInfo est une chaîne, les autres champs sont Oui/Non
+    const valeur = (champ === 'acompteInfo') ? val : (val ? 'Oui' : 'Non');
     await fetch(URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -958,7 +1089,7 @@ async function maj(id, champ, val) {
         action: 'update',
         reservation: {
           id: parseInt(id, 10),
-          [champ]: val ? 'Oui' : 'Non'
+          [champ]: valeur
         }
       }),
       mode: 'no-cors'
@@ -1068,6 +1199,60 @@ function saveEmailConfig() {
   };
   localStorage.setItem('emailConfig_' + CLIENT_ID, JSON.stringify(config));
 }
+
+// ---- Popup acompte ----
+let payPopupId = null;
+let paySelectedMode = '';
+
+function openPayPopup(id, montant, mode) {
+  payPopupId = id;
+  paySelectedMode = mode;
+  document.getElementById('payMontant').value = montant || '';
+  document.querySelectorAll('.mode-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+  document.getElementById('payPopup').style.display = 'flex';
+}
+
+function closePayPopup() {
+  document.getElementById('payPopup').style.display = 'none';
+  payPopupId = null;
+  paySelectedMode = '';
+}
+
+function savePayPopup() {
+  if (!payPopupId) return;
+  const montant = parseInt(document.getElementById('payMontant').value) || 0;
+  if (!paySelectedMode) {
+    document.querySelectorAll('.mode-btn').forEach(function(b) {
+      b.style.outline = '1px solid rgba(239,68,68,0.7)';
+    });
+    setTimeout(function() {
+      document.querySelectorAll('.mode-btn').forEach(function(b) { b.style.outline = ''; });
+    }, 900);
+    return;
+  }
+  const acompteInfo = montant + '|' + paySelectedMode;
+  maj(payPopupId, 'acompteInfo', acompteInfo);
+  closePayPopup();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.mode-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      paySelectedMode = btn.dataset.mode;
+      document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+    });
+  });
+  document.getElementById('paySaveBtn').addEventListener('click', savePayPopup);
+  document.getElementById('payCancelBtn').addEventListener('click', closePayPopup);
+  document.getElementById('payPopup').addEventListener('click', function(e) {
+    if (e.target === document.getElementById('payPopup')) closePayPopup();
+  });
+});
+
+// ---- Fin popup acompte ----
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('loginBtn')?.addEventListener('click', () => {
