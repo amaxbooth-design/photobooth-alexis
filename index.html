@@ -413,11 +413,15 @@ async function load() {
     tbody.innerHTML = data
       .filter(x => !filtre || (x.enlevement && x.enlevement.startsWith(filtre)))
       .map(r => {
-        // Acompte
-        const aRaw = r.acompte || '';
-        let aMontant=0, aMode='';
-        if (aRaw.includes('|')) { const p=aRaw.split('|'); aMontant=parseInt(p[0])||0; aMode=p[1]||''; }
-        else if (aRaw==='Oui') { aMontant=35; }
+        // Acompte — Google Sheets donne Oui/Non, détails dans localStorage
+        const lsKey = 'pay_' + CLIENT_ID + '_' + r.id;
+        let aMontant = 0, aMode = '';
+        try {
+          const saved = localStorage.getItem(lsKey);
+          if (saved) { const p = JSON.parse(saved); aMontant = p.montant || 0; aMode = p.mode || ''; }
+        } catch(e) {}
+        // Fallback : si Oui dans Sheets mais rien en local → afficher "35€"
+        if (aMontant === 0 && r.acompte === 'Oui') aMontant = 35;
         const aCls = aMontant>=75 ? 'full' : aMontant>0 ? 'partial' : 'unpaid';
         const aLbl = aMontant>0 ? aMontant+'€'+(aMode?' '+aMode:'') : '— Ajouter';
 
@@ -542,11 +546,26 @@ function savePayPopup() {
     setTimeout(() => document.querySelectorAll('.mode-btn').forEach(b => b.style.outline=''), 900);
     return;
   }
-  // Capturer les valeurs AVANT de fermer
   const idToSave = payPopupId;
-  const valeur = montant + '|' + paySelectedMode;
   closePayPopup();
-  maj(idToSave, 'acompte', valeur);
+
+  // 1. Stocker les détails localement (montant + mode)
+  const lsKey = 'pay_' + CLIENT_ID + '_' + idToSave;
+  localStorage.setItem(lsKey, JSON.stringify({ montant, mode: paySelectedMode }));
+
+  // 2. Mettre à jour Google Sheets avec Oui/Non (champ existant)
+  maj(idToSave, 'acompte', montant > 0);
+
+  // 3. Mettre à jour le badge dans le tableau immédiatement sans attendre reload
+  const badge = document.querySelector(`.btn-acompte[data-id="${idToSave}"]`);
+  if (badge) {
+    badge.dataset.montant = montant;
+    badge.dataset.mode = paySelectedMode;
+    const cls = montant >= 75 ? 'full' : montant > 0 ? 'partial' : 'unpaid';
+    const lbl = montant > 0 ? montant + '€ ' + paySelectedMode : '— Ajouter';
+    badge.className = 'badge-pay ' + cls + ' btn-acompte';
+    badge.innerHTML = '💰 ' + lbl;
+  }
 }
 
 // ── CRUD ──────────────────────────────────────────────────────────────────────
