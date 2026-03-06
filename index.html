@@ -1047,7 +1047,7 @@ async function load() {
           '<td class="text-center">' +
             '<input type="checkbox" class="w-5 h-5 cursor-pointer chk-caution" data-id="' + r.id + '" ' + (r.caution === 'Oui' ? 'checked' : '') + '>' +
           '</td>' +
-          '<td class="text-gray-300">' + (r.template || 'Non') + '</td>' +
+          '<td class="text-center"><span class="badge-pay ' + (r.template === 'Oui' ? 'full' : 'unpaid') + '">' + (r.template === 'Oui' ? '🎨 Oui' : '🎨 Non') + '</span></td>' +
           '<td class="text-center">' + statusBadge + '</td>' +
           '<td class="text-center whitespace-nowrap">' +
             '<button class="btn-edit bg-blue-500 bg-opacity-20 text-blue-400 p-2 rounded-lg hover:bg-opacity-30 transition border border-blue-500 border-opacity-30 mr-2" data-resa=\'' + resaJson + '\' title="Modifier">✏️</button>' +
