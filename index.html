@@ -419,12 +419,14 @@
           autocomplete="off">
       </div>
       <div class="md:col-span-2">
-        <label class="block text-sm font-bold mb-2 text-gray-300">Corps du mail (utilisez {PRENOM} et {NOM}) :</label>
+        <label class="block text-sm font-bold mb-2 text-gray-300">Corps du mail (utilisez {PRENOM}, {NOM}, {DATE_ENLEVEMENT}, {DATE_RESTITUTION}) :</label>
         <textarea id="corps" rows="6" 
           class="w-full p-4 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" 
           autocomplete="off">Bonjour {PRENOM} {NOM},
 
 Veuillez trouver ci-joint votre contrat de location Photobooth à signer.
+
+Votre location est prévue du {DATE_ENLEVEMENT} au {DATE_RESTITUTION}.
 
 Cordialement,
 Alexis - Photobooth</textarea>
@@ -913,8 +915,10 @@ function generateAndSendContract(id, resa) {
 
   const sujet = encodeURIComponent(document.getElementById('sujet').value || 'Votre contrat Photobooth');
   let corps = document.getElementById('corps').value
-    .replace('{PRENOM}', resa.prenom || '')
-    .replace('{NOM}', resa.nom || '');
+    .replace(/{PRENOM}/g, resa.prenom || '')
+    .replace(/{NOM}/g, resa.nom || '')
+    .replace(/{DATE_ENLEVEMENT}/g, resa.enlevement ? new Date(resa.enlevement).toLocaleDateString('fr-FR') : '')
+    .replace(/{DATE_RESTITUTION}/g, resa.restitution ? new Date(resa.restitution).toLocaleDateString('fr-FR') : '');
   const gmail = 'https://mail.google.com/mail/?view=cm&to=' + (resa.email || '') + '&su=' + sujet + '&body=' + encodeURIComponent(corps);
   setTimeout(function() { window.open(gmail, '_blank'); }, 1500);
 
