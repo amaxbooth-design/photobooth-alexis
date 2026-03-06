@@ -702,12 +702,12 @@ body{font-family:Georgia,serif;font-size:13px;color:#1a1a1a;background:#f0f2f5;p
   </div>
   <div class="box">
     <h3>Le Locataire</h3>
-    <div class="fr"><label>Nom :</label><br><span class="fl">&nbsp;</span></div>
-    <div class="fr"><label>Prénom :</label><br><span class="fl">&nbsp;</span></div>
-    <div class="fr"><label>Adresse :</label><br><span class="fl" style="min-width:230px">&nbsp;</span></div>
-    <div class="fr"><label>Ville :</label> <span class="fl" style="min-width:100px">&nbsp;</span> &nbsp;<label>CP :</label> <span class="fl" style="min-width:65px">&nbsp;</span></div>
-    <div class="fr"><label>Mail :</label><br><span class="fl" style="min-width:230px">&nbsp;</span></div>
-    <div class="fr"><label>Téléphone :</label><br><span class="fl">&nbsp;</span></div>
+    <div class="fr"><label>Nom :</label><br><span class="fl">{NOM}</span></div>
+    <div class="fr"><label>Prénom :</label><br><span class="fl">{PRENOM}</span></div>
+    <div class="fr"><label>Adresse :</label><br><span class="fl" style="min-width:230px">{ADRESSE}</span></div>
+    <div class="fr"><label>Ville :</label> <span class="fl" style="min-width:100px">{VILLE}</span> &nbsp;<label>CP :</label> <span class="fl" style="min-width:65px">{CODE_POSTAL}</span></div>
+    <div class="fr"><label>Mail :</label><br><span class="fl" style="min-width:230px">{EMAIL}</span></div>
+    <div class="fr"><label>Téléphone :</label><br><span class="fl">{TELEPHONE}</span></div>
     <div class="fr"><label>N° pièce d'identité :</label><br><span class="fl">&nbsp;</span></div>
   </div>
 </div>
@@ -715,8 +715,8 @@ body{font-family:Georgia,serif;font-size:13px;color:#1a1a1a;background:#f0f2f5;p
 <div class="loc-box">
   <h3>La Location</h3>
   <div class="date-row">
-    <span>📅 <strong>Du</strong> : ______ / ______ / 202____ à <strong>17h00</strong></span>
-    <span>📅 <strong>Au</strong> : ______ / ______ / 202____ à <strong>11h00</strong></span>
+    <span>📅 <strong>Du</strong> : {DATE_ENLEVEMENT} à <strong>17h00</strong></span>
+    <span>📅 <strong>Au</strong> : {DATE_RESTITUTION} à <strong>11h00</strong></span>
   </div>
   <p style="font-size:11.5px;color:#777;margin-bottom:12px;font-style:italic">(Enlèvement et dépôt à l'adresse du loueur)</p>
   <div style="margin-bottom:14px">
@@ -1314,7 +1314,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const c = JSON.parse(saved);
         document.getElementById('emailCopie').value = c.email || '';
         document.getElementById('sujet').value = c.sujet || '';
-        document.getElementById('corps').value = c.corps || '';
+        // Si le corps sauvegardé ne contient pas les dates → on garde le défaut du textarea
+        if (c.corps && c.corps.includes('{DATE_ENLEVEMENT}')) {
+          document.getElementById('corps').value = c.corps;
+        }
+        // Sinon le textarea garde sa valeur par défaut avec les dates
       }
       load();
     } else {
