@@ -471,44 +471,43 @@ async function load() {
         </tr>`;
       }).join('');
 
-    // Événements
-    document.querySelectorAll('.btn-envoye').forEach(btn => btn.addEventListener('click', e => {
-      const t = e.currentTarget;
-      if (t.dataset.val !== 'Oui') {
-        Swal.fire({ title:'Contrat', icon:'question', showDenyButton:true, showCancelButton:true,
-          confirmButtonText:'📧 Envoyer + marquer', denyButtonText:'✅ Juste marquer', cancelButtonText:'Annuler'
-        }).then(r => {
-          if (r.isConfirmed) generateAndSendContract(t.dataset.id, JSON.parse(t.dataset.resa.replace(/&#39;/g,"'")));
-          else if (r.isDenied) maj(t.dataset.id, 'contratEnvoye', true);
-        });
-      } else maj(t.dataset.id, 'contratEnvoye', false);
-    }));
+    // ── Délégation d'événements sur le tbody (plus robuste) ──
+    const tbody2 = document.getElementById('tbody');
+    tbody2.onclick = function(e) {
+      const btn = e.target.closest('.btn-envoye, .btn-signe, .btn-acompte, .btn-template, .btn-edit, .btn-delete');
+      if (!btn) return;
 
-    document.querySelectorAll('.btn-signe').forEach(btn => btn.addEventListener('click', e => {
-      const t = e.currentTarget;
-      maj(t.dataset.id, 'contratSigne', t.dataset.val !== 'Oui');
-    }));
+      if (btn.classList.contains('btn-envoye')) {
+        if (btn.dataset.val !== 'Oui') {
+          Swal.fire({ title:'Contrat', icon:'question', showDenyButton:true, showCancelButton:true,
+            confirmButtonText:'📧 Envoyer + marquer', denyButtonText:'✅ Juste marquer', cancelButtonText:'Annuler'
+          }).then(r => {
+            if (r.isConfirmed) generateAndSendContract(btn.dataset.id, JSON.parse(btn.dataset.resa.replace(/&#39;/g,"'")));
+            else if (r.isDenied) maj(btn.dataset.id, 'contratEnvoye', true);
+          });
+        } else maj(btn.dataset.id, 'contratEnvoye', false);
+      }
+      else if (btn.classList.contains('btn-signe')) {
+        maj(btn.dataset.id, 'contratSigne', btn.dataset.val !== 'Oui');
+      }
+      else if (btn.classList.contains('btn-acompte')) {
+        openPayPopup(btn.dataset.id, parseInt(btn.dataset.montant)||0, btn.dataset.mode||'');
+      }
+      else if (btn.classList.contains('btn-template')) {
+        maj(btn.dataset.id, 'template', btn.dataset.val === 'Oui' ? 'Non' : 'Oui');
+      }
+      else if (btn.classList.contains('btn-edit')) {
+        editer(JSON.parse(btn.dataset.resa.replace(/&#39;/g,"'")));
+      }
+      else if (btn.classList.contains('btn-delete')) {
+        supprimer(btn.dataset.id);
+      }
+    };
 
-    document.querySelectorAll('.btn-acompte').forEach(b => b.addEventListener('click', e => {
-      const t = e.currentTarget;
-      openPayPopup(t.dataset.id, parseInt(t.dataset.montant)||0, t.dataset.mode||'');
-    }));
-
-    document.querySelectorAll('.chk-caution').forEach(cb => cb.addEventListener('change', e => {
-      maj(e.target.dataset.id, 'caution', e.target.checked);
-    }));
-
-    document.querySelectorAll('.btn-template').forEach(b => b.addEventListener('click', e => {
-      const t = e.currentTarget;
-      maj(t.dataset.id, 'template', t.dataset.val === 'Oui' ? 'Non' : 'Oui');
-    }));
-
-    document.querySelectorAll('.btn-edit').forEach(btn => btn.addEventListener('click', e => {
-      editer(JSON.parse(e.currentTarget.dataset.resa.replace(/&#39;/g,"'")));
-    }));
-    document.querySelectorAll('.btn-delete').forEach(btn => btn.addEventListener('click', e => {
-      supprimer(e.currentTarget.dataset.id);
-    }));
+    tbody2.onchange = function(e) {
+      const cb = e.target.closest('.chk-caution');
+      if (cb) maj(cb.dataset.id, 'caution', cb.checked);
+    };
 
   } catch(err) {
     console.error(err);
@@ -522,7 +521,15 @@ let payPopupId = null, paySelectedMode = '';
 function openPayPopup(id, montant, mode) {
   payPopupId = id; paySelectedMode = mode || '';
   document.getElementById('payMontant').value = montant || '';
-  document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === paySelectedMode));
+  // Réattacher les listeners mode-btn à chaque ouverture
+  document.querySelectorAll('.mode-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.mode === paySelectedMode);
+    b.onclick = function() {
+      paySelectedMode = b.dataset.mode;
+      document.querySelectorAll('.mode-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+    };
+  });
   document.getElementById('payPopup').style.display = 'flex';
   document.getElementById('payMontant').focus();
 }
@@ -607,12 +614,7 @@ function saveEmailConfig() {
 // ── Init ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Popup modes paiement
-  document.querySelectorAll('.mode-btn').forEach(btn => btn.addEventListener('click', () => {
-    paySelectedMode = btn.dataset.mode;
-    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }));
+  // Popup acompte
   document.getElementById('paySaveBtn').addEventListener('click', savePayPopup);
   document.getElementById('payCancelBtn').addEventListener('click', closePayPopup);
   document.getElementById('payPopup').addEventListener('click', e => {
