@@ -950,11 +950,7 @@ async function load() {
     }
 
     const total = data.length;
-    const confirmed = data.filter(r => {
-      const raw = r.acompte || '';
-      const m = raw.includes('|') ? (parseInt(raw.split('|')[0]) || 0) : (raw === 'Oui' ? 35 : 0);
-      return r.contratSigne === 'Oui' && m > 0;
-    });
+    const confirmed = data.filter(r => r.contratSigne === 'Oui' && r.acompte === 'Oui');
     const pending = total - confirmed.length;
     const revenue = confirmed.reduce((sum, r) => {
       let price = 75;
@@ -971,22 +967,27 @@ async function load() {
         return !filtre || (x.enlevement && x.enlevement.startsWith(filtre));
       })
       .map(function(r) {
-        // Acompte : le champ 'acompte' peut contenir "Non", "Oui" (legacy) ou "35|💵 Espèces"
-        const acompteRaw = r.acompte || '';
-        let acompteMontant = 0, acompteMode = '';
-        if (acompteRaw.includes('|')) {
-          const parts = acompteRaw.split('|');
-          acompteMontant = parseInt(parts[0]) || 0;
-          acompteMode = parts[1] || '';
-        } else if (acompteRaw === 'Oui') {
-          acompteMontant = 35; acompteMode = '';
+        // Acompte : Oui/Non dans Google Sheets (inchangé)
+        // Détails paiement stockés localement dans localStorage
+        const payKey = 'pay_' + CLIENT_ID + '_' + r.id;
+        let payInfo = null;
+        try { payInfo = JSON.parse(localStorage.getItem(payKey)); } catch(e) {}
+        
+        const acompteOui = r.acompte === 'Oui';
+        let acompteClass, acompteLabel;
+        if (payInfo && payInfo.montant > 0) {
+          acompteClass = payInfo.montant >= 75 ? 'full' : 'partial';
+          acompteLabel = payInfo.montant + '€ ' + payInfo.mode;
+        } else if (acompteOui) {
+          acompteClass = 'partial';
+          acompteLabel = '35€ (ancien)';
+        } else {
+          acompteClass = 'unpaid';
+          acompteLabel = '— Ajouter';
         }
-        let acompteClass = 'unpaid', acompteLabel = '— Ajouter';
-        if (acompteMontant >= 75) { acompteClass = 'full'; acompteLabel = acompteMontant + '€' + (acompteMode ? ' ' + acompteMode : ''); }
-        else if (acompteMontant > 0) { acompteClass = 'partial'; acompteLabel = acompteMontant + '€' + (acompteMode ? ' ' + acompteMode : ''); }
 
-        // Statut confirmé si contrat signé + acompte reçu
-        const isConfirmed = r.contratSigne === 'Oui' && acompteMontant > 0;
+        // Statut confirmé : contrat signé + acompte reçu (Oui/Non Google Sheets)
+        const isConfirmed = r.contratSigne === 'Oui' && r.acompte === 'Oui';
         const rowClass = isConfirmed ? 'status-confirmed' : 'status-pending';
         const statusBadge = isConfirmed
           ? '<span class="status-badge confirmed">✓ Confirmé</span>'
@@ -1032,7 +1033,10 @@ async function load() {
 
           // 💰 Acompte badge cliquable
           '<td class="text-center">' +
-            '<div class="badge-pay ' + acompteClass + ' btn-acompte" data-id="' + r.id + '" data-montant="' + acompteMontant + '" data-mode="' + acompteMode.replace(/'/g,'&#39;') + '">💰 ' + acompteLabel + '</div>' +
+            '<div class="badge-pay ' + acompteClass + ' btn-acompte" data-id="' + r.id + '" ' +
+            'data-montant="' + (payInfo ? payInfo.montant : (acompteOui ? 35 : 0)) + '" ' +
+            'data-mode="' + (payInfo ? payInfo.mode.replace(/'/g,'&#39;') : '') + '" ' +
+            'data-acompte-oui="' + (acompteOui ? 'Oui' : 'Non') + '">💰 ' + acompteLabel + '</div>' +
           '</td>' +
 
           // 🔒 Caution checkbox inchangée
@@ -1122,13 +1126,9 @@ async function load() {
 
 async function maj(id, champ, val) {
   try {
-    // 'acompte' peut être une chaîne "35|💵 Espèces", les autres sont Oui/Non
-    let valeur;
-    if (champ === 'acompte' && typeof val === 'string' && val.includes('|')) {
-      valeur = val; // déjà formaté "montant|mode"
-    } else {
-      valeur = val ? 'Oui' : 'Non';
-    }
+    // Si val est une string non vide → on l'envoie telle quelle (ex: "35|💵 Espèces")
+    // Sinon → Oui/Non
+    const valeur = (typeof val === 'string' && val !== '') ? val : (val ? 'Oui' : 'Non');
     await fetch(URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -1278,9 +1278,11 @@ function savePayPopup() {
     }, 900);
     return;
   }
-  // On stocke dans le champ existant 'acompte' : "35|💵 Espèces"
-  const valeur = montant + '|' + paySelectedMode;
-  maj(payPopupId, 'acompte', valeur);
+  // Sauvegarde locale des détails (montant + mode)
+  const payKey = 'pay_' + CLIENT_ID + '_' + payPopupId;
+  localStorage.setItem(payKey, JSON.stringify({ montant: montant, mode: paySelectedMode }));
+  // Met à jour acompte = Oui/Non dans Google Sheets (champ existant)
+  maj(payPopupId, 'acompte', montant > 0);
   closePayPopup();
 }
 // ---- Fin popup acompte ----
