@@ -188,12 +188,14 @@ Cordialement,
 Alexis - Photobooth</textarea>
         </div>
         <div>
-          <label class="block text-sm font-bold mb-2 text-gray-300">✅ Corps confirmation — variables : {PRENOM} {NOM} {DATE_ENLEVEMENT} {DATE_RESTITUTION}</label>
+          <label class="block text-sm font-bold mb-2 text-gray-300">✅ Corps confirmation — variables : {PRENOM} {NOM} {DATE_ENLEVEMENT} {DATE_RESTITUTION} {ACOMPTE}</label>
           <textarea id="corpsConfirmation" rows="7" class="w-full p-4 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" autocomplete="off">Bonjour {PRENOM} {NOM},
 
 Nous confirmons votre réservation du Photobooth.
 
 Votre location est prévue du {DATE_ENLEVEMENT} au {DATE_RESTITUTION}.
+
+Acompte bien reçu de {ACOMPTE}.
 
 Merci pour votre confiance !
 
@@ -394,11 +396,25 @@ function sendConfirmation(id, resa) {
   const corpsTemplate = document.getElementById('corpsConfirmation')
     ? document.getElementById('corpsConfirmation').value
     : 'Bonjour {PRENOM} {NOM},\n\nVotre location est confirmée du {DATE_ENLEVEMENT} au {DATE_RESTITUTION}.\n\nCordialement,\nAlexis - Photobooth';
+
+  // Récupérer les infos acompte depuis localStorage
+  let acompteStr = 'non renseigné';
+  try {
+    const lsKey = 'pay_' + CLIENT_ID + '_' + id;
+    const saved = localStorage.getItem(lsKey);
+    if (saved) {
+      const p = JSON.parse(saved);
+      if (p.montant > 0) acompteStr = p.montant + '€ en ' + p.mode.replace(/[💵🏦🅿️📝]/g,'').trim();
+    }
+  } catch(e) {}
+
   const corps = corpsTemplate
     .replace(/{PRENOM}/g,           resa.prenom     || '')
     .replace(/{NOM}/g,              resa.nom        || '')
     .replace(/{DATE_ENLEVEMENT}/g,  frDate(resa.enlevement))
-    .replace(/{DATE_RESTITUTION}/g, frDate(resa.restitution));
+    .replace(/{DATE_RESTITUTION}/g, frDate(resa.restitution))
+    .replace(/{ACOMPTE}/g,          acompteStr);
+
   window.open('https://mail.google.com/mail/?view=cm&to='+(resa.email||'')+'&su='+sujet+'&body='+encodeURIComponent(corps),'_blank');
   maj(id, 'confirmEnvoye', true);
 }
