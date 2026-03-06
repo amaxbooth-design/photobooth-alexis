@@ -86,6 +86,11 @@
     .btn-cancel-pay:hover { color:#fff; border-color:rgba(255,255,255,0.3); }
 
     #contractFrame { width:100%; border:none; flex:1; }
+
+    /* Largeurs colonnes */
+    th:nth-child(1), td:nth-child(1) { width:62px; }
+    th:nth-child(2), td:nth-child(2) { width:62px; }
+    th:nth-child(9), td:nth-child(9) { width:72px; max-width:72px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   </style>
 </head>
 <body>
@@ -170,9 +175,10 @@
         <label class="block text-sm font-bold mb-2 text-gray-300">📧 Mon email (copie) :</label>
         <input id="emailCopie" type="email" class="w-full p-4 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" placeholder="alexis@exemple.com" autocomplete="off">
       </div>
-      <div class="md:col-span-2">
-        <label class="block text-sm font-bold mb-2 text-gray-300">Corps du mail — variables disponibles : {PRENOM} {NOM} {DATE_ENLEVEMENT} {DATE_RESTITUTION}</label>
-        <textarea id="corps" rows="7" class="w-full p-4 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" autocomplete="off">Bonjour {PRENOM} {NOM},
+      <div class="md:col-span-2 grid md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-bold mb-2 text-gray-300">📄 Corps contrat — variables : {PRENOM} {NOM} {DATE_ENLEVEMENT} {DATE_RESTITUTION}</label>
+          <textarea id="corps" rows="7" class="w-full p-4 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" autocomplete="off">Bonjour {PRENOM} {NOM},
 
 Veuillez trouver ci-joint votre contrat de location Photobooth à signer.
 
@@ -180,6 +186,20 @@ Votre location est prévue du {DATE_ENLEVEMENT} au {DATE_RESTITUTION}.
 
 Cordialement,
 Alexis - Photobooth</textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-bold mb-2 text-gray-300">✅ Corps confirmation — variables : {PRENOM} {NOM} {DATE_ENLEVEMENT} {DATE_RESTITUTION}</label>
+          <textarea id="corpsConfirmation" rows="7" class="w-full p-4 border-2 border-gray-600 bg-gray-800 text-white rounded-lg focus:outline-none focus:border-blue-500 transition" autocomplete="off">Bonjour {PRENOM} {NOM},
+
+Nous confirmons votre réservation du Photobooth.
+
+Votre location est prévue du {DATE_ENLEVEMENT} au {DATE_RESTITUTION}.
+
+Merci pour votre confiance !
+
+Cordialement,
+Alexis - Photobooth</textarea>
+        </div>
       </div>
     </div>
     <button id="openContractBtn" class="mt-6 bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition glow-purple">📝 Modifier mon contrat</button>
@@ -209,6 +229,7 @@ Alexis - Photobooth</textarea>
             <th>✉️ ENVOYÉ</th>
             <th>✅ SIGNÉ</th>
             <th>💰 ACOMPTE</th>
+            <th>📩 CONFIRM.</th>
             <th>🔒 CAUTION</th>
             <th>🎨 TEMPLATE</th>
             <th>🔧 STATUT</th>
@@ -216,7 +237,7 @@ Alexis - Photobooth</textarea>
           </tr>
         </thead>
         <tbody id="tbody">
-          <tr><td colspan="16" class="text-center py-8 text-gray-400">
+          <tr><td colspan="17" class="text-center py-8 text-gray-400">
             <div class="flex flex-col items-center gap-3">
               <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
               <div>Chargement...</div>
@@ -368,7 +389,19 @@ function generateAndSendContract(id, resa) {
   maj(id, 'contratEnvoye', true);
 }
 
-// ── API ───────────────────────────────────────────────────────────────────────
+function sendConfirmation(id, resa) {
+  const sujet = encodeURIComponent('Confirmation de votre réservation Photobooth');
+  const corpsTemplate = document.getElementById('corpsConfirmation')
+    ? document.getElementById('corpsConfirmation').value
+    : 'Bonjour {PRENOM} {NOM},\n\nVotre location est confirmée du {DATE_ENLEVEMENT} au {DATE_RESTITUTION}.\n\nCordialement,\nAlexis - Photobooth';
+  const corps = corpsTemplate
+    .replace(/{PRENOM}/g,           resa.prenom     || '')
+    .replace(/{NOM}/g,              resa.nom        || '')
+    .replace(/{DATE_ENLEVEMENT}/g,  frDate(resa.enlevement))
+    .replace(/{DATE_RESTITUTION}/g, frDate(resa.restitution));
+  window.open('https://mail.google.com/mail/?view=cm&to='+(resa.email||'')+'&su='+sujet+'&body='+encodeURIComponent(corps),'_blank');
+  maj(id, 'confirmEnvoye', true);
+}
 async function maj(id, champ, val) {
   try {
     // boolean → Oui/Non  |  string non vide → envoyée telle quelle (ex: "35|💵 Espèces")
@@ -397,7 +430,7 @@ async function load() {
       mois.map(m => `<option value="${m}" class="bg-gray-800"${filtre===m?' selected':''}>${new Date(m+'-01').toLocaleDateString('fr-FR',{month:'long',year:'numeric'})}</option>`).join('');
 
     const tbody = document.getElementById('tbody');
-    if (!data.length) { tbody.innerHTML='<tr><td colspan="16" class="text-center py-8 text-gray-400">Aucune réservation</td></tr>'; return; }
+    if (!data.length) { tbody.innerHTML='<tr><td colspan="17" class="text-center py-8 text-gray-400">Aucune réservation</td></tr>'; return; }
 
     // Stats
     const confirmed = data.filter(r => {
@@ -457,6 +490,13 @@ async function load() {
             </div>
           </td>
           <td>
+            <button class="btn-toggle ${r.confirmEnvoye==='Oui'?'on':'off'} btn-confirm"
+              data-id="${r.id}" data-val="${r.confirmEnvoye||'Non'}" data-resa='${rj}'
+              title="${r.confirmEnvoye==='Oui'?'Confirmation envoyée — cliquer pour annuler':'Envoyer mail de confirmation'}">
+              ${r.confirmEnvoye==='Oui'?'✅':'📩'}
+            </button>
+          </td>
+          <td>
             <input type="checkbox" class="w-5 h-5 cursor-pointer chk-caution" data-id="${r.id}" ${r.caution==='Oui'?'checked':''}>
           </td>
           <td>
@@ -481,7 +521,15 @@ async function load() {
       const btn = e.target.closest('.btn-envoye, .btn-signe, .btn-acompte, .btn-template, .btn-edit, .btn-delete');
       if (!btn) return;
 
-      if (btn.classList.contains('btn-envoye')) {
+      else if (btn.classList.contains('btn-confirm')) {
+        const resa = JSON.parse(btn.dataset.resa.replace(/&#39;/g,"'"));
+        if (btn.dataset.val !== 'Oui') {
+          sendConfirmation(btn.dataset.id, resa);
+        } else {
+          maj(btn.dataset.id, 'confirmEnvoye', false);
+        }
+      }
+      else if (btn.classList.contains('btn-envoye')) {
         if (btn.dataset.val !== 'Oui') {
           Swal.fire({ title:'Contrat', icon:'question', showDenyButton:true, showCancelButton:true,
             confirmButtonText:'📧 Envoyer + marquer', denyButtonText:'✅ Juste marquer', cancelButtonText:'Annuler'
@@ -515,7 +563,7 @@ async function load() {
 
   } catch(err) {
     console.error(err);
-    document.getElementById('tbody').innerHTML='<tr><td colspan="16" class="text-center py-8 text-red-400">❌ Erreur de chargement</td></tr>';
+    document.getElementById('tbody').innerHTML='<tr><td colspan="17" class="text-center py-8 text-red-400">❌ Erreur de chargement</td></tr>';
   }
 }
 
@@ -629,7 +677,8 @@ function saveEmailConfig() {
   localStorage.setItem('emailConfig_'+CLIENT_ID, JSON.stringify({
     email: document.getElementById('emailCopie').value,
     sujet: document.getElementById('sujet').value,
-    corps: document.getElementById('corps').value
+    corps: document.getElementById('corps').value,
+    corpsConfirmation: document.getElementById('corpsConfirmation').value
   }));
 }
 
@@ -659,6 +708,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('sujet').value      = c.sujet || '';
         if (c.corps && c.corps.includes('{DATE_ENLEVEMENT}')) {
           document.getElementById('corps').value = c.corps;
+        }
+        if (c.corpsConfirmation) {
+          document.getElementById('corpsConfirmation').value = c.corpsConfirmation;
         }
       }
       load();
@@ -697,6 +749,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('sujet').addEventListener('change', saveEmailConfig);
   document.getElementById('emailCopie').addEventListener('change', saveEmailConfig);
   document.getElementById('corps').addEventListener('change', saveEmailConfig);
+  document.getElementById('corpsConfirmation').addEventListener('change', saveEmailConfig);
 });
 </script>
 </body>
