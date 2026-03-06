@@ -542,8 +542,11 @@ function savePayPopup() {
     setTimeout(() => document.querySelectorAll('.mode-btn').forEach(b => b.style.outline=''), 900);
     return;
   }
-  maj(payPopupId, 'acompte', montant + '|' + paySelectedMode);
+  // Capturer les valeurs AVANT de fermer
+  const idToSave = payPopupId;
+  const valeur = montant + '|' + paySelectedMode;
   closePayPopup();
+  maj(idToSave, 'acompte', valeur);
 }
 
 // ── CRUD ──────────────────────────────────────────────────────────────────────
@@ -617,8 +620,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Popup acompte
   document.getElementById('paySaveBtn').addEventListener('click', savePayPopup);
   document.getElementById('payCancelBtn').addEventListener('click', closePayPopup);
+  // Ferme uniquement si clic sur le fond (pas sur la boîte)
   document.getElementById('payPopup').addEventListener('click', e => {
     if (e.target === document.getElementById('payPopup')) closePayPopup();
+  });
+  document.querySelector('.pay-popup-box').addEventListener('click', e => {
+    e.stopPropagation();
   });
 
   // Login
