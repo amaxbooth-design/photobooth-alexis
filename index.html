@@ -518,7 +518,7 @@ async function load() {
     // ── Délégation d'événements sur le tbody (plus robuste) ──
     const tbody2 = document.getElementById('tbody');
     tbody2.onclick = function(e) {
-      const btn = e.target.closest('.btn-envoye, .btn-signe, .btn-acompte, .btn-template, .btn-edit, .btn-delete');
+      const btn = e.target.closest('.btn-envoye, .btn-signe, .btn-acompte, .btn-template, .btn-edit, .btn-delete, .btn-confirm');
       if (!btn) return;
 
       else if (btn.classList.contains('btn-confirm')) {
