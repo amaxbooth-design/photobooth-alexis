@@ -85,7 +85,10 @@
     .btn-cancel-pay { width:100%; padding:0.55rem; margin-top:0.5rem; background:transparent; color:#6b7280; border:1px solid rgba(255,255,255,0.1); border-radius:0.65rem; font-size:0.85rem; cursor:pointer; }
     .btn-cancel-pay:hover { color:#fff; border-color:rgba(255,255,255,0.3); }
 
-    #contractFrame { width:100%; border:none; flex:1; }
+    /* Cacher les flèches des inputs number */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance:none; margin:0; }
+    input[type=number] { -moz-appearance:textfield; }
 
     /* Largeurs colonnes */
     th:nth-child(1), td:nth-child(1)   { width:62px; }
@@ -163,14 +166,14 @@
     <div class="stat-card" style="border:1px solid rgba(139,92,246,0.3);">
       <div class="text-purple-400 text-sm font-semibold mb-3">💶 TARIFS</div>
       <div class="flex items-center gap-2 mb-2">
-        <label class="text-gray-400 text-xs whitespace-nowrap">Location :</label>
+        <label class="text-gray-400 text-sm whitespace-nowrap">Location :</label>
         <input id="tarifLocation" type="number" value="75"
           class="w-full p-1 text-center font-bold text-white bg-transparent border-b border-purple-500 focus:outline-none text-lg"
           min="0">
         <span class="text-gray-400 text-sm">€</span>
       </div>
       <div class="flex items-center gap-2">
-        <label class="text-gray-400 text-xs whitespace-nowrap">Template :</label>
+        <label class="text-gray-400 text-sm whitespace-nowrap">Template :</label>
         <input id="tarifTemplate" type="number" value="25"
           class="w-full p-1 text-center font-bold text-white bg-transparent border-b border-purple-500 focus:outline-none text-lg"
           min="0">
