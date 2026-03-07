@@ -160,21 +160,6 @@
 
   <!-- Stats -->
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-    <div class="stat-card blue">
-      <div class="text-blue-400 text-sm font-semibold mb-2">RÉSERVATIONS TOTALES</div>
-      <div class="text-4xl font-bold text-white mb-1" id="statTotal">-</div>
-      <div class="text-gray-400 text-sm">Toutes périodes</div>
-    </div>
-    <div class="stat-card green">
-      <div class="text-green-400 text-sm font-semibold mb-2">REVENUS</div>
-      <div class="text-4xl font-bold text-white mb-1" id="statRevenue">-</div>
-      <div class="text-gray-400 text-sm">Confirmés</div>
-    </div>
-    <div class="stat-card orange">
-      <div class="text-orange-400 text-sm font-semibold mb-2">EN ATTENTE</div>
-      <div class="text-4xl font-bold text-white mb-1" id="statPending">-</div>
-      <div class="text-gray-400 text-sm">À confirmer</div>
-    </div>
     <div class="stat-card" style="border:1px solid rgba(139,92,246,0.3);">
       <div class="text-purple-400 text-sm font-semibold mb-3">💶 TARIFS</div>
       <div class="flex items-center gap-2 mb-2">
@@ -191,6 +176,21 @@
           min="0">
         <span class="text-gray-400 text-sm">€</span>
       </div>
+    </div>
+    <div class="stat-card green">
+      <div class="text-green-400 text-sm font-semibold mb-2">REVENUS</div>
+      <div class="text-4xl font-bold text-white mb-1" id="statRevenue">-</div>
+      <div class="text-gray-400 text-sm">Confirmés</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="text-orange-400 text-sm font-semibold mb-2">EN ATTENTE</div>
+      <div class="text-4xl font-bold text-white mb-1" id="statPending">-</div>
+      <div class="text-gray-400 text-sm">À confirmer</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="text-blue-400 text-sm font-semibold mb-2">RÉSERVATIONS TOTALES</div>
+      <div class="text-4xl font-bold text-white mb-1" id="statTotal">-</div>
+      <div class="text-gray-400 text-sm">Toutes périodes</div>
     </div>
   </div>
 
@@ -483,11 +483,18 @@ async function load() {
     const tbody = document.getElementById('tbody');
     if (!data.length) { tbody.innerHTML='<tr><td colspan="18" class="text-center py-8 text-gray-400">Aucune réservation</td></tr>'; return; }
 
-    // Stats
+    // Stats — "confirmé" = contrat signé ET acompte reçu (Sheets OU localStorage)
     const confirmed = data.filter(r => {
+      if (r.contratSigne !== 'Oui') return false;
+      // Vérifier localStorage d'abord
+      try {
+        const ls = localStorage.getItem('pay_' + CLIENT_ID + '_' + r.id);
+        if (ls) { const p = JSON.parse(ls); if (p.montant > 0) return true; }
+      } catch(e) {}
+      // Fallback Sheets
       const raw = r.acompte || '';
       const m = raw.includes('|') ? (parseInt(raw.split('|')[0])||0) : (raw==='Oui' ? 35 : 0);
-      return r.contratSigne === 'Oui' && m > 0;
+      return m > 0;
     });
     const tarifLoc = parseInt(document.getElementById('tarifLocation')?.value) || 75;
     const tarifTpl = parseInt(document.getElementById('tarifTemplate')?.value) || 25;
