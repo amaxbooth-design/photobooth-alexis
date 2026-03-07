@@ -180,7 +180,17 @@
     <div class="stat-card green">
       <div class="text-green-400 text-sm font-semibold mb-2">REVENUS</div>
       <div class="text-4xl font-bold text-white mb-1" id="statRevenue">-</div>
-      <div class="text-gray-400 text-sm">Confirmés</div>
+      <div class="flex justify-between mt-1 gap-2">
+        <div class="text-xs text-center">
+          <div class="text-green-400 font-bold" id="statEncaisse">-</div>
+          <div class="text-gray-500">encaissé</div>
+        </div>
+        <div class="text-gray-600 text-lg">|</div>
+        <div class="text-xs text-center">
+          <div class="text-yellow-400 font-bold" id="statResteDu">-</div>
+          <div class="text-gray-500">reste dû</div>
+        </div>
+      </div>
     </div>
     <div class="stat-card orange">
       <div class="text-orange-400 text-sm font-semibold mb-2">EN ATTENTE</div>
@@ -500,7 +510,24 @@ async function load() {
     const tarifTpl = parseInt(document.getElementById('tarifTemplate')?.value) || 25;
     document.getElementById('statTotal').textContent   = data.length;
     document.getElementById('statPending').textContent = data.length - confirmed.length;
-    document.getElementById('statRevenue').textContent = confirmed.reduce((s,r) => s + tarifLoc + (r.template==='Oui' ? tarifTpl : 0), 0) + '€';
+
+    // Total attendu (réservations confirmées)
+    const totalAttendu = confirmed.reduce((s,r) => s + tarifLoc + (r.template==='Oui' ? tarifTpl : 0), 0);
+
+    // Total encaissé (acomptes reçus sur toutes les réservations)
+    const totalEncaisse = data.reduce((s,r) => {
+      try {
+        const ls = localStorage.getItem('pay_' + CLIENT_ID + '_' + r.id);
+        if (ls) { const p = JSON.parse(ls); return s + (p.montant || 0); }
+      } catch(e) {}
+      const raw = r.acompte || '';
+      return s + (raw.includes('|') ? (parseInt(raw.split('|')[0])||0) : (raw==='Oui' ? 35 : 0));
+    }, 0);
+
+    const resteGlobal = totalAttendu - totalEncaisse;
+    document.getElementById('statRevenue').textContent  = totalAttendu + '€';
+    document.getElementById('statEncaisse').textContent = totalEncaisse + '€';
+    document.getElementById('statResteDu').textContent  = (resteGlobal > 0 ? resteGlobal : 0) + '€';
 
     // Lignes
     tbody.innerHTML = data
