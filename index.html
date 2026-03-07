@@ -100,12 +100,14 @@
     th:nth-child(10), td:nth-child(10) { width:58px; padding:0.5rem 0.25rem; }
     th:nth-child(11), td:nth-child(11) { width:58px; padding:0.5rem 0.25rem; }
     th:nth-child(12), td:nth-child(12) { width:100px; }
-    th:nth-child(13), td:nth-child(13) { width:58px; padding:0.5rem 0.25rem; }
+    th:nth-child(13), td:nth-child(13) { width:80px; }
     th:nth-child(14), td:nth-child(14) { width:58px; padding:0.5rem 0.25rem; }
     th:nth-child(15), td:nth-child(15) { width:58px; padding:0.5rem 0.25rem; }
-    th:nth-child(16), td:nth-child(16) { width:100px; }
-    th:nth-child(17), td:nth-child(17) { width:72px; }
-    th:nth-child(10), th:nth-child(11), th:nth-child(13), th:nth-child(14), th:nth-child(15) { font-size:0.55rem; }
+    th:nth-child(16), td:nth-child(16) { width:58px; padding:0.5rem 0.25rem; }
+    th:nth-child(17), td:nth-child(17) { width:58px; padding:0.5rem 0.25rem; }
+    th:nth-child(18), td:nth-child(18) { width:100px; }
+    th:nth-child(19), td:nth-child(19) { width:72px; }
+    th:nth-child(10), th:nth-child(11), th:nth-child(14), th:nth-child(15), th:nth-child(16), th:nth-child(17) { font-size:0.55rem; }
   </style>
 </head>
 <body>
@@ -157,7 +159,7 @@
   </div>
 
   <!-- Stats -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
     <div class="stat-card blue">
       <div class="text-blue-400 text-sm font-semibold mb-2">RÉSERVATIONS TOTALES</div>
       <div class="text-4xl font-bold text-white mb-1" id="statTotal">-</div>
@@ -171,7 +173,24 @@
     <div class="stat-card orange">
       <div class="text-orange-400 text-sm font-semibold mb-2">EN ATTENTE</div>
       <div class="text-4xl font-bold text-white mb-1" id="statPending">-</div>
-      <div class="text-gray-400 text-sm">Action requise</div>
+      <div class="text-gray-400 text-sm">À confirmer</div>
+    </div>
+    <div class="stat-card" style="border:1px solid rgba(139,92,246,0.3);">
+      <div class="text-purple-400 text-sm font-semibold mb-3">💶 TARIFS</div>
+      <div class="flex items-center gap-2 mb-2">
+        <label class="text-gray-400 text-xs whitespace-nowrap">Location :</label>
+        <input id="tarifLocation" type="number" value="75"
+          class="w-full p-1 text-center font-bold text-white bg-transparent border-b border-purple-500 focus:outline-none text-lg"
+          min="0">
+        <span class="text-gray-400 text-sm">€</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-gray-400 text-xs whitespace-nowrap">Template :</label>
+        <input id="tarifTemplate" type="number" value="25"
+          class="w-full p-1 text-center font-bold text-white bg-transparent border-b border-purple-500 focus:outline-none text-lg"
+          min="0">
+        <span class="text-gray-400 text-sm">€</span>
+      </div>
     </div>
   </div>
 
@@ -246,6 +265,7 @@ Alexis - Photobooth</textarea>
             <th>✉️ ENVOYÉ</th>
             <th>✅ SIGNÉ</th>
             <th>💰 ACOMPTE</th>
+            <th>💳 RESTE</th>
             <th>📩 CONFIRM.</th>
             <th>🔒 CAUTION</th>
             <th>🎨 TEMPLATE</th>
@@ -254,7 +274,7 @@ Alexis - Photobooth</textarea>
           </tr>
         </thead>
         <tbody id="tbody">
-          <tr><td colspan="17" class="text-center py-8 text-gray-400">
+          <tr><td colspan="18" class="text-center py-8 text-gray-400">
             <div class="flex flex-col items-center gap-3">
               <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
               <div>Chargement...</div>
@@ -461,7 +481,7 @@ async function load() {
       mois.map(m => `<option value="${m}" class="bg-gray-800"${filtre===m?' selected':''}>${new Date(m+'-01').toLocaleDateString('fr-FR',{month:'long',year:'numeric'})}</option>`).join('');
 
     const tbody = document.getElementById('tbody');
-    if (!data.length) { tbody.innerHTML='<tr><td colspan="17" class="text-center py-8 text-gray-400">Aucune réservation</td></tr>'; return; }
+    if (!data.length) { tbody.innerHTML='<tr><td colspan="18" class="text-center py-8 text-gray-400">Aucune réservation</td></tr>'; return; }
 
     // Stats
     const confirmed = data.filter(r => {
@@ -469,9 +489,11 @@ async function load() {
       const m = raw.includes('|') ? (parseInt(raw.split('|')[0])||0) : (raw==='Oui' ? 35 : 0);
       return r.contratSigne === 'Oui' && m > 0;
     });
+    const tarifLoc = parseInt(document.getElementById('tarifLocation')?.value) || 75;
+    const tarifTpl = parseInt(document.getElementById('tarifTemplate')?.value) || 25;
     document.getElementById('statTotal').textContent   = data.length;
     document.getElementById('statPending').textContent = data.length - confirmed.length;
-    document.getElementById('statRevenue').textContent = confirmed.reduce((s,r) => s+75+(r.template==='Oui'?25:0), 0) + '€';
+    document.getElementById('statRevenue').textContent = confirmed.reduce((s,r) => s + tarifLoc + (r.template==='Oui' ? tarifTpl : 0), 0) + '€';
 
     // Lignes
     tbody.innerHTML = data
@@ -519,6 +541,17 @@ async function load() {
               data-id="${r.id}" data-montant="${aMontant}" data-mode="${(aMode||'').replace(/'/g,"&#39;")}">
               💰 ${aLbl}
             </div>
+          </td>
+          <td>
+            ${(function(){
+              const tarifLoc = parseInt(document.getElementById('tarifLocation')?.value) || 75;
+              const tarifTpl = parseInt(document.getElementById('tarifTemplate')?.value) || 25;
+              const total = tarifLoc + (r.template==='Oui' ? tarifTpl : 0);
+              const reste = total - aMontant;
+              const cls = reste <= 0 ? 'full' : reste < total ? 'partial' : 'unpaid';
+              const label = reste <= 0 ? '✓ Soldé' : reste + '€';
+              return '<span class="badge-pay ' + cls + '">💳 ' + label + '</span>';
+            })()}
           </td>
           <td>
             <button class="btn-toggle ${r.confirmEnvoye==='Oui'?'on':'off'} btn-confirm"
@@ -594,7 +627,7 @@ async function load() {
 
   } catch(err) {
     console.error(err);
-    document.getElementById('tbody').innerHTML='<tr><td colspan="17" class="text-center py-8 text-red-400">❌ Erreur de chargement</td></tr>';
+    document.getElementById('tbody').innerHTML='<tr><td colspan="18" class="text-center py-8 text-red-400">❌ Erreur de chargement</td></tr>';
   }
 }
 
@@ -744,6 +777,13 @@ document.addEventListener('DOMContentLoaded', () => {
           document.getElementById('corpsConfirmation').value = c.corpsConfirmation;
         }
       }
+      // Charger les tarifs sauvegardés
+      const savedTarifs = localStorage.getItem('tarifs_'+CLIENT_ID);
+      if (savedTarifs) {
+        const t = JSON.parse(savedTarifs);
+        if (t.location) document.getElementById('tarifLocation').value = t.location;
+        if (t.template) document.getElementById('tarifTemplate').value = t.template;
+      }
       load();
     } else { Swal.fire('Erreur','Mot de passe incorrect','error'); }
   });
@@ -781,6 +821,17 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('emailCopie').addEventListener('change', saveEmailConfig);
   document.getElementById('corps').addEventListener('change', saveEmailConfig);
   document.getElementById('corpsConfirmation').addEventListener('change', saveEmailConfig);
+
+  // Tarifs — sauvegarde + recalcul tableau
+  ['tarifLocation','tarifTemplate'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+      localStorage.setItem('tarifs_'+CLIENT_ID, JSON.stringify({
+        location: document.getElementById('tarifLocation').value,
+        template: document.getElementById('tarifTemplate').value
+      }));
+      load();
+    });
+  });
 });
 </script>
 </body>
