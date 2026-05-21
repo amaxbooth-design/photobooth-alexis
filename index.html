@@ -55,8 +55,8 @@
     tbody tr:hover { background:rgba(59,130,246,0.1); }
     .status-confirmed { background:rgba(34,197,94,0.1); border-left:3px solid #22c55e; }
     .status-confirmed:hover { background:rgba(34,197,94,0.15) !important; }
-    .status-pending   { background:rgba(251,146,60,0.18); border-left:4px solid #f97316; box-shadow:inset 3px 0 0 #f97316; }
-    .status-pending:hover { background:rgba(251,146,60,0.30) !important; }
+    .status-pending   { background:rgba(251,146,60,0.1); border-left:3px solid #fb923c; }
+    .status-pending:hover { background:rgba(251,146,60,0.15) !important; }
 
     /* STAT CARDS */
     .stat-card { background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); border:1px solid rgba(255,255,255,0.1); border-radius:1rem; padding:1.25rem; position:relative; overflow:hidden; transition:all 0.3s ease; }
@@ -252,51 +252,6 @@
     .usb-overlay-dim{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:400;display:none;}
     .usb-overlay-dim.show{display:block;}
 
-    /* ═══ POPUP AVIS ═══ */
-    .avis-overlay { position:fixed; inset:0; background:rgba(0,0,0,.80); display:flex; align-items:center; justify-content:center; z-index:300; padding:1rem; }
-    .avis-box { background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); border:1px solid rgba(251,191,36,.25); border-radius:1.2rem; width:100%; max-width:680px; max-height:90vh; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,.6); }
-    .avis-header { padding:1.4rem 1.75rem; border-bottom:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
-    .avis-title { font-size:1.15rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:.6rem; }
-    .avis-close { background:none; border:none; color:#6b7280; font-size:1.4rem; cursor:pointer; padding:4px 8px; border-radius:8px; transition:all .15s; line-height:1; }
-    .avis-close:hover { color:#f87171; background:rgba(248,113,113,.1); }
-    .avis-body { padding:1.2rem 1.75rem; flex:1; overflow-y:auto; }
-    .avis-info { background:rgba(251,191,36,.07); border:1px solid rgba(251,191,36,.2); border-radius:.6rem; padding:.75rem 1rem; margin-bottom:1rem; font-size:.82rem; color:#fbbf24; }
-    .avis-select-bar { display:flex; gap:.6rem; margin-bottom:.9rem; align-items:center; }
-    .avis-select-btn { font-size:.78rem; padding:.35rem .8rem; border-radius:.5rem; border:1px solid rgba(255,255,255,.15); background:rgba(255,255,255,.06); color:#94a3b8; cursor:pointer; transition:all .15s; }
-    .avis-select-btn:hover { background:rgba(255,255,255,.12); color:#fff; }
-    .avis-empty { text-align:center; padding:2.5rem; color:#6b7280; font-size:.95rem; }
-    .avis-client-item { display:flex; align-items:center; gap:.75rem; padding:.65rem .85rem; border-radius:.6rem; border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.03); margin-bottom:.45rem; cursor:pointer; transition:background .15s; }
-    .avis-client-item:hover { background:rgba(251,191,36,.06); border-color:rgba(251,191,36,.2); }
-    .avis-client-item.selected { background:rgba(251,191,36,.1); border-color:rgba(251,191,36,.35); }
-    .avis-client-chk { width:18px; height:18px; accent-color:#fbbf24; cursor:pointer; flex-shrink:0; }
-    .avis-client-info { flex:1; min-width:0; }
-    .avis-client-name { font-weight:700; color:#fff; font-size:.9rem; }
-    .avis-client-sub { font-size:.75rem; color:#94a3b8; margin-top:2px; }
-    .avis-client-email { font-size:.78rem; color:#60a5fa; }
-    .avis-client-badge { font-size:.7rem; padding:2px 8px; border-radius:6px; background:rgba(34,197,94,.15); color:#22c55e; border:1px solid rgba(34,197,94,.3); white-space:nowrap; flex-shrink:0; }
-    .avis-client-badge.orange { background:rgba(251,146,60,.15); color:#fb923c; border-color:rgba(251,146,60,.3); }
-    .avis-footer { padding:1.1rem 1.75rem; border-top:1px solid rgba(255,255,255,.08); flex-shrink:0; display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
-    .avis-count { font-size:.85rem; color:#94a3b8; flex:1; }
-    .avis-count strong { color:#fbbf24; }
-    .avis-send-btn { padding:.7rem 1.5rem; background:linear-gradient(135deg,#f59e0b,#d97706); color:#fff; border:none; border-radius:.75rem; font-size:.9rem; font-weight:800; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:.5rem; }
-    .avis-send-btn:hover:not(:disabled) { opacity:.88; transform:translateY(-1px); box-shadow:0 6px 20px rgba(245,158,11,.35); }
-    .avis-send-btn:disabled { opacity:.4; cursor:not-allowed; }
-    .avis-cancel-btn { padding:.65rem 1.1rem; background:transparent; color:#6b7280; border:1px solid rgba(255,255,255,.1); border-radius:.75rem; font-size:.85rem; cursor:pointer; transition:all .15s; }
-    .avis-cancel-btn:hover { color:#fff; border-color:rgba(255,255,255,.25); }
-    /* résultat envoi */
-    .avis-result { margin-top:.5rem; }
-    .avis-result-item { display:flex; align-items:center; gap:.5rem; padding:.45rem .7rem; border-radius:.5rem; font-size:.82rem; margin-bottom:.3rem; }
-    .avis-result-item.ok { background:rgba(34,197,94,.1); color:#22c55e; border:1px solid rgba(34,197,94,.2); }
-    .avis-result-item.err { background:rgba(248,113,113,.1); color:#f87171; border:1px solid rgba(248,113,113,.2); }
-    /* Instructions Ctrl+V */
-    .avis-instructions { background:linear-gradient(135deg,rgba(99,179,255,.08),rgba(167,139,250,.08)); border:1px solid rgba(99,179,255,.25); border-radius:.75rem; padding:1rem 1.2rem; margin-top:.75rem; }
-    .avis-instructions-title { font-size:.85rem; font-weight:800; color:#fff; margin-bottom:.6rem; display:flex; align-items:center; gap:.5rem; }
-    .avis-instructions ol { padding-left:1.2rem; margin:0; }
-    .avis-instructions li { font-size:.82rem; color:#94a3b8; margin-bottom:.35rem; line-height:1.5; }
-    .avis-instructions li strong { color:#e2e8f0; }
-    .avis-kbd { display:inline-block; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); border-radius:4px; padding:1px 7px; font-size:.8rem; font-family:monospace; color:#fff; font-weight:700; }
-    .avis-note { font-size:.75rem; color:#fbbf24; margin-top:.5rem; font-style:italic; }
-
     /* MOBILE */
     @media (max-width: 768px) {
       #app { padding:0.75rem !important; }
@@ -395,14 +350,9 @@
     </div>
   </div>
 
-  <!-- Stats — 4 cartes sur une ligne -->
-  <style>
-    #statsGrid { display:grid; grid-template-columns:1fr 1.5fr 1fr 1.8fr; gap:12px; margin-bottom:20px; align-items:stretch; }
-    @media (max-width:960px) { #statsGrid { grid-template-columns:1fr 1fr; } }
-    @media (max-width:580px) { #statsGrid { grid-template-columns:1fr; } }
-  </style>
-  <div id="statsGrid">
-    <!-- TARIFS -->
+  <!-- Stats -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+    <!-- Tarifs -->
     <div class="stat-card" style="border:1px solid rgba(139,92,246,0.3);">
       <div class="text-purple-400 text-sm font-semibold mb-3">💶 TARIFS</div>
       <div style="display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;margin-bottom:12px;">
@@ -416,7 +366,7 @@
         <span class="text-gray-400 text-sm font-bold">€</span>
       </div>
     </div>
-    <!-- REVENUS -->
+    <!-- Revenus -->
     <div class="stat-card green">
       <div class="text-green-400 text-sm font-semibold mb-1">REVENUS</div>
       <div class="text-3xl font-bold text-white mb-1" id="statRevenue">-</div>
@@ -432,28 +382,22 @@
         </div>
       </div>
     </div>
-    <!-- TOTAL + EN ATTENTE -->
-    <div class="stat-card blue">
-      <div style="display:flex;align-items:center;justify-content:space-around;gap:8px;height:100%;">
-        <div style="text-align:center;">
-          <div class="text-blue-400 text-sm font-semibold mb-1">TOTAL</div>
-          <div class="text-3xl font-bold text-white mb-1" id="statTotal">-</div>
-          <div class="text-gray-400 text-xs">Réservations</div>
-        </div>
-        <div style="width:1px;background:rgba(255,255,255,0.1);align-self:stretch;"></div>
-        <div style="text-align:center;">
-          <div class="text-orange-400 text-sm font-semibold mb-1">EN ATTENTE</div>
-          <div class="text-3xl font-bold text-white mb-1" id="statPending">-</div>
-          <div class="text-gray-400 text-xs">À confirmer</div>
-        </div>
-      </div>
+    <!-- En attente -->
+    <div class="stat-card orange">
+      <div class="text-orange-400 text-sm font-semibold mb-1">EN ATTENTE</div>
+      <div class="text-3xl font-bold text-white mb-1" id="statPending">-</div>
+      <div class="text-gray-400 text-xs">À confirmer</div>
     </div>
-    <!-- LOCATIONS À VENIR -->
-    <div class="stat-card orange" id="alertesProchesCard">
-      <div class="text-orange-400 text-sm font-semibold mb-2">⏰ LOCATIONS À VENIR</div>
-      <div id="alertesProchesInner" style="font-size:.8rem;color:#6b7280;font-style:italic;">Aucune location dans les 7 prochains jours</div>
+    <!-- Total -->
+    <div class="stat-card blue">
+      <div class="text-blue-400 text-sm font-semibold mb-1">TOTAL</div>
+      <div class="text-3xl font-bold text-white mb-1" id="statTotal">-</div>
+      <div class="text-gray-400 text-xs">Réservations</div>
     </div>
   </div>
+
+  <!-- Alertes réservations proches -->
+  <div id="alertesProches" class="mb-4" style="display:none;"></div>
 
   <!-- Barre de recherche -->
   <div class="mb-4 flex gap-3 items-center flex-wrap">
@@ -480,7 +424,6 @@
       <div class="flex gap-2 flex-wrap">
         <button id="btnEditCorps" class="bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-4 py-2 rounded-xl font-semibold text-sm hover:shadow-lg transition">📄 Corps contrat</button>
         <button id="btnEditConfirm" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-xl font-semibold text-sm hover:shadow-lg transition">✅ Corps confirmation</button>
-        <button id="btnEnvoyerAvis" class="bg-gradient-to-r from-yellow-500 to-amber-600 text-white px-4 py-2 rounded-xl font-semibold text-sm hover:shadow-lg transition glow-orange">⭐ Avis clients</button>
         <button id="openContractBtn" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-2 rounded-xl font-semibold text-sm hover:shadow-lg transition glow-purple">📝 Contrat PDF</button>
       </div>
     </div>
@@ -552,48 +495,6 @@ Photobooth Pro</textarea>
   </div>
 </div>
 
-<!-- ═══════════ POPUP AVIS CLIENTS ═══════════ -->
-<div id="avisPopup" style="display:none;" class="avis-overlay">
-  <div class="avis-box">
-    <div class="avis-header">
-      <div class="avis-title">⭐ Demande d'avis clients</div>
-      <button class="avis-close" id="avisCloseBtn">✕</button>
-    </div>
-    <div class="avis-body">
-      <div class="avis-info">
-        📋 Clients dont la location est <strong>terminée</strong> — sélectionnez ceux à qui envoyer le mail d'avis Google.
-      </div>
-      <div class="avis-select-bar">
-        <span style="font-size:.8rem;color:#6b7280;flex:1;" id="avisCountLabel">0 client(s) disponible(s)</span>
-        <button class="avis-select-btn" id="avisSelectAll">Tout sélectionner</button>
-        <button class="avis-select-btn" id="avisDeselectAll">Tout décocher</button>
-      </div>
-      <div id="avisClientList"></div>
-      <div id="avisResultZone" class="avis-result" style="display:none;">
-        <div id="avisInstructions" class="avis-instructions" style="display:none;">
-          <div class="avis-instructions-title">📋 Comment coller le mail dans Gmail ?</div>
-          <ol>
-            <li>Gmail s'est ouvert avec <strong>le destinataire et le sujet</strong> pré-remplis</li>
-            <li>Cliquez dans la zone de corps du mail (zone blanche)</li>
-            <li>Faites <span class="avis-kbd">Ctrl</span> + <span class="avis-kbd">V</span> (ou <span class="avis-kbd">⌘V</span> sur Mac)</li>
-            <li>Le mail mis en page apparaît → cliquez <strong>Envoyer</strong> ✅</li>
-          </ol>
-          <p class="avis-note">⚠️ Ne pas coller dans la zone "Objet", mais bien dans le corps du message</p>
-        </div>
-        <div style="font-size:.85rem;font-weight:700;color:#fff;margin:.6rem 0 .4rem;" id="avisResultTitle" style="display:none;">📨 Résultats :</div>
-        <div id="avisResultList"></div>
-      </div>
-    </div>
-    <div class="avis-footer">
-      <span class="avis-count"><strong id="avisSelectedCount">0</strong> sélectionné(s)</span>
-      <button class="avis-cancel-btn" id="avisCancelBtn">Fermer</button>
-      <button class="avis-send-btn" id="avisSendBtn" disabled>
-        <span>📋 Copier & Ouvrir Gmail</span>
-      </button>
-    </div>
-  </div>
-</div>
-
 <!-- ═══════════ MODAL RÉSERVATION ═══════════ -->
 <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 hidden flex items-center justify-center z-50 p-4">
   <div class="card-dark rounded-2xl p-6 max-w-3xl w-full max-h-[95vh] overflow-y-auto">
@@ -639,25 +540,6 @@ Photobooth Pro</textarea>
     </div>
     <button class="btn-save" id="paySaveBtn">💾 Enregistrer</button>
     <button class="btn-cancel-pop" id="payCancelBtn">Annuler</button>
-  </div>
-</div>
-
-<!-- ═══════════ POPUP RESTE / SOLDE ═══════════ -->
-<div class="popup-overlay" id="restePopup" style="display:none;">
-  <div class="popup-box">
-    <div class="popup-title" id="restePopupTitle">💳 Paiement du solde</div>
-    <div id="resteInfoLine" style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);border-radius:8px;padding:10px 14px;margin-bottom:1rem;font-size:.9rem;color:#94a3b8;"></div>
-    <label class="popup-label">Montant payé (€)</label>
-    <input type="number" id="resteMontant" class="popup-input" placeholder="ex: 40" min="0" max="1000">
-    <label class="popup-label">Moyen de paiement</label>
-    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.25rem;">
-      <button class="mode-btn reste-mode-btn" data-mode="💵 Espèces">💵 Espèces</button>
-      <button class="mode-btn reste-mode-btn" data-mode="🏦 Virement">🏦 Virement</button>
-      <button class="mode-btn reste-mode-btn" data-mode="🅿️ PayPal">🅿️ PayPal</button>
-      <button class="mode-btn reste-mode-btn" data-mode="📝 Chèque">📝 Chèque</button>
-    </div>
-    <button class="btn-save" id="resteSaveBtn">💾 Enregistrer</button>
-    <button class="btn-cancel-pop" id="resteCancelBtn">Annuler</button>
   </div>
 </div>
 
@@ -709,12 +591,10 @@ Photobooth Pro</textarea>
       <h2 class="text-xl font-bold">📝 Modifier mon contrat PDF</h2>
     </div>
     <iframe id="contractFrame" style="width:100%;flex:1;border:none;background:#fff;"></iframe>
-    <div class="px-3 py-3 bg-gray-900 flex flex-wrap justify-center gap-2 border-t border-gray-700 flex-shrink-0">
-      <button id="saveContractBtn" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-lg font-bold text-xs hover:shadow-lg glow-green">💾 Sauvegarder</button>
-      <button id="exportContractBtn" class="bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-4 py-2 rounded-lg font-bold text-xs hover:shadow-lg">📤 Exporter</button>
-      <label id="importContractBtn" class="bg-gradient-to-r from-indigo-500 to-blue-600 text-white px-4 py-2 rounded-lg font-bold text-xs hover:shadow-lg cursor-pointer">📥 Importer<input type="file" id="importContractFile" accept=".html" style="display:none"></label>
-      <button id="resetContractBtn" class="bg-gradient-to-r from-orange-500 to-red-600 text-white px-4 py-2 rounded-lg font-bold text-xs hover:shadow-lg">🔄 Réinitialiser</button>
-      <button id="closeContractBtn" class="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-4 py-2 rounded-lg font-bold text-xs hover:shadow-lg">❌ Fermer</button>
+    <div class="px-6 py-3 bg-gray-900 flex justify-center gap-4 border-t border-gray-700 flex-shrink-0">
+      <button id="saveContractBtn" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-2 rounded-lg font-bold text-sm hover:shadow-lg glow-green">💾 Sauvegarder</button>
+      <button id="resetContractBtn" class="bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 py-2 rounded-lg font-bold text-sm hover:shadow-lg">🔄 Réinitialiser</button>
+      <button id="closeContractBtn" class="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-6 py-2 rounded-lg font-bold text-sm hover:shadow-lg">❌ Fermer</button>
     </div>
   </div>
 </div>
@@ -1657,30 +1537,8 @@ function generateAndSendContract(id, r) {
   const htmlAvecBar = html.replace('</body>', printBar + '</body>');
   const blob = new Blob([htmlAvecBar], {type:'text/html;charset=utf-8'});
   const blobUrl = URL.createObjectURL(blob);
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  if (isMobile) {
-    // Sur mobile : afficher dans un modal fullscreen plutôt que window.open
-    let mobileModal = document.getElementById('_contractMobileModal');
-    if (!mobileModal) {
-      mobileModal = document.createElement('div');
-      mobileModal.id = '_contractMobileModal';
-      mobileModal.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;background:#111;';
-      mobileModal.innerHTML = `
-        <div style="background:linear-gradient(135deg,#1e3a5f,#2d4a6f);padding:10px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;">
-          <span style="color:#e2e8f0;font-size:14px;flex:1;font-weight:600;">📄 Contrat</span>
-          <button onclick="window.open(document.getElementById('_contractMobileFrame').src,'_blank')" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">📥 Télécharger</button>
-          <button onclick="document.getElementById('_contractMobileModal').style.display='none'" style="background:rgba(255,255,255,.1);color:#94a3b8;border:1px solid rgba(255,255,255,.15);padding:8px 14px;border-radius:8px;font-size:13px;cursor:pointer;">✕ Fermer</button>
-        </div>
-        <iframe id="_contractMobileFrame" style="flex:1;border:none;background:#fff;"></iframe>`;
-      document.body.appendChild(mobileModal);
-    }
-    mobileModal.style.display = 'flex';
-    document.getElementById('_contractMobileFrame').src = blobUrl;
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 30000);
-  } else {
-    const win = window.open(blobUrl, '_blank');
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
-  }
+  const win = window.open(blobUrl, '_blank');
+  setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
 
   maj(id, 'contrat_envoye', true);
 }
@@ -1711,18 +1569,16 @@ function renderTableau(rows, tarifLoc, tarifTpl) {
   else tbody.innerHTML = rows.map(r => {
     const aMontant = r.acompte_montant || 0;
     const aMode    = r.acompte_mode || '';
-    const aCls     = (aMontant>0 && aMode)?'full':aMontant>0?'partial':'unpaid';
+    const aCls     = aMontant>=75?'full':aMontant>0?'partial':'unpaid';
     const aLbl     = aMontant>0 ? aMontant+'€'+(aMode?' '+aMode:'') : '— Ajouter';
     const isOk     = r.contrat_signe==='Oui' && aMontant>0;
     const total    = tarifLoc + (r.template==='Oui' ? tarifTpl : 0);
-    const sSolde   = r.solde_montant || 0;
-    const sSoldeMode = r.solde_mode || '';
-    const reste    = total - aMontant - sSolde;
+    const reste    = total - aMontant;
     const rCls     = reste<=0?'full':reste<total?'partial':'unpaid';
-    const rLbl     = reste<=0?'✓ Soldé'+(sSolde>0?' ('+sSolde+'€ '+sSoldeMode+')':''):reste+'€';
+    const rLbl     = reste<=0?'✓ Soldé':reste+'€';
     const rj       = JSON.stringify(r).replace(/'/g,"&#39;").replace(/"/g,'&quot;');
     return `<tr class="${isOk?'status-confirmed':'status-pending'}">
-      <td class="text-white font-medium">${frDate(r.enlevement)||'<span style="color:#f87171;font-size:0.7rem;font-weight:700;">⚠ DATE MANQUANTE</span>'}</td>
+      <td class="text-white font-medium">${frDate(r.enlevement)||'-'}</td>
       <td class="text-white font-medium">${frDate(r.restitution)||'-'}</td>
       <td><strong class="text-white">${r.nom||''} ${r.prenom||''}</strong></td>
       <td class="text-gray-300">${r.email||''}</td>
@@ -1734,7 +1590,7 @@ function renderTableau(rows, tarifLoc, tarifTpl) {
       <td><button class="btn-toggle ${r.contrat_envoye==='Oui'?'on':'off'} btn-envoye" data-id="${r.id}" data-val="${r.contrat_envoye||'Non'}" data-resa='${rj}'>${r.contrat_envoye==='Oui'?'✅':'📧'}</button></td>
       <td><button class="btn-toggle ${r.contrat_signe==='Oui'?'on':'off'} btn-signe" data-id="${r.id}" data-val="${r.contrat_signe||'Non'}">${r.contrat_signe==='Oui'?'✅':'📝'}</button></td>
       <td><div class="badge-pay ${aCls} btn-acompte" data-id="${r.id}" data-montant="${aMontant}" data-mode="${aMode.replace(/'/g,"&#39;")}">💰 ${aLbl}</div></td>
-      <td><div class="badge-pay ${rCls} btn-reste" data-id="${r.id}" data-reste="${reste}" data-total="${total}" data-montant="${aMontant}" style="cursor:pointer">💳 ${rLbl}</div></td>
+      <td><span class="badge-pay ${rCls}">💳 ${rLbl}</span></td>
       <td><button class="btn-toggle ${r.confirm_envoye==='Oui'?'on':'off'} btn-confirm" data-id="${r.id}" data-val="${r.confirm_envoye||'Non'}" data-resa='${rj}'>${r.confirm_envoye==='Oui'?'✅':'📩'}</button></td>
       <td><input type="checkbox" class="w-5 h-5 cursor-pointer chk-caution" data-id="${r.id}" ${r.caution==='Oui'?'checked':''}></td>
       <td><span class="badge-pay ${r.template==='Oui'?'full':'unpaid'} btn-template" data-id="${r.id}" data-val="${r.template||'Non'}">🎨 ${r.template==='Oui'?'Oui':'Non'}</span></td>
@@ -1755,16 +1611,14 @@ function renderTableau(rows, tarifLoc, tarifTpl) {
     cardsContainer.innerHTML = rows.map(r => {
       const aMontant = r.acompte_montant || 0;
       const aMode    = r.acompte_mode || '';
-      const aCls     = (aMontant>0 && aMode)?'full':aMontant>0?'partial':'unpaid';
+      const aCls     = aMontant>=75?'full':aMontant>0?'partial':'unpaid';
       const isOk     = r.contrat_signe==='Oui' && aMontant>0;
       const total    = tarifLoc + (r.template==='Oui' ? tarifTpl : 0);
-      const sSolde   = r.solde_montant || 0;
-      const sSoldeMode = r.solde_mode || '';
-      const reste    = total - aMontant - sSolde;
+      const reste    = total - aMontant;
       const rCls     = reste<=0?'full':reste<total?'partial':'unpaid';
-      const rLbl     = reste<=0?'✓ Soldé'+(sSolde>0?' ('+sSolde+'€ '+sSoldeMode+')':''):reste+'€';
+      const rLbl     = reste<=0?'✓ Soldé':reste+'€';
       const rj       = JSON.stringify(r).replace(/'/g,"&#39;").replace(/"/g,'&quot;');
-      const dateEnl  = frDate(r.enlevement) || '<span style="color:#f87171;font-size:0.7rem;font-weight:700;">⚠ DATE MANQUANTE</span>';
+      const dateEnl  = frDate(r.enlevement) || '-';
       const dateRes  = frDate(r.restitution) || '-';
       return `<div class="resa-card ${isOk?'confirmed':'pending'}" data-id="${r.id}">
         <div class="resa-header resa-toggle-header">
@@ -1781,7 +1635,7 @@ function renderTableau(rows, tarifLoc, tarifTpl) {
           <div class="resa-card-row"><span class="resa-card-label">💰 Acompte</span>
             <div class="badge-pay ${aCls} btn-acompte" data-id="${r.id}" data-montant="${aMontant}" data-mode="${aMode.replace(/'/g,"&#39;")}">💰 ${aMontant>0?aMontant+'€'+(aMode?' '+aMode:''):'— Ajouter'}</div>
           </div>
-          <div class="resa-card-row"><span class="resa-card-label">💳 Reste</span><div class="badge-pay ${rCls} btn-reste" data-id="${r.id}" data-reste="${reste}" data-total="${total}" data-montant="${aMontant}" style="cursor:pointer">💳 ${rLbl}</div></div>
+          <div class="resa-card-row"><span class="resa-card-label">💳 Reste</span><span class="badge-pay ${rCls}">💳 ${rLbl}</span></div>
           <div class="resa-card-toggles">
             <button class="mob-tog ${r.contrat_envoye==='Oui'?'on':'off'} btn-envoye" data-id="${r.id}" data-val="${r.contrat_envoye||'Non'}" data-resa='${rj}'>${r.contrat_envoye==='Oui'?'✅':'📧'} Envoyé</button>
             <button class="mob-tog ${r.contrat_signe==='Oui'?'on':'off'} btn-signe" data-id="${r.id}" data-val="${r.contrat_signe||'Non'}">${r.contrat_signe==='Oui'?'✅':'📝'} Signé</button>
@@ -1813,18 +1667,16 @@ async function load() {
     allDataCache = data;
     afficherAlertesProches(data);
     const filtre = document.getElementById('filtre').value;
-    const mois = [...new Set(data.map(x => { return x.enlevement ? x.enlevement.slice(0,7) : null; }).filter(Boolean))].sort().reverse();
+    const mois = [...new Set(data.map(x => x.enlevement ? x.enlevement.slice(0,7) : null).filter(Boolean))].sort().reverse();
     document.getElementById('filtre').innerHTML =
       '<option value="" class="bg-gray-800">Tous les mois</option>' +
-      mois.map(m => `<option value="${m}" class="bg-gray-800">${new Date(m+'-02').toLocaleDateString('fr-FR',{month:'long',year:'numeric'})}</option>`).join('');
-    // Forcer explicitement la reselection (innerHTML ne suffit pas sur tous les navigateurs)
-    document.getElementById('filtre').value = filtre;
+      mois.map(m => `<option value="${m}" class="bg-gray-800"${filtre===m?' selected':''}>${new Date(m+'-02').toLocaleDateString('fr-FR',{month:'long',year:'numeric'})}</option>`).join('');
 
     const tarifLoc = parseInt(document.getElementById('tarifLocation')?.value) || 75;
     const tarifTpl = parseInt(document.getElementById('tarifTemplate')?.value) || 25;
     const confirmed = data.filter(r => r.contrat_signe === 'Oui' && r.acompte_montant > 0);
     const totalAttendu  = confirmed.reduce((s,r) => s + tarifLoc + (r.template==='Oui' ? tarifTpl : 0), 0);
-    const totalEncaisse = data.reduce((s,r) => s + (r.acompte_montant || 0) + (r.solde_montant || 0), 0);
+    const totalEncaisse = data.reduce((s,r) => s + (r.acompte_montant || 0), 0);
     const resteGlobal   = Math.max(0, totalAttendu - totalEncaisse);
 
     document.getElementById('statTotal').textContent    = data.length;
@@ -1834,7 +1686,7 @@ async function load() {
     document.getElementById('statResteDu').textContent  = resteGlobal + '€';
 
     const tbody = document.getElementById('tbody');
-    const filtered = data.filter(x => !filtre || (( x.enlevement ? x.enlevement.slice(0,10) : '' )).startsWith(filtre));
+    const filtered = data.filter(x => !filtre || (x.enlevement && x.enlevement.startsWith(filtre)));
     const q = (document.getElementById('searchClient')?.value || '').toLowerCase().trim();
     const display = q ? filtered.filter(r =>
       (r.nom||'').toLowerCase().includes(q)||(r.prenom||'').toLowerCase().includes(q)||
@@ -1872,64 +1724,7 @@ function openPayPopup(id, montant, mode) {
 }
 function closePayPopup() { document.getElementById('payPopup').style.display='none'; payPopupId=null; }
 
-// ── Popup Reste / Solde ───────────────────────────────────────────────────────
-let restePopupId = null, resteSelectedMode = '', resteOpenCardId = null;
-function openRestePopup(id, resteVal, total, acompteActuel) {
-  restePopupId = id; resteSelectedMode = '';
-  const openCard = document.querySelector('.resa-card.open');
-  resteOpenCardId = openCard ? openCard.dataset.id : null;
-  if (resteOpenCardId) openCardIds.add(resteOpenCardId);
-  const resa = allDataCache.find(r => r.id == id);
-  const soldeExistant = resa ? (resa.solde_montant || 0) : 0;
-  const estSolde = resteVal <= 0;
-  document.getElementById('restePopupTitle').textContent = estSolde ? '✏️ Corriger le paiement' : '💳 Paiement du solde';
-  document.getElementById('resteInfoLine').innerHTML = estSolde
-    ? `<span style="color:#22c55e;font-weight:700;">✓ Soldé</span> — Acompte : <strong style="color:#22c55e">${acompteActuel}€</strong> + Solde : <strong style="color:#22c55e">${soldeExistant}€</strong> = Total : <strong style="color:#fff">${total}€</strong><br><span style="font-size:.8rem;color:#94a3b8;">Saisissez un montant supplémentaire à enregistrer en solde.</span>`
-    : `Acompte reçu : <strong style="color:#22c55e">${acompteActuel}€</strong>${soldeExistant>0?' + Solde déjà enregistré : <strong style="color:#22c55e">'+soldeExistant+'€</strong>':''} — Reste à payer : <strong style="color:#fbbf24">${resteVal}€</strong> / Total : <strong style="color:#fff">${total}€</strong>`;
-  document.getElementById('resteMontant').value = estSolde ? 0 : resteVal;
-  document.querySelectorAll('.reste-mode-btn').forEach(b => {
-    b.classList.remove('active');
-    b.onclick = function() {
-      resteSelectedMode = b.dataset.mode;
-      document.querySelectorAll('.reste-mode-btn').forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
-    };
-  });
-  document.getElementById('restePopup').style.display = 'flex';
-  document.getElementById('resteMontant').focus();
-}
-function closeRestePopup() { document.getElementById('restePopup').style.display='none'; restePopupId=null; }
-async function saveRestePopup() {
-  if (!restePopupId) return;
-  const montantSaisi = parseInt(document.getElementById('resteMontant').value) || 0;
-  // Moyen de paiement obligatoire SEULEMENT si montant > 0
-  if (montantSaisi > 0 && !resteSelectedMode) {
-    document.querySelectorAll('.reste-mode-btn').forEach(b => b.style.outline='1px solid rgba(239,68,68,0.7)');
-    setTimeout(() => document.querySelectorAll('.reste-mode-btn').forEach(b => b.style.outline=''), 900);
-    return;
-  }
-  // Si montant = 0 : on efface le solde existant
-  const idToSave = restePopupId;
-  const resa2 = allDataCache.find(r => r.id == idToSave);
-  const soldeExistant = resa2 ? (resa2.solde_montant || 0) : 0;
-  if (montantSaisi === 0) {
-    if (soldeExistant > 0) {
-      closeRestePopup();
-      try { await sbUpdate(idToSave, { solde_montant: 0, solde_mode: '' }); await load(); }
-      catch(e) { Swal.fire('Erreur', e.message, 'error'); }
-    } else { closeRestePopup(); }
-    return;
-  }
-  closeRestePopup();
-  try {
-    await sbUpdate(idToSave, {
-      solde_montant: soldeExistant + montantSaisi,
-      solde_mode: resteSelectedMode
-    });
-    await load();
-  } catch(e) { Swal.fire('Erreur', e.message, 'error'); }
-}
-
+// ── Popup Note ────────────────────────────────────────────────────────────────
 let notePopupId = null;
 function ouvrirNotePopup(id, noteActuelle) {
   notePopupId = id;
@@ -1959,8 +1754,8 @@ function ouvrirNotePopup(id, noteActuelle) {
 
 // ── Alertes réservations proches (7 jours) ───────────────────────────────────
 function afficherAlertesProches(data) {
-  const inner = document.getElementById('alertesProchesInner');
-  if (!inner) return;
+  const el = document.getElementById('alertesProches');
+  if (!el) return;
   const auj = new Date(); auj.setHours(0,0,0,0);
   const dans7 = new Date(auj); dans7.setDate(dans7.getDate() + 7);
   const proches = data.filter(r => {
@@ -1968,27 +1763,24 @@ function afficherAlertesProches(data) {
     const d = new Date(r.enlevement); d.setHours(0,0,0,0);
     return d >= auj && d <= dans7;
   }).sort((a,b) => new Date(a.enlevement) - new Date(b.enlevement));
-  if (!proches.length) {
-    inner.innerHTML = '<span style="color:#6b7280;font-style:italic;font-size:.8rem;">Aucune location dans les 7 prochains jours</span>';
-    return;
-  }
-  const jours = d => { const diff = Math.round((new Date(d)-auj)/86400000); return diff===0?'Auj.':diff===1?'Demain':'Dans '+diff+' j'; };
-  inner.innerHTML = proches.map(r => {
-    const label = jours(r.enlevement);
-    const isToday = label === 'Auj.';
-    const contratOk = r.contrat_signe === 'Oui';
-    const acompteOk = (r.acompte_montant||0) > 0;
-    return `<div style="display:flex;flex-direction:column;gap:3px;background:rgba(0,0,0,.2);border:1px solid rgba(251,146,60,${isToday?'.4':'.15'});border-radius:8px;padding:6px 8px;margin-bottom:6px;">
-      <div style="display:flex;align-items:center;gap:6px;">
-        <span style="font-weight:800;color:${isToday?'#f97316':'#fb923c'};font-size:.78rem;white-space:nowrap;">${label}</span>
-        <span style="color:#e8e8f0;font-size:.82rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.prenom||''} ${r.nom||''}</span>
-      </div>
-      <div style="display:flex;gap:4px;flex-wrap:wrap;">
-        <span style="font-size:.68rem;padding:1px 6px;border-radius:4px;${contratOk?'color:#22c55e;background:rgba(34,197,94,.15);':'color:#f87171;background:rgba(248,113,113,.12);'}">${contratOk?'✅ Signé':'⚠ Non signé'}</span>
-        <span style="font-size:.68rem;padding:1px 6px;border-radius:4px;${acompteOk?'color:#22c55e;background:rgba(34,197,94,.15);':'color:#fbbf24;background:rgba(251,191,36,.1);'}">${acompteOk?'✅ Acompte '+r.acompte_montant+'€':'⏳ Acompte manquant'}</span>
+  if (!proches.length) { el.style.display='none'; return; }
+  const jours = d => { const diff = Math.round((new Date(d)-auj)/86400000); return diff===0?'Aujourd\'hui':diff===1?'Demain':'Dans '+diff+' j'; };
+  el.style.display = 'block';
+  el.innerHTML = `
+    <div style="background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.3);border-radius:12px;padding:1rem 1.2rem;">
+      <div style="font-size:.85rem;font-weight:700;color:#fb923c;margin-bottom:.6rem;">⏰ ${proches.length} réservation${proches.length>1?'s':''} dans les 7 prochains jours</div>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
+        ${proches.map(r => {
+          const label = jours(r.enlevement);
+          const isToday = label === "Aujourd'hui";
+          return `<div style="display:flex;align-items:center;gap:.5rem;background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,${isToday?'.5':'.2'});border-radius:8px;padding:.4rem .8rem;">
+            <span style="font-weight:800;color:${isToday?'#f97316':'#fb923c'};font-size:.85rem;">${label}</span>
+            <span style="color:#e8e8f0;font-size:.85rem;">${r.prenom||''} ${r.nom||''}</span>
+            ${r.contrat_signe!=='Oui'?'<span style="font-size:.7rem;color:#f87171;background:rgba(248,113,113,.15);padding:1px 6px;border-radius:6px;">⚠ Non signé</span>':''}
+          </div>`;
+        }).join('')}
       </div>
     </div>`;
-  }).join('');
 }
 
 // ── Recherche / filtre client ────────────────────────────────────────────────
@@ -1996,7 +1788,7 @@ let allDataCache = [];
 function filtrerClients() {
   const q = (document.getElementById('searchClient')?.value || '').toLowerCase().trim();
   const filtre = document.getElementById('filtre')?.value || '';
-  const filtered = allDataCache.filter(x => !filtre || (( x.enlevement ? x.enlevement.slice(0,10) : '' )).startsWith(filtre));
+  const filtered = allDataCache.filter(x => !filtre || (x.enlevement && x.enlevement.startsWith(filtre)));
   const display = q ? filtered.filter(r =>
     (r.nom||'').toLowerCase().includes(q)||(r.prenom||'').toLowerCase().includes(q)||
     (r.email||'').toLowerCase().includes(q)||(r.telephone||'').includes(q)||(r.ville||'').toLowerCase().includes(q)
@@ -2046,14 +1838,8 @@ async function supprimer(id) {
 }
 async function save() {
   const editId = document.getElementById('editId').value;
-  const enlevementVal = document.getElementById('enlevement').value;
-  if (!enlevementVal) {
-    Swal.fire('Date manquante', 'La date d\'enlèvement est obligatoire pour que la réservation apparaisse dans le filtre par mois.', 'warning');
-    document.getElementById('enlevement').focus();
-    return;
-  }
   const row = {
-    enlevement:  enlevementVal,
+    enlevement:  document.getElementById('enlevement').value  || null,
     restitution: document.getElementById('restitution').value || null,
     nom:         document.getElementById('nom').value,
     prenom:      document.getElementById('prenom').value,
@@ -2282,11 +2068,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('payCancelBtn').addEventListener('click', closePayPopup);
   document.getElementById('payPopup').addEventListener('click', e => { if (e.target===document.getElementById('payPopup')) closePayPopup(); });
 
-  // Popup reste / solde
-  document.getElementById('resteSaveBtn').addEventListener('click', saveRestePopup);
-  document.getElementById('resteCancelBtn').addEventListener('click', closeRestePopup);
-  // Reste popup : fermeture UNIQUEMENT via boutons, pas au clic extérieur
-
   // Popup corps contrat
   document.getElementById('btnEditCorps').addEventListener('click', openCorpsPopup);
   document.getElementById('saveCorpsBtn').addEventListener('click', () => {
@@ -2309,53 +2090,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('cancelConfirmBtn').addEventListener('click', () => { document.getElementById('confirmPopup').style.display='none'; });
   document.getElementById('confirmPopup').addEventListener('click', e => { if (e.target===document.getElementById('confirmPopup')) document.getElementById('confirmPopup').style.display='none'; });
 
-  // Popup Avis clients
-  document.getElementById('btnEnvoyerAvis').addEventListener('click', ouvrirAvisPopup);
-  document.getElementById('avisCloseBtn').addEventListener('click', fermerAvisPopup);
-  document.getElementById('avisCancelBtn').addEventListener('click', fermerAvisPopup);
-  document.getElementById('avisPopup').addEventListener('click', e => { if (e.target === document.getElementById('avisPopup')) fermerAvisPopup(); });
-  document.getElementById('avisSelectAll').addEventListener('click', avisSelectAll);
-  document.getElementById('avisDeselectAll').addEventListener('click', avisDeselectAll);
-  document.getElementById('avisSendBtn').addEventListener('click', envoyerAvisSelectionnes);
-
   // Contrat PDF
   document.getElementById('openContractBtn').addEventListener('click', openContractEditor);
   document.getElementById('closeContractBtn').addEventListener('click', () => document.getElementById('contractEditorModal').classList.add('hidden'));
   document.getElementById('saveContractBtn').addEventListener('click', saveCustomContract);
   document.getElementById('resetContractBtn').addEventListener('click', resetToDefaultContract);
-
-  // Export contrat → télécharge le HTML
-  document.getElementById('exportContractBtn').addEventListener('click', () => {
-    try {
-      const html = document.getElementById('contractFrame').contentDocument.documentElement.outerHTML
-                || localStorage.getItem(lsKey('contrat'))
-                || getDefaultContract();
-      const blob = new Blob([html], {type:'text/html;charset=utf-8'});
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'contrat_amaxbooth.html';
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
-    } catch(e) { Swal.fire('Erreur','Impossible d\'exporter','error'); }
-  });
-
-  // Import contrat ← charge un fichier HTML
-  document.getElementById('importContractFile').addEventListener('change', function() {
-    const file = this.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(ev) {
-      const html = ev.target.result;
-      localStorage.setItem(lsKey('contrat'), html);
-      // Recharger dans l'iframe si le modal est ouvert
-      const frame = document.getElementById('contractFrame');
-      frame.srcdoc = html;
-      frame.onload = function() { try { frame.contentDocument.designMode='on'; } catch(e){} };
-      Swal.fire('✅ Importé !','Contrat chargé avec succès','success');
-    };
-    reader.readAsText(file);
-    this.value = ''; // reset input
-  });
 
   // Modal réservation
   document.getElementById('cancelBtn').addEventListener('click', () => document.getElementById('modal').classList.add('hidden'));
@@ -2378,7 +2117,7 @@ function initMobileCardListeners() {
   if (!cardsContainer) return;
   // Handler unique accordéon + boutons actions — attaché UNE SEULE FOIS
   cardsContainer.addEventListener('click', function(e) {
-    const btn = e.target.closest('.btn-envoye,.btn-signe,.btn-acompte,.btn-reste,.btn-template,.btn-edit,.btn-delete,.btn-confirm,.btn-rendu,.btn-note');
+    const btn = e.target.closest('.btn-envoye,.btn-signe,.btn-acompte,.btn-template,.btn-edit,.btn-delete,.btn-confirm,.btn-rendu,.btn-note');
     if (btn) {
       const parseResa = () => JSON.parse(btn.dataset.resa.replace(/&#39;/g,"'").replace(/&quot;/g,'"'));
       if (btn.classList.contains('btn-confirm')) {
@@ -2396,8 +2135,6 @@ function initMobileCardListeners() {
         maj(btn.dataset.id, 'contrat_signe', btn.dataset.val !== 'Oui');
       } else if (btn.classList.contains('btn-acompte')) {
         openPayPopup(btn.dataset.id, parseInt(btn.dataset.montant)||0, btn.dataset.mode||'');
-      } else if (btn.classList.contains('btn-reste')) {
-        openRestePopup(btn.dataset.id, parseInt(btn.dataset.reste)||0, parseInt(btn.dataset.total)||0, parseInt(btn.dataset.montant)||0);
       } else if (btn.classList.contains('btn-template')) {
         maj(btn.dataset.id, 'template', btn.dataset.val === 'Oui' ? 'Non' : 'Oui');
       } else if (btn.classList.contains('btn-rendu')) {
@@ -2427,268 +2164,6 @@ function initMobileCardListeners() {
   });
 }
 
-// ── Popup Avis Clients ────────────────────────────────────────────────────────
-// Template HTML du mail d'avis (avec PRENOM_PLACEHOLDER)
-function getEmailAvisHTML(prenom) {
-  // On utilise le template email_amaxbooth stocké en localStorage (ou le défaut)
-  const tpl = localStorage.getItem(lsKey('emailAvisTemplate')) || null;
-  if (tpl) return tpl.replace(/PRENOM_PLACEHOLDER/g, prenom || 'cher client');
-  // Template de base si non configuré
-  return null;
-}
-
-let avisDataCache = [];
-
-async function ouvrirAvisPopup() {
-  // Charger toutes les réservations dont restitution < aujourd'hui
-  const auj = new Date(); auj.setHours(0,0,0,0);
-  let rows = allDataCache;
-  if (!rows || !rows.length) {
-    // Si pas en cache, recharger
-    try {
-      const { data } = await db.from('reservations').select('*').eq('client_code', CLIENT_CODE);
-      rows = data || [];
-    } catch(e) { rows = []; }
-  }
-  // Filtrer : restitution passée ET email renseigné
-  avisDataCache = rows.filter(r => {
-    if (!r.restitution || !r.email) return false;
-    const d = new Date(r.restitution); d.setHours(0,0,0,0);
-    return d < auj;
-  }).sort((a,b) => new Date(b.restitution) - new Date(a.restitution));
-
-  renderAvisClientList();
-  document.getElementById('avisPopup').style.display = 'flex';
-  document.getElementById('avisResultZone').style.display = 'none';
-  document.getElementById('avisResultList').innerHTML = '';
-  updateAvisSendBtn();
-}
-
-function renderAvisClientList() {
-  const container = document.getElementById('avisClientList');
-  const label = document.getElementById('avisCountLabel');
-  label.textContent = avisDataCache.length + ' client(s) dont la location est terminée';
-
-  if (!avisDataCache.length) {
-    container.innerHTML = '<div class="avis-empty">😊 Aucun client avec une location terminée pour le moment.</div>';
-    return;
-  }
-  container.innerHTML = avisDataCache.map((r,i) => {
-    const dateRest = frDate(r.restitution) || r.restitution;
-    const dateEnl  = frDate(r.enlevement)  || r.enlevement;
-    const dejaAvis = r.avis_envoye === 'Oui';
-    return `<label class="avis-client-item${dejaAvis?' selected':''}" for="avisChk_${i}" id="avisItem_${i}">
-      <input type="checkbox" class="avis-client-chk" id="avisChk_${i}" data-idx="${i}" ${dejaAvis?'checked':''} onchange="toggleAvisItem(${i})">
-      <div class="avis-client-info">
-        <div class="avis-client-name">${r.prenom||''} ${r.nom||''}</div>
-        <div class="avis-client-sub">📅 ${dateEnl} → ${dateRest}${r.numero_photobooth?' &nbsp;·&nbsp; 📷 '+r.numero_photobooth:''}</div>
-        <div class="avis-client-email">✉️ ${r.email}</div>
-      </div>
-      ${dejaAvis
-        ? '<span class="avis-client-badge">✅ Avis envoyé</span>'
-        : '<span class="avis-client-badge orange">📨 Non envoyé</span>'}
-    </label>`;
-  }).join('');
-}
-
-function toggleAvisItem(idx) {
-  const item = document.getElementById('avisItem_' + idx);
-  const chk  = document.getElementById('avisChk_'  + idx);
-  if (chk.checked) item.classList.add('selected');
-  else item.classList.remove('selected');
-  updateAvisSendBtn();
-}
-
-function updateAvisSendBtn() {
-  const selected = document.querySelectorAll('#avisClientList .avis-client-chk:checked');
-  const count = selected.length;
-  document.getElementById('avisSelectedCount').textContent = count;
-  document.getElementById('avisSendBtn').disabled = count === 0;
-}
-
-function avisSelectAll()   { document.querySelectorAll('#avisClientList .avis-client-chk').forEach((c,i)=>{ c.checked=true;  document.getElementById('avisItem_'+i)?.classList.add('selected'); }); updateAvisSendBtn(); }
-function avisDeselectAll() { document.querySelectorAll('#avisClientList .avis-client-chk').forEach((c,i)=>{ c.checked=false; document.getElementById('avisItem_'+i)?.classList.remove('selected'); }); updateAvisSendBtn(); }
-
-function getEmailAvisHTMLComplet(prenom) {
-  // Template HTML complet email_amaxbooth_FINAL avec prénom injecté
-  const prenomSafe = (prenom || 'cher client').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  return `<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amaxbooth - Avis</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#0a0a0a;font-family:'DM Sans',Arial,sans-serif;}
-.wrapper{max-width:600px;margin:0 auto;background:#0d0d0d;}
-.header{background:#000000;padding:48px 40px 40px;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid rgba(99,179,255,0.2);}
-.header-logo{width:130px;height:130px;object-fit:contain;border-radius:50%;background:#000;padding:4px;display:block;margin:0 auto 24px;box-shadow:0 0 40px rgba(30,120,255,0.4),0 0 80px rgba(160,80,255,0.2);position:relative;z-index:1;}
-.header h1{font-family:'Playfair Display',Georgia,serif;color:#fff;font-size:30px;font-weight:700;line-height:1.25;margin-bottom:12px;position:relative;z-index:1;}
-.header h1 em{font-style:italic;background:linear-gradient(90deg,#63b3ff 0%,#a78bfa 50%,#63b3ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.header-sub{color:rgba(255,255,255,0.55);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;position:relative;z-index:1;}
-.chrome-line{height:2px;background:linear-gradient(90deg,transparent 0%,#63b3ff 30%,#a78bfa 70%,transparent 100%);}
-.body{padding:44px 48px 36px;background:#0d0d0d;}
-.greeting{font-family:'Playfair Display',Georgia,serif;font-size:21px;color:#fff;margin-bottom:18px;}
-.body p{color:#ffffff;font-size:15px;line-height:1.85;margin-bottom:16px;}
-.quote-box{border-left:2px solid #63b3ff;background:rgba(99,179,255,0.06);padding:16px 20px;margin:24px 0;border-radius:0 8px 8px 0;}
-.quote-box p{margin:0;color:#e0e0e0;font-size:14px;line-height:1.75;font-style:italic;}
-.stars-wrap{text-align:center;padding:22px 0 18px;}
-.stars{font-size:30px;letter-spacing:5px;display:block;margin-bottom:8px;}
-.stars-label{color:#cccccc;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;}
-.cta-wrap{text-align:center;padding:4px 0 28px;}
-.cta-btn{display:inline-block;background:linear-gradient(135deg,#1a6fff 0%,#b44fff 100%);color:#fff !important;font-family:'DM Sans',Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;padding:16px 48px;border-radius:3px;box-shadow:0 4px 30px rgba(30,111,255,0.4),0 0 60px rgba(139,92,246,0.15);}
-.cta-note{color:#e0e0e0;font-size:11px;margin-top:12px;letter-spacing:0.04em;}
-.divider{border:none;height:1px;background:linear-gradient(90deg,transparent,rgba(99,179,255,0.2),transparent);margin:24px 0;}
-.signature{color:#ffffff;font-size:14px;line-height:1.9;}
-.signature-name{font-family:'Dancing Script',cursive;font-size:38px;color:#fff;margin-top:8px;line-height:1.2;background:linear-gradient(90deg,#63b3ff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.footer{background:#000;padding:36px 40px;text-align:center;border-top:1px solid rgba(99,179,255,0.15);}
-.footer-logo{width:75px;height:75px;object-fit:contain;border-radius:50%;background:#000;padding:3px;display:block;margin:0 auto 14px;box-shadow:0 0 20px rgba(30,120,255,0.35);}
-.footer-brand{font-family:'Playfair Display',Georgia,serif;background:linear-gradient(90deg,#63b3ff 0%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:20px;font-weight:700;letter-spacing:0.1em;margin-bottom:22px;}
-.social-row{display:flex;justify-content:center;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
-.social-link{display:inline-flex;align-items:center;gap:8px;background:rgba(99,179,255,0.08);border:1px solid rgba(99,179,255,0.2);border-radius:30px;padding:9px 20px;text-decoration:none;color:#63b3ff;font-size:13px;font-weight:600;}
-.social-link svg{width:15px;height:15px;fill:#63b3ff;flex-shrink:0;}
-.footer-contacts{color:#ffffff;font-size:15px;font-weight:500;line-height:2.2;margin-bottom:18px;}
-.footer-legal{color:rgba(255,255,255,0.4);font-size:11px;}
-.footer-legal a{color:rgba(255,255,255,0.5);text-decoration:underline;}
-</style>
-</head>
-<body>
-<div class="wrapper">
-  <div class="header">
-    <img class="header-logo" src="https://i.imgur.com/placeholder.png" alt="Amaxbooth" onerror="this.style.display='none'">
-    <h1>Merci pour votre<br><em>confiance</em></h1>
-    <p class="header-sub">Votre avis compte énormément pour moi</p>
-  </div>
-  <div class="chrome-line"></div>
-  <div class="body">
-    <p class="greeting">Bonjour ${prenomSafe},</p>
-    <p>J'espère que votre événement s'est passé à merveille et que vos invités ont adoré le photobooth !</p>
-    <p>C'était un vrai plaisir de vous accompagner. Si vous avez été satisfait(e) de la prestation, j'aurais une petite faveur à vous demander.</p>
-    <div class="quote-box">
-      <p>Un avis positif de votre part m'aide énormément à me faire connaître et à continuer à proposer un service de qualité. Cela ne prend que 2 minutes !</p>
-    </div>
-    <p>Si vous avez passé un bon moment, <strong>n'hésitez pas à laisser un avis</strong> — chaque témoignage compte vraiment pour moi.</p>
-    <div class="stars-wrap">
-      <span class="stars">⭐⭐⭐⭐⭐</span>
-      <span class="stars-label">Laissez votre avis en cliquant ci-dessous</span>
-    </div>
-    <div class="cta-wrap">
-      <a href="https://g.page/r/CcSXHL3ToCJUEBM/review" class="cta-btn">Laisser un avis Google</a>
-      <p class="cta-note">Moins de 2 minutes — merci infiniment</p>
-    </div>
-    <hr class="divider">
-    <p class="signature">À très bientôt,</p>
-    <p class="signature-name">Alexis</p>
-  </div>
-  <div class="footer">
-    <div class="footer-brand">Amaxbooth</div>
-    <div class="social-row">
-      <a href="https://www.facebook.com/amaxbooth" class="social-link">
-        <svg viewBox="0 0 24 24"><path d="M22.676 0H1.324C.593 0 0 .593 0 1.324v21.352C0 23.408.593 24 1.324 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.592 1.323-1.324V1.324C24 .593 23.408 0 22.676 0"/></svg>
-        amaxbooth
-      </a>
-      <a href="https://www.instagram.com/amaxbooth" class="social-link">
-        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        amaxbooth
-      </a>
-    </div>
-    <div class="footer-contacts">06 68 17 24 63<br>amaxbooth@gmail.com<br>34410 Sauvian</div>
-    <p class="footer-legal"><a href="#">Se désabonner</a></p>
-  </div>
-</div>
-</body>
-</html>`;
-}
-
-async function envoyerAvisSelectionnes() {
-  const checkboxes = document.querySelectorAll('#avisClientList .avis-client-chk:checked');
-  if (!checkboxes.length) return;
-
-  const btn = document.getElementById('avisSendBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span>⏳ Préparation...</span>';
-
-  const resultats = [];
-  const emailCopie = (document.getElementById('emailCopie')?.value || '').trim();
-  const sujetAvis  = encodeURIComponent('Votre avis compte beaucoup pour nous ! ⭐');
-
-  for (const chk of checkboxes) {
-    const idx = parseInt(chk.dataset.idx);
-    const r   = avisDataCache[idx];
-    if (!r || !r.email) continue;
-
-    try {
-      const prenom = r.prenom || 'cher client';
-      const htmlMail = getEmailAvisHTMLComplet(prenom);
-
-      // Copier le HTML dans le presse-papier comme text/html
-      let copieOk = false;
-      try {
-        const blobHtml = new Blob([htmlMail], { type: 'text/html' });
-        const blobTxt  = new Blob([`Bonjour ${prenom},\n\nMerci de votre confiance !\n\n👉 Laisser un avis Google : https://g.page/r/CcSXHL3ToCJUEBM/review\n\nAlexis – Amaxbooth`], { type: 'text/plain' });
-        const clipItem = new ClipboardItem({ 'text/html': blobHtml, 'text/plain': blobTxt });
-        await navigator.clipboard.write([clipItem]);
-        copieOk = true;
-      } catch(clipErr) {
-        console.warn('Clipboard API échouée, fallback texte', clipErr);
-        try {
-          await navigator.clipboard.writeText(`Bonjour ${prenom},\n\nMerci de votre confiance !\n\n👉 Laisser un avis Google : https://g.page/r/CcSXHL3ToCJUEBM/review\n\nAlexis – Amaxbooth`);
-          copieOk = true;
-        } catch(e2) {}
-      }
-
-      // Ouvrir Gmail avec destinataire + sujet pré-remplis
-      const ccParam = emailCopie ? '&cc=' + encodeURIComponent(emailCopie) : '';
-      const gmailUrl = 'https://mail.google.com/mail/?view=cm&to=' + encodeURIComponent(r.email) + ccParam + '&su=' + sujetAvis;
-      window.open(gmailUrl, '_blank');
-
-      // Marquer avis_envoye = Oui dans Supabase
-      try { await sbUpdate(r.id, { avis_envoye: 'Oui' }); } catch(e) {}
-
-      resultats.push({ ok: true, name: (r.prenom||'') + ' ' + (r.nom||''), email: r.email, copieOk });
-      await new Promise(res => setTimeout(res, 800));
-    } catch(e) {
-      resultats.push({ ok: false, name: (r.prenom||'') + ' ' + (r.nom||''), email: r.email, err: e.message });
-    }
-  }
-
-  // Afficher les instructions + résultats
-  const zone = document.getElementById('avisResultZone');
-  const list = document.getElementById('avisResultList');
-  const instruct = document.getElementById('avisInstructions');
-  const title = document.getElementById('avisResultTitle');
-  zone.style.display = 'block';
-  instruct.style.display = resultats.some(r => r.ok) ? 'block' : 'none';
-  title.style.display = 'block';
-  list.innerHTML = resultats.map(r =>
-    `<div class="avis-result-item ${r.ok?'ok':'err'}">
-      ${r.ok ? '✅' : '❌'} <strong>${r.name}</strong> <span style="opacity:.7">${r.email}</span>
-      ${r.ok
-        ? `<span style="opacity:.6;font-size:.75rem;margin-left:auto;">📋 Copié · Gmail ouvert</span>`
-        : `<span style="opacity:.7">${r.err||''}</span>`}
-    </div>`
-  ).join('');
-
-  btn.innerHTML = '<span>✅ Fait !</span>';
-  // Recharger pour mettre à jour les badges
-  await load();
-  avisDataCache = avisDataCache.map(r => {
-    const updated = allDataCache.find(x => x.id === r.id);
-    return updated || r;
-  });
-  renderAvisClientList();
-  updateAvisSendBtn();
-  setTimeout(() => {
-    btn.innerHTML = '<span>📋 Copier & Ouvrir Gmail</span>';
-    updateAvisSendBtn();
-  }, 4000);
-}
-function fermerAvisPopup() {
-  document.getElementById('avisPopup').style.display = 'none';
-}
-
 function demarrerApp(code, nom) {
   CLIENT_CODE = code;
   document.getElementById('screenCode').classList.add('hidden');
@@ -2701,7 +2176,7 @@ function demarrerApp(code, nom) {
   // Listeners tableau desktop — une seule fois
   const tbody2 = document.getElementById('tbody');
   tbody2.addEventListener('click', function(e) {
-    const btn = e.target.closest('.btn-envoye,.btn-signe,.btn-acompte,.btn-reste,.btn-template,.btn-edit,.btn-delete,.btn-confirm,.btn-rendu,.btn-note');
+    const btn = e.target.closest('.btn-envoye,.btn-signe,.btn-acompte,.btn-template,.btn-edit,.btn-delete,.btn-confirm,.btn-rendu,.btn-note');
     if (!btn) return;
     const parseResa = () => JSON.parse(btn.dataset.resa.replace(/&#39;/g,"'").replace(/&quot;/g,'"'));
     if (btn.classList.contains('btn-confirm')) {
@@ -2719,8 +2194,6 @@ function demarrerApp(code, nom) {
       maj(btn.dataset.id, 'contrat_signe', btn.dataset.val !== 'Oui');
     } else if (btn.classList.contains('btn-acompte')) {
       openPayPopup(btn.dataset.id, parseInt(btn.dataset.montant)||0, btn.dataset.mode||'');
-    } else if (btn.classList.contains('btn-reste')) {
-      openRestePopup(btn.dataset.id, parseInt(btn.dataset.reste)||0, parseInt(btn.dataset.total)||0, parseInt(btn.dataset.montant)||0);
     } else if (btn.classList.contains('btn-template')) {
       maj(btn.dataset.id, 'template', btn.dataset.val === 'Oui' ? 'Non' : 'Oui');
     } else if (btn.classList.contains('btn-rendu')) {
