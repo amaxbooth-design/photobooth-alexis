@@ -1722,7 +1722,7 @@ function renderTableau(rows, tarifLoc, tarifTpl) {
     const rLbl     = reste<=0?'✓ Soldé'+(sSolde>0?' ('+sSolde+'€ '+sSoldeMode+')':''):reste+'€';
     const rj       = JSON.stringify(r).replace(/'/g,"&#39;").replace(/"/g,'&quot;');
     return `<tr class="${isOk?'status-confirmed':'status-pending'}">
-      <td class="text-white font-medium">${frDate(r.enlevement)||'-'}</td>
+      <td class="text-white font-medium">${frDate(r.enlevement)||'<span style="color:#f87171;font-size:0.7rem;font-weight:700;">⚠ DATE MANQUANTE</span>'}</td>
       <td class="text-white font-medium">${frDate(r.restitution)||'-'}</td>
       <td><strong class="text-white">${r.nom||''} ${r.prenom||''}</strong></td>
       <td class="text-gray-300">${r.email||''}</td>
@@ -1764,7 +1764,7 @@ function renderTableau(rows, tarifLoc, tarifTpl) {
       const rCls     = reste<=0?'full':reste<total?'partial':'unpaid';
       const rLbl     = reste<=0?'✓ Soldé'+(sSolde>0?' ('+sSolde+'€ '+sSoldeMode+')':''):reste+'€';
       const rj       = JSON.stringify(r).replace(/'/g,"&#39;").replace(/"/g,'&quot;');
-      const dateEnl  = frDate(r.enlevement) || '-';
+      const dateEnl  = frDate(r.enlevement) || '<span style="color:#f87171;font-size:0.7rem;font-weight:700;">⚠ DATE MANQUANTE</span>';
       const dateRes  = frDate(r.restitution) || '-';
       return `<div class="resa-card ${isOk?'confirmed':'pending'}" data-id="${r.id}">
         <div class="resa-header resa-toggle-header">
@@ -2046,8 +2046,14 @@ async function supprimer(id) {
 }
 async function save() {
   const editId = document.getElementById('editId').value;
+  const enlevementVal = document.getElementById('enlevement').value;
+  if (!enlevementVal) {
+    Swal.fire('Date manquante', 'La date d\'enlèvement est obligatoire pour que la réservation apparaisse dans le filtre par mois.', 'warning');
+    document.getElementById('enlevement').focus();
+    return;
+  }
   const row = {
-    enlevement:  document.getElementById('enlevement').value  || null,
+    enlevement:  enlevementVal,
     restitution: document.getElementById('restitution').value || null,
     nom:         document.getElementById('nom').value,
     prenom:      document.getElementById('prenom').value,
