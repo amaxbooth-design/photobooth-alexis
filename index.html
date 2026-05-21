@@ -55,8 +55,8 @@
     tbody tr:hover { background:rgba(59,130,246,0.1); }
     .status-confirmed { background:rgba(34,197,94,0.1); border-left:3px solid #22c55e; }
     .status-confirmed:hover { background:rgba(34,197,94,0.15) !important; }
-    .status-pending   { background:rgba(251,146,60,0.22); border-left:4px solid #fb923c; }
-    .status-pending:hover { background:rgba(251,146,60,0.32) !important; }
+    .status-pending   { background:rgba(251,146,60,0.18); border-left:4px solid #f97316; box-shadow:inset 3px 0 0 #f97316; }
+    .status-pending:hover { background:rgba(251,146,60,0.30) !important; }
 
     /* STAT CARDS */
     .stat-card { background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); border:1px solid rgba(255,255,255,0.1); border-radius:1rem; padding:1.25rem; position:relative; overflow:hidden; transition:all 0.3s ease; }
@@ -709,12 +709,12 @@ Photobooth Pro</textarea>
       <h2 class="text-xl font-bold">📝 Modifier mon contrat PDF</h2>
     </div>
     <iframe id="contractFrame" style="width:100%;flex:1;border:none;background:#fff;"></iframe>
-    <div class="px-6 py-3 bg-gray-900 flex justify-center gap-4 border-t border-gray-700 flex-shrink-0">
-      <button id="saveContractBtn" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-2 rounded-lg font-bold text-sm hover:shadow-lg glow-green">💾 Sauvegarder</button>
-      <button id="exportContractBtn" class="bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-6 py-2 rounded-lg font-bold text-sm hover:shadow-lg">📤 Exporter</button>
-      <label id="importContractBtn" class="bg-gradient-to-r from-indigo-500 to-blue-600 text-white px-6 py-2 rounded-lg font-bold text-sm hover:shadow-lg cursor-pointer">📥 Importer<input type="file" id="importContractFile" accept=".html" style="display:none"></label>
-      <button id="resetContractBtn" class="bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 py-2 rounded-lg font-bold text-sm hover:shadow-lg">🔄 Réinitialiser</button>
-      <button id="closeContractBtn" class="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-6 py-2 rounded-lg font-bold text-sm hover:shadow-lg">❌ Fermer</button>
+    <div class="px-3 py-3 bg-gray-900 flex flex-wrap justify-center gap-2 border-t border-gray-700 flex-shrink-0">
+      <button id="saveContractBtn" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-lg font-bold text-xs hover:shadow-lg glow-green">💾 Sauvegarder</button>
+      <button id="exportContractBtn" class="bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-4 py-2 rounded-lg font-bold text-xs hover:shadow-lg">📤 Exporter</button>
+      <label id="importContractBtn" class="bg-gradient-to-r from-indigo-500 to-blue-600 text-white px-4 py-2 rounded-lg font-bold text-xs hover:shadow-lg cursor-pointer">📥 Importer<input type="file" id="importContractFile" accept=".html" style="display:none"></label>
+      <button id="resetContractBtn" class="bg-gradient-to-r from-orange-500 to-red-600 text-white px-4 py-2 rounded-lg font-bold text-xs hover:shadow-lg">🔄 Réinitialiser</button>
+      <button id="closeContractBtn" class="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-4 py-2 rounded-lg font-bold text-xs hover:shadow-lg">❌ Fermer</button>
     </div>
   </div>
 </div>
@@ -1816,7 +1816,9 @@ async function load() {
     const mois = [...new Set(data.map(x => { const n=dateToInputValue(x.enlevement); return n?n.slice(0,7):null; }).filter(Boolean))].sort().reverse();
     document.getElementById('filtre').innerHTML =
       '<option value="" class="bg-gray-800">Tous les mois</option>' +
-      mois.map(m => `<option value="${m}" class="bg-gray-800"${filtre===m?' selected':''}>${new Date(m+'-02').toLocaleDateString('fr-FR',{month:'long',year:'numeric'})}</option>`).join('');
+      mois.map(m => `<option value="${m}" class="bg-gray-800">${new Date(m+'-02').toLocaleDateString('fr-FR',{month:'long',year:'numeric'})}</option>`).join('');
+    // Forcer explicitement la reselection (innerHTML ne suffit pas sur tous les navigateurs)
+    document.getElementById('filtre').value = filtre;
 
     const tarifLoc = parseInt(document.getElementById('tarifLocation')?.value) || 75;
     const tarifTpl = parseInt(document.getElementById('tarifTemplate')?.value) || 25;
