@@ -1813,7 +1813,7 @@ async function load() {
     allDataCache = data;
     afficherAlertesProches(data);
     const filtre = document.getElementById('filtre').value;
-    const mois = [...new Set(data.map(x => { const n=dateToInputValue(x.enlevement); return n?n.slice(0,7):null; }).filter(Boolean))].sort().reverse();
+    const mois = [...new Set(data.map(x => { return x.enlevement ? x.enlevement.slice(0,7) : null; }).filter(Boolean))].sort().reverse();
     document.getElementById('filtre').innerHTML =
       '<option value="" class="bg-gray-800">Tous les mois</option>' +
       mois.map(m => `<option value="${m}" class="bg-gray-800">${new Date(m+'-02').toLocaleDateString('fr-FR',{month:'long',year:'numeric'})}</option>`).join('');
@@ -1834,7 +1834,7 @@ async function load() {
     document.getElementById('statResteDu').textContent  = resteGlobal + '€';
 
     const tbody = document.getElementById('tbody');
-    const filtered = data.filter(x => !filtre || (dateToInputValue(x.enlevement)||'').startsWith(filtre));
+    const filtered = data.filter(x => !filtre || (( x.enlevement ? x.enlevement.slice(0,10) : '' )).startsWith(filtre));
     const q = (document.getElementById('searchClient')?.value || '').toLowerCase().trim();
     const display = q ? filtered.filter(r =>
       (r.nom||'').toLowerCase().includes(q)||(r.prenom||'').toLowerCase().includes(q)||
@@ -1996,7 +1996,7 @@ let allDataCache = [];
 function filtrerClients() {
   const q = (document.getElementById('searchClient')?.value || '').toLowerCase().trim();
   const filtre = document.getElementById('filtre')?.value || '';
-  const filtered = allDataCache.filter(x => !filtre || (dateToInputValue(x.enlevement)||'').startsWith(filtre));
+  const filtered = allDataCache.filter(x => !filtre || (( x.enlevement ? x.enlevement.slice(0,10) : '' )).startsWith(filtre));
   const display = q ? filtered.filter(r =>
     (r.nom||'').toLowerCase().includes(q)||(r.prenom||'').toLowerCase().includes(q)||
     (r.email||'').toLowerCase().includes(q)||(r.telephone||'').includes(q)||(r.ville||'').toLowerCase().includes(q)
